@@ -1,0 +1,79 @@
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 80px;
+    /* Space for tab bar */
+    -webkit-overflow-scrolling: touch;
+}
+
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 83px;
+    /* Standard iOS Tab Bar Height */
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--divider-color);
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 20px;
+    /* Safe area for modern iPhones */
+    padding-top: 10px;
+    z-index: 1000;
+}
+
+@media (min-width: 600px) {
+    .app-layout {
+        max-width: 600px;
+        margin: 0 auto;
+        border-left: 1px solid var(--divider-color);
+        border-right: 1px solid var(--divider-color);
+        background: var(--ios-bg);
+    }
+
+    .tab-bar {
+        max-width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 1px solid var(--divider-color);
+        border-right: 1px solid var(--divider-color);
+    }
+}
+
+.tab-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: var(--text-secondary);
+    cursor: pointer;
+    trainsition: color 0.2s;
+}
+
+.tab-item.active {
+    color: var(--ios-blue);
+}
+
+.tab-item .icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.tab-item .label {
+    font-size: 10px;
+    font-weight: 500;
+}
