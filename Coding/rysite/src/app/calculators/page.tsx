@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 const calculators = [
   {
     name: 'Beers Per Beer',
-    description: 'Find out how many standard beers (4.2%, 12 oz) are in any beverage by ABV and volume.',
+    description: 'Slide any pour to standard beers live, then log the night and watch your estimated BAC curve against the driving limits.',
     href: '/calculators/beers-per-beer',
     icon: '&#127866;',
     accent: 'card-accent-gold',
