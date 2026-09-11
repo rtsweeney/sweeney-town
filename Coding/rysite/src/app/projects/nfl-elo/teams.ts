@@ -1,7 +1,7 @@
 // ── NFL team reference ───────────────────────────────────────────────────────
 // Abbreviations follow nflverse (note LA = Rams, LAC = Chargers, WAS, LV).
-// Names are used nominatively to identify the clubs whose games are described.
-// No club logos, wordmarks or photography are used anywhere in this project.
+// Names are used nominatively to identify the teams whose games are described.
+// No team logos, wordmarks or photography are used anywhere in this project.
 
 export type Conference = 'AFC' | 'NFC';
 
@@ -11,7 +11,7 @@ export interface Team {
   nickname: string;
   conference: Conference;
   division: string;
-  /** Primary club colour, used only as a chip accent. */
+  /** Primary team colour, used only as a chip accent. */
   color: string;
 }
 
@@ -54,13 +54,13 @@ export const TEAM_BY_ABBR: Record<string, Team> = Object.fromEntries(
   TEAMS.map((t) => [t.abbr, t]),
 );
 
-/** Historical abbreviations that nflverse still emits for relocated clubs. */
+/** Historical abbreviations that nflverse still emits for relocated teams. */
 const ALIASES: Record<string, string> = {
   OAK: 'LV', SD: 'LAC', STL: 'LA', LAR: 'LA', WSH: 'WAS', ARZ: 'ARI',
   BLT: 'BAL', CLV: 'CLE', HST: 'HOU', SL: 'LA', JAC: 'JAX',
 };
 
-/** Resolve any abbreviation the feeds use to a current club. */
+/** Resolve any abbreviation the feeds use to a current team. */
 export function resolveTeam(abbr: string): Team | undefined {
   return TEAM_BY_ABBR[abbr] ?? TEAM_BY_ABBR[ALIASES[abbr] ?? ''];
 }
@@ -71,7 +71,7 @@ export function fullName(abbr: string): string {
   return t ? `${t.location} ${t.nickname}` : abbr;
 }
 
-/** "Chiefs" — enough to identify a club in a dense list. */
+/** "Chiefs" — enough to identify a team in a dense list. */
 export function shortName(abbr: string): string {
   return resolveTeam(abbr)?.nickname ?? abbr;
 }

@@ -26,18 +26,37 @@ const MINUTE = 60_000;
 const HOUR = 3_600_000;
 const DAY = 24 * HOUR;
 
+/** Can, pint, tallboy, stovepipe, bomber, and the 24 oz can. */
+const OZ_MAGNETS = [8, 12, 16, 19.2, 22, 24, 32];
 const OZ_MIN = 1;
-const OZ_MAX = 40;
+const OZ_MAX = 32;
+/** European bottle, half litre, wine bottle, and a round litre to finish. */
+const ML_MAGNETS = [330, 500, 750, 1000];
 const ML_MIN = 30;
-const ML_MAX = 1183; // 40 oz, so both sliders hit their ends together
-const ABV_MIN = 0.5;
-const ABV_MAX = 20;
+const ML_MAX = 1000;
+/** A litre is 33.8 oz, past the end of the ounce scale — that track reads as pegged. */
+const OZ_SCALE_MAX_ML = OZ_MAX * ML_PER_OZ;
+
+/**
+ * Beer lives between 3.3% and 15%, so that stretch gets two thirds of the track
+ * at 0.1% resolution. Above 15% it is spirits, which come in round numbers, so
+ * the top of the scale steps in fives instead of pretending to be precise.
+ */
+const ABV_ANCHORS = [
+  { pos: 0, value: 0.5 },
+  { pos: 0.08, value: 3.3 },
+  { pos: 0.76, value: 15 },
+  { pos: 1, value: 50 },
+];
+const ABV_FINE_MAX = 15;
+const ABV_COARSE_STOPS = [15, 20, 25, 30, 35, 40, 45, 50];
+
 const WEIGHT_MIN = 80;
 const WEIGHT_MAX = 400;
-const TIME_SPAN_MIN = 1440; // the time slider covers the last 24 hours
+const TIME_SPAN_MIN = 480; // the time slider covers the last 8 hours
 
 const DEFAULT_ML = STANDARD_OZ * ML_PER_OZ; // reads 12.0 oz / 355 mL
-const DEFAULT_ABV = 5;
+const DEFAULT_ABV = STANDARD_ABV; // the gold standard: 12 oz at 4.2% is exactly one beer
 const DEFAULT_WEIGHT = 185;
 const DEFAULT_BODY: BodyKey = 'male';
 
@@ -217,6 +236,21 @@ function describeCrossing(at: number | null, alreadyUnder: boolean, now: number)
   return alreadyUnder ? 'already there' : 'past this chart';
 }
 
+/**
+ * A figure space is exactly a digit wide, so "9:41 PM" lines up under "11:41 PM"
+ * and the readout stops jumping around as the slider moves.
+ */
+function padClock(clock: string): string {
+  return clock.length < 8 ? `\u2007${clock}` : clock;
+}
+
+/** Always H:MM, so the elapsed time keeps one width from 0:00 to 8:00. */
+function fmtElapsed(minutes: number): string {
+  const h = Math.floor(minutes / 60);
+  const m = Math.round(minutes % 60);
+  return `${h}:${String(m).padStart(2, '0')}`;
+}
+
 function statusFor(bac: number): { label: string; tone: string; blurb: string } {
   if (bac < 0.005) return { label: 'Stone cold', tone: 'good', blurb: 'Nothing measurable on board.' };
   if (bac < 0.02) return { label: 'Barely there', tone: 'good', blurb: 'A trace — still not a green light to drive.' };
@@ -226,32 +260,135 @@ function statusFor(bac: number): { label: string; tone: string; blurb: string } 
   return { label: 'Way over', tone: 'bad', blurb: 'Get water, get food, and get a ride.' };
 }
 
+// ── Slider scales ────────────────────────────────────────────────────────────
+
+/**
+ * A slider track is always 0–1000 raw positions; a Scale maps that to real
+ * values. Keeping the geometry separate is what lets ABV spend two thirds of
+ * its length between 3.3% and 15% and cram the spirits up at the far end.
+ */
+interface Scale {
+  toValue: (pos: number) => number;
+  toPos: (value: number) => number;
+}
+
+function linearScale(min: number, max: number): Scale {
+  return {
+    toValue: (pos) => min + clamp(pos, 0, 1) * (max - min),
+    toPos: (value) => clamp((value - min) / (max - min), 0, 1),
+  };
+}
+
+/** Straight lines between anchor points — each segment gets the share of the track it deserves. */
+function piecewiseScale(anchors: { pos: number; value: number }[]): Scale {
+  const last = anchors[anchors.length - 1];
+  return {
+    toValue(pos) {
+      const t = clamp(pos, 0, 1);
+      for (let i = 1; i < anchors.length; i += 1) {
+        const a = anchors[i - 1];
+        const b = anchors[i];
+        if (t <= b.pos) return a.value + ((t - a.pos) / (b.pos - a.pos)) * (b.value - a.value);
+      }
+      return last.value;
+    },
+    toPos(value) {
+      for (let i = 1; i < anchors.length; i += 1) {
+        const a = anchors[i - 1];
+        const b = anchors[i];
+        if (value <= b.value) {
+          return clamp(a.pos + ((value - a.value) / (b.value - a.value)) * (b.pos - a.pos), 0, 1);
+        }
+      }
+      return 1;
+    },
+  };
+}
+
+/** Pull to the nearest magnet within `radius` of the track's length, or leave the value alone. */
+function magnetize(pos: number, magnets: number[], scale: Scale, radius: number): number | null {
+  let best: number | null = null;
+  let bestDistance = radius;
+  for (const m of magnets) {
+    const d = Math.abs(pos - scale.toPos(m));
+    if (d <= bestDistance) {
+      bestDistance = d;
+      best = m;
+    }
+  }
+  return best;
+}
+
+/** 2% of the track — a detent you feel with a thumb, still draggable past. */
+const MAGNET_RADIUS = 0.02;
+
 // ── Slider ───────────────────────────────────────────────────────────────────
 
 interface SliderProps {
   label: string;
-  readout: string;
+  readout: React.ReactNode;
   value: number;
-  min: number;
-  max: number;
-  step: number;
+  scale: Scale;
+  /**
+   * How many positions the track has. Size it to the number of values the
+   * slider can actually take, so one arrow key press moves exactly one step
+   * instead of being rounded straight back to where it started.
+   */
+  steps: number;
   accent: string;
+  /** Values the thumb is pulled toward. */
+  magnets?: number[];
+  /** Final shaping of a dragged value — rounding, or coarse stops at one end. */
+  quantize?: (value: number) => number;
   muted?: boolean;
+  /** The value is past the top of this scale, so the track reads as pegged. */
+  over?: boolean;
   badge?: string;
   hint?: string;
   onChange: (value: number) => void;
 }
 
-function Slider({ label, readout, value, min, max, step, accent, muted, badge, hint, onChange }: SliderProps) {
-  const pct = clamp(((value - min) / (max - min)) * 100, 0, 100);
-  // The vars live on the wrapper, not the input: an inline var on the input would
-  // outrank the .is-muted rule, and the badge needs to read the same accent.
+function Slider({
+  label,
+  readout,
+  value,
+  scale,
+  steps,
+  accent,
+  magnets,
+  quantize,
+  muted,
+  over,
+  badge,
+  hint,
+  onChange,
+}: SliderProps) {
+  const pos = over ? 1 : scale.toPos(value);
   const vars = {
+    // The vars live on the wrapper, not the input: an inline var on the input
+    // would outrank the .is-muted rule, and the badge reads the same accent.
     '--bpb-accent': muted ? MUTED_ACCENT : accent,
-    '--bpb-pct': `${pct}%`,
+    '--bpb-pct': `${pos * 100}%`,
   } as React.CSSProperties;
+
+  // A magnet would swallow an arrow key press whole — nudge off 12 oz and it
+  // pulls you straight back. Keyboard moves are deliberate, so they ignore them.
+  const fromKey = useRef(false);
+
+  const handle = (raw: number) => {
+    const p = raw / steps;
+    const pulled = magnets && !fromKey.current ? magnetize(p, magnets, scale, MAGNET_RADIUS) : null;
+    fromKey.current = false;
+    if (pulled !== null) {
+      onChange(pulled);
+      return;
+    }
+    const v = scale.toValue(p);
+    onChange(quantize ? quantize(v) : v);
+  };
+
   return (
-    <div className={`bpb-slider${muted ? ' is-muted' : ''}`} style={vars}>
+    <div className={`bpb-slider${muted ? ' is-muted' : ''}${over ? ' is-over' : ''}`} style={vars}>
       <div className="bpb-sliderhead">
         <span className="bpb-sliderlabel">
           {label}
@@ -261,12 +398,16 @@ function Slider({ label, readout, value, min, max, step, accent, muted, badge, h
       </div>
       <input
         type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
+        min={0}
+        max={steps}
+        step={1}
+        value={Math.round(pos * steps)}
         aria-label={label}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
+        aria-valuetext={typeof readout === 'string' ? readout : undefined}
+        onKeyDown={(e) => {
+          fromKey.current = e.key.startsWith('Arrow') || e.key.startsWith('Page') || e.key === 'Home' || e.key === 'End';
+        }}
+        onChange={(e) => handle(parseFloat(e.target.value))}
       />
       {hint && <p className="bpb-sliderhint">{hint}</p>}
     </div>
@@ -454,6 +595,32 @@ function BacChart({ sim, drinks, now, compact }: ChartProps) {
   );
 }
 
+// ── Scales, built once ───────────────────────────────────────────────────────
+
+const OZ_SCALE = linearScale(OZ_MIN, OZ_MAX);
+const ML_SCALE = linearScale(ML_MIN, ML_MAX);
+const ABV_SCALE = piecewiseScale(ABV_ANCHORS);
+const WEIGHT_SCALE = linearScale(WEIGHT_MIN, WEIGHT_MAX);
+const TIME_SCALE = linearScale(0, TIME_SPAN_MIN);
+
+/** One track position per value the slider can hold: 0.1 oz, 1 mL, 1 lb, 5 minutes. */
+const OZ_STEPS = (OZ_MAX - OZ_MIN) * 10;
+const ML_STEPS = ML_MAX - ML_MIN;
+const WEIGHT_STEPS = WEIGHT_MAX - WEIGHT_MIN;
+const TIME_STEPS = TIME_SPAN_MIN / 5;
+/** Sized so the 3.3–15% stretch — 117 tenths of a percent — gets exactly one position each. */
+const ABV_STEPS = Math.round(((ABV_FINE_MAX - 3.3) * 10) / (ABV_SCALE.toPos(ABV_FINE_MAX) - ABV_SCALE.toPos(3.3)));
+
+const round1 = (v: number) => Math.round(v * 10) / 10;
+
+/** Fine below 15%, round fives above it — nobody pours a 37.4% spirit. */
+function quantizeAbv(value: number): number {
+  if (value <= ABV_FINE_MAX) return round1(value);
+  return ABV_COARSE_STOPS.reduce((best, stop) =>
+    Math.abs(stop - value) < Math.abs(best - value) ? stop : best,
+  );
+}
+
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 function isDrink(value: unknown): value is Drink {
@@ -555,6 +722,7 @@ export default function BeersPerBeerPage() {
   // ── Derived pour values — both volume sliders always read the same drink ──
   const ozValue = Math.round((volumeMl / ML_PER_OZ) * 10) / 10;
   const mlValue = Math.round(volumeMl);
+  const ozOverScale = volumeMl > OZ_SCALE_MAX_ML + 0.5;
   const grams = ethanolGrams(volumeMl, abv);
   const beers = (volumeMl * abv) / (STANDARD_ML * STANDARD_ABV);
   const usDrinks = grams / US_STANDARD_DRINK_G;
@@ -653,28 +821,33 @@ export default function BeersPerBeerPage() {
             label="Volume (oz)"
             readout={`${ozValue.toFixed(1)} oz`}
             value={ozValue}
-            min={OZ_MIN}
-            max={OZ_MAX}
-            step={0.1}
+            scale={OZ_SCALE}
+            steps={OZ_STEPS}
+            magnets={OZ_MAGNETS}
+            quantize={round1}
             accent="#6c5ce7"
             muted={driver !== 'oz'}
-            badge={driver === 'oz' ? 'driving' : undefined}
+            over={ozOverScale}
+            badge={ozOverScale ? 'off scale' : driver === 'oz' ? 'driving' : undefined}
             onChange={handleOz}
           />
           <Slider
             label="Volume (mL)"
             readout={`${mlValue} mL`}
             value={mlValue}
-            min={ML_MIN}
-            max={ML_MAX}
-            step={1}
+            scale={ML_SCALE}
+            steps={ML_STEPS}
+            magnets={ML_MAGNETS}
+            quantize={Math.round}
             accent="#00b894"
             muted={driver !== 'mL'}
             badge={driver === 'mL' ? 'driving' : undefined}
             hint={
-              driver === 'oz'
-                ? 'Ounces are driving. Nudge this one and metric takes over — both always read the same pour.'
-                : 'Millilitres are driving. Nudge the ounce slider to hand it back.'
+              ozOverScale
+                ? `Past ${OZ_MAX} oz, the ounce track runs out — it stays pegged and just reads the number.`
+                : driver === 'oz'
+                  ? 'Ounces are driving. Nudge this one and metric takes over.'
+                  : 'Millilitres are driving. Nudge the ounce slider to hand it back.'
             }
             onChange={handleMl}
           />
@@ -682,11 +855,12 @@ export default function BeersPerBeerPage() {
             label="ABV"
             readout={`${abv.toFixed(1)}%`}
             value={abv}
-            min={ABV_MIN}
-            max={ABV_MAX}
-            step={0.1}
+            scale={ABV_SCALE}
+            steps={ABV_STEPS}
+            quantize={quantizeAbv}
             accent="#e84393"
             onChange={setAbv}
+            hint={`Fine to ${ABV_FINE_MAX}%, then fives up to ${ABV_COARSE_STOPS[ABV_COARSE_STOPS.length - 1]}% for spirits.`}
           />
 
           <div className="bpb-readout">
@@ -702,14 +876,40 @@ export default function BeersPerBeerPage() {
           </div>
         </section>
 
-        {/* ── 2 · The drinker ── */}
+        {/* ── 2 · The drinker — the button leads, so logging a round is one tap ── */}
         <section className="bpb-card">
           <div className="bpb-cardhead">
-            <h2>2 &middot; You, and when you drank it</h2>
+            <h2>2 &middot; Drink it</h2>
+            <span className="bpb-cardnote">{fmtBeers(beers)} beers &middot; {abv.toFixed(1)}%</span>
           </div>
 
+          <button type="button" className="bpb-drinkbtn" onClick={handleDrink}>
+            <span className="bpb-drinkicon">&#127866;</span> Drink it
+          </button>
+
+          <Slider
+            label="When"
+            readout={
+              mounted ? (
+                <>
+                  {padClock(fmtClock(drinkTime))}
+                  <span className="bpb-subval">{fmtElapsed(minutesAgo)} ago</span>
+                </>
+              ) : (
+                '—'
+              )
+            }
+            value={TIME_SPAN_MIN - minutesAgo}
+            scale={TIME_SCALE}
+            steps={TIME_STEPS}
+            quantize={(v) => Math.round(v / 5) * 5}
+            accent="#fdcb6e"
+            onChange={(v) => setMinutesAgo(TIME_SPAN_MIN - v)}
+            hint="Right is now, left is 8 hours back — backfill what you missed."
+          />
+
           <label className="bpb-field">
-            <span className="bpb-fieldlabel">Body build (Widmark r)</span>
+            <span className="bpb-fieldlabel">Build</span>
             <select value={bodyKey} onChange={(e) => setBodyKey(e.target.value as BodyKey)}>
               {BODY_TYPES.map((b) => (
                 <option key={b.key} value={b.key}>
@@ -717,43 +917,22 @@ export default function BeersPerBeerPage() {
                 </option>
               ))}
             </select>
-            <span className="bpb-fieldhint">
-              Widmark&rsquo;s r is the share of your body that acts like water and dilutes the alcohol. More lean
-              mass means a lower BAC from the same drink.
-            </span>
           </label>
 
           <Slider
             label="Body weight"
-            readout={`${weightLb} lb`}
-            value={weightLb}
-            min={WEIGHT_MIN}
-            max={WEIGHT_MAX}
-            step={1}
-            accent="#00b894"
-            onChange={(v) => setWeightLb(Math.round(v))}
-            hint={`${Math.round(weightLb * 0.45359237)} kg`}
-          />
-          <Slider
-            label="When did you drink it?"
             readout={
-              mounted ? (minutesAgo === 0 ? 'right now' : `${fmtClock(drinkTime)} · ${fmtDuration(minutesAgo * MINUTE)} ago`) : '—'
+              <>
+                {weightLb} lb<span className="bpb-subval">{Math.round(weightLb * 0.45359237)} kg</span>
+              </>
             }
-            value={TIME_SPAN_MIN - minutesAgo}
-            min={0}
-            max={TIME_SPAN_MIN}
-            step={5}
-            accent="#fdcb6e"
-            onChange={(v) => setMinutesAgo(TIME_SPAN_MIN - Math.round(v))}
-            hint="Left is 24 hours ago, right is this second. Backfill the ones you forgot to log."
+            value={weightLb}
+            scale={WEIGHT_SCALE}
+            steps={WEIGHT_STEPS}
+            quantize={Math.round}
+            accent="#00b894"
+            onChange={setWeightLb}
           />
-
-          <button type="button" className="bpb-drinkbtn" onClick={handleDrink}>
-            <span className="bpb-drinkicon">&#127866;</span> Drink it
-          </button>
-          <p className="bpb-sliderhint" style={{ textAlign: 'center', marginTop: '0.5rem' }}>
-            Adds this exact pour to the log at that time and redraws the curve.
-          </p>
         </section>
 
         {/* ── 3 · Right now ── */}
@@ -772,49 +951,9 @@ export default function BeersPerBeerPage() {
             </p>
           ) : (
             <>
-              <div className="bpb-bacgrid">
-                <div className={`bpb-bactile tone-${status.tone}`}>
-                  <div className="bpb-bactilelabel">Estimated BAC</div>
-                  <div className="bpb-bacvalue">{fmtBac(sim.bacNow)}%</div>
-                  <div className="bpb-bacstatus">{status.label}</div>
-                  <div className="bpb-bacblurb">{status.blurb}</div>
-                </div>
-                <div className="bpb-stats">
-                  <div className="bpb-stat">
-                    <span>Peak</span>
-                    <b>
-                      {fmtBac(sim.peak)}%{' '}
-                      <small>
-                        {sim.peakAt > now ? 'projected ' : ''}
-                        {fmtClock(sim.peakAt)}
-                      </small>
-                    </b>
-                  </div>
-                  <div className="bpb-stat">
-                    <span>Under 0.08</span>
-                    <b>{describeCrossing(sim.clearsAt['0.08'], sim.endBac < 0.08, now)}</b>
-                  </div>
-                  <div className="bpb-stat">
-                    <span>Back to zero</span>
-                    <b>{describeCrossing(sim.soberAt, sim.endBac <= 1e-4, now)}</b>
-                  </div>
-                  <div className="bpb-stat">
-                    <span>Logged tonight</span>
-                    <b>
-                      {drinks.length} drink{drinks.length === 1 ? '' : 's'} · {fmtBeers(totals.beers)} standard beers
-                    </b>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bpb-warn">
-                <span className="bpb-warnicon">&#9888;</span>
-                <p>
-                  <b>Do not trust this number.</b> It is a Widmark estimate from a slider, not a breathalyzer.
-                  Food, sleep, medication, hydration, genetics, how fast you drank, and plain measurement error move
-                  real BAC well outside anything modelled here. It is not legal advice, not a defense, and never a
-                  reason to decide you are fine to drive. If you have been drinking, get a ride.
-                </p>
+              <div className={`bpb-bacline tone-${status.tone}`}>
+                <span className="bpb-bacvalue">{fmtBac(sim.bacNow)}%</span>
+                <span className="bpb-bacstatus">{status.label}</span>
               </div>
 
               <BacChart sim={sim} drinks={drinks} now={now} compact={compact} />
@@ -825,6 +964,34 @@ export default function BeersPerBeerPage() {
                 <span className="bpb-lg bpb-lg-drink">a drink</span>
                 <span className="bpb-lg bpb-lg-limit">0.08 limit</span>
                 <span className="bpb-lg bpb-lg-limit2">0.05 limit</span>
+              </div>
+
+              <div className="bpb-stats">
+                <div className="bpb-stat">
+                  <span>Peak</span>
+                  <b>
+                    {fmtBac(sim.peak)}%{' '}
+                    <small>
+                      {sim.peakAt > now ? 'projected ' : ''}
+                      {fmtClock(sim.peakAt)}
+                    </small>
+                  </b>
+                </div>
+                <div className="bpb-stat">
+                  <span>Under 0.08</span>
+                  <b>{describeCrossing(sim.clearsAt['0.08'], sim.endBac < 0.08, now)}</b>
+                </div>
+                <div className="bpb-stat">
+                  <span>Back to zero</span>
+                  <b>{describeCrossing(sim.soberAt, sim.endBac <= 1e-4, now)}</b>
+                </div>
+                <div className="bpb-stat">
+                  <span>Logged tonight</span>
+                  <b>
+                    {drinks.length} drink{drinks.length === 1 ? '' : 's'} &middot; {fmtBeers(totals.beers)} standard
+                    beers
+                  </b>
+                </div>
               </div>
             </>
           )}
@@ -880,9 +1047,11 @@ export default function BeersPerBeerPage() {
 
           <div className="bpb-storagerow">
             <p className="bpb-sliderhint" style={{ margin: 0 }}>
-              Saved in this browser&rsquo;s local storage under <code>{STORAGE_KEY}</code> &mdash; no server, no
-              account, nothing leaves your device. Close the tab and come back later and the night is still here.
-              Drinks older than 24 hours are dropped when the page loads.
+              Saved in this browser under <code>{STORAGE_KEY}</code> &mdash; same idea as a cookie, but it uses
+              local storage instead, so it stays on your device rather than riding along with every request, and it
+              holds far more. No server, no account, nothing leaves your phone. Close the tab and come back later
+              and the night is still here; drinks older than 24 hours are dropped when the page loads. Clearing it
+              below deletes the entry outright.
             </p>
             <button type="button" className={`bpb-clearbtn${confirmClear ? ' is-armed' : ''}`} onClick={handleClear}>
               {confirmClear ? 'Tap again to wipe' : 'Clear everything'}
@@ -890,9 +1059,20 @@ export default function BeersPerBeerPage() {
           </div>
         </section>
 
+        <div className="bpb-warn">
+          <span className="bpb-warnicon">&#9888;</span>
+          <p>
+            <b>Do not trust this number.</b> It is a Widmark estimate from a slider, not a breathalyzer. Food,
+            sleep, medication, hydration, genetics, how fast you drank, and plain measurement error move real BAC
+            well outside anything modelled here. It is not legal advice, not a defense, and never a reason to
+            decide you are fine to drive. If you have been drinking, get a ride.
+          </p>
+        </div>
+
         <p className="bpb-fineprint">
           Widmark (1932) with first-order absorption (&tau; = {ABSORPTION_TAU_MIN} min) and zero-order elimination
-          at {ELIMINATION_PER_HOUR.toFixed(3)}%/hour. Individual elimination rates run roughly 0.010&ndash;0.020%/hour,
+          at {ELIMINATION_PER_HOUR.toFixed(3)}%/hour. The <b>r</b> in the build dropdown is the share of you that
+          acts like water and dilutes the alcohol &mdash; more lean mass, lower BAC from the same drink. Individual elimination rates run roughly 0.010&ndash;0.020%/hour,
           so the tail of that curve could be hours off in either direction. Entertainment only &mdash; when it matters,
           don&rsquo;t drive.
         </p>
@@ -917,11 +1097,16 @@ const BPB_CSS = `
 /* ── Sliders ── */
 .bpb-slider{margin-bottom:1.15rem;--bpb-accent:var(--accent-primary);--bpb-rail:rgba(108,92,231,0.12)}
 .bpb-slider.is-muted{--bpb-rail:rgba(0,0,0,0.05)}
+/* Past the end of its own scale the track fills solid and goes striped — pegged, not simply maxed. */
+.bpb-slider.is-over input[type=range]::-webkit-slider-runnable-track{background:repeating-linear-gradient(115deg,var(--bpb-accent) 0 7px,rgba(255,255,255,0.55) 7px 13px)}
+.bpb-slider.is-over input[type=range]::-moz-range-track{background:repeating-linear-gradient(115deg,var(--bpb-accent) 0 7px,rgba(255,255,255,0.55) 7px 13px)}
+.bpb-slider.is-over .bpb-badge{background:var(--accent-orange)}
 .bpb-slider.is-muted .bpb-sliderlabel,.bpb-slider.is-muted .bpb-sliderval{color:var(--text-muted)}
 .bpb-slider.is-muted input[type=range]{opacity:0.75}
 .bpb-sliderhead{display:flex;align-items:baseline;justify-content:space-between;gap:0.6rem;margin-bottom:0.15rem}
 .bpb-sliderlabel{font-size:0.72rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-secondary);display:flex;align-items:center;gap:0.45rem}
-.bpb-sliderval{font-size:1.05rem;font-weight:800;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.bpb-sliderval{font-size:1.05rem;font-weight:800;color:var(--text-primary);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.bpb-subval{font-weight:600;font-size:0.85rem;color:var(--text-muted);margin-left:0.45rem}
 .bpb-badge{font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:var(--bpb-accent);border-radius:999px;padding:0.1rem 0.42rem}
 .bpb-sliderhint{font-size:0.72rem;color:var(--text-muted);line-height:1.5;margin:0.15rem 0 0}
 
@@ -957,25 +1142,22 @@ const BPB_CSS = `
 .bpb-drinkicon{font-size:1.15rem;margin-right:0.3rem}
 
 /* ── BAC summary ── */
-.bpb-bacgrid{display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);gap:1rem;margin-bottom:1rem}
-@media(max-width:680px){.bpb-bacgrid{grid-template-columns:1fr}}
-.bpb-bactile{border-radius:var(--radius-md);padding:1.1rem 1.2rem;border:1px solid var(--border-subtle);background:var(--surface)}
-.bpb-bactile.tone-good{background:rgba(0,184,148,0.09);border-color:rgba(0,184,148,0.3)}
-.bpb-bactile.tone-warn{background:rgba(253,203,110,0.16);border-color:rgba(253,203,110,0.5)}
-.bpb-bactile.tone-hot{background:rgba(225,112,85,0.12);border-color:rgba(225,112,85,0.38)}
-.bpb-bactile.tone-bad{background:rgba(232,67,147,0.12);border-color:rgba(232,67,147,0.4)}
-.bpb-bactilelabel{font-size:0.66rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-secondary)}
-.bpb-bacvalue{font-size:2.9rem;line-height:1.05;font-weight:900;letter-spacing:-0.03em;color:var(--text-primary);font-variant-numeric:tabular-nums;margin-top:0.2rem}
-.bpb-bacstatus{font-size:0.95rem;font-weight:800;color:var(--text-primary);margin-top:0.1rem}
-.bpb-bacblurb{font-size:0.76rem;color:var(--text-secondary);line-height:1.5;margin-top:0.25rem}
-.bpb-stats{display:flex;flex-direction:column;gap:0.5rem}
+.bpb-bacline{display:flex;align-items:baseline;justify-content:space-between;gap:0.8rem;flex-wrap:nowrap;border-radius:var(--radius-md);border:1px solid var(--border-subtle);background:var(--surface);padding:0.7rem 1.1rem;margin-bottom:0.9rem}
+.bpb-bacline.tone-good{background:rgba(0,184,148,0.09);border-color:rgba(0,184,148,0.3)}
+.bpb-bacline.tone-warn{background:rgba(253,203,110,0.16);border-color:rgba(253,203,110,0.5)}
+.bpb-bacline.tone-hot{background:rgba(225,112,85,0.12);border-color:rgba(225,112,85,0.38)}
+.bpb-bacline.tone-bad{background:rgba(232,67,147,0.12);border-color:rgba(232,67,147,0.4)}
+.bpb-bacvalue{font-size:2.5rem;line-height:1.05;font-weight:900;letter-spacing:-0.03em;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.bpb-bacstatus{font-size:1rem;font-weight:800;color:var(--text-primary);text-align:right}
+
+.bpb-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0.5rem;margin-top:0.9rem}
 .bpb-stat{display:flex;align-items:baseline;justify-content:space-between;gap:0.8rem;padding:0.5rem 0.75rem;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:var(--surface)}
 .bpb-stat span{font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);flex-shrink:0}
 .bpb-stat b{font-size:0.82rem;font-weight:700;color:var(--text-primary);text-align:right;font-variant-numeric:tabular-nums}
 .bpb-stat b small{font-weight:600;color:var(--text-muted)}
 
 /* ── Disclaimer ── */
-.bpb-warn{display:flex;gap:0.7rem;align-items:flex-start;background:rgba(232,67,147,0.07);border:1px solid rgba(232,67,147,0.32);border-radius:var(--radius-md);padding:0.8rem 0.95rem;margin-bottom:1.1rem}
+.bpb-warn{display:flex;gap:0.7rem;align-items:flex-start;background:rgba(232,67,147,0.07);border:1px solid rgba(232,67,147,0.32);border-radius:var(--radius-md);padding:0.9rem 1rem;margin:0 0 0.9rem}
 .bpb-warnicon{font-size:1.05rem;line-height:1.4;color:var(--accent-warm);flex-shrink:0}
 .bpb-warn p{font-size:0.78rem;line-height:1.6;color:var(--text-primary);margin:0}
 
@@ -1031,11 +1213,41 @@ const BPB_CSS = `
 
 .bpb-fineprint{font-size:0.72rem;line-height:1.65;color:var(--text-muted);margin-top:0.4rem}
 
+/*
+  Phone layout. The gaps and the prose shrink; the thumbs, the readouts and the
+  Drink button do not — this gets used one-handed, in the dark, several beers in.
+*/
 @media(max-width:600px){
-  .bpb-card{padding:1.1rem 1rem}
-  .bpb-bignum{font-size:2.5rem}
-  .bpb-bacvalue{font-size:2.3rem}
+  .bpb-root{padding:0 1rem}
+  .bpb-card{padding:0.9rem 0.85rem;margin-bottom:0.8rem;border-radius:var(--radius-md)}
+  .bpb-cardhead{margin-bottom:0.7rem}
   .bpb-hide-sm{display:none}
   .bpb-table td,.bpb-table th{padding:0.45rem 0.35rem}
+
+  .bpb-slider{margin-bottom:0.75rem}
+  .bpb-sliderhead{margin-bottom:0}
+  .bpb-sliderlabel{font-size:0.68rem}
+  .bpb-sliderval{font-size:1.15rem}
+  .bpb-sliderhint{font-size:0.68rem;line-height:1.4;margin-top:0}
+  .bpb-slider input[type=range]{height:30px}
+
+  .bpb-readout{margin-top:0.9rem;padding:0.85rem 0.7rem}
+  .bpb-bignum{font-size:2.6rem}
+  .bpb-bignumlabel{margin-top:0.2rem}
+  .bpb-readoutdetail{font-size:0.74rem;margin-top:0.5rem}
+  .bpb-muted{font-size:0.68rem}
+
+  .bpb-field{margin-bottom:0.75rem}
+  .bpb-field select{padding:0.7rem 2.2rem 0.7rem 0.7rem;font-size:1rem}
+  .bpb-drinkbtn{padding:1.05rem;font-size:1.15rem;margin-top:0.1rem;margin-bottom:1rem}
+
+  .bpb-bacline{padding:0.6rem 0.85rem;margin-bottom:0.7rem}
+  .bpb-bacvalue{font-size:2.2rem}
+  .bpb-bacstatus{font-size:0.85rem}
+  .bpb-stats{grid-template-columns:1fr;gap:0.35rem;margin-top:0.7rem}
+  .bpb-stat{padding:0.45rem 0.6rem}
+  .bpb-legend{gap:0.3rem 0.8rem;margin-top:0.5rem;padding-top:0.55rem}
+  .bpb-storagerow{margin-top:0.9rem;padding-top:0.75rem}
+  .bpb-clearbtn{width:100%;padding:0.7rem}
 }
 `;
