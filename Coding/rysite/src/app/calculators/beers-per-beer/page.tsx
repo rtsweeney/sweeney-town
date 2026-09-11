@@ -14,8 +14,6 @@ const G_PER_LB = 453.59237;
 const STANDARD_ABV = 4.2;
 const STANDARD_OZ = 12;
 const STANDARD_ML = STANDARD_OZ * ML_PER_OZ;
-/** A US standard drink is 14 g of pure ethanol (12 oz at 5%). */
-const US_STANDARD_DRINK_G = 14;
 
 /** Widmark elimination is zero-order — a flat %BAC burned off per hour. */
 const ELIMINATION_PER_HOUR = 0.015;
@@ -723,9 +721,7 @@ export default function BeersPerBeerPage() {
   const ozValue = Math.round((volumeMl / ML_PER_OZ) * 10) / 10;
   const mlValue = Math.round(volumeMl);
   const ozOverScale = volumeMl > OZ_SCALE_MAX_ML + 0.5;
-  const grams = ethanolGrams(volumeMl, abv);
   const beers = (volumeMl * abv) / (STANDARD_ML * STANDARD_ABV);
-  const usDrinks = grams / US_STANDARD_DRINK_G;
 
   const handleOz = useCallback((oz: number) => {
     setDriver('oz');
@@ -842,13 +838,6 @@ export default function BeersPerBeerPage() {
             accent="#00b894"
             muted={driver !== 'mL'}
             badge={driver === 'mL' ? 'driving' : undefined}
-            hint={
-              ozOverScale
-                ? `Past ${OZ_MAX} oz, the ounce track runs out — it stays pegged and just reads the number.`
-                : driver === 'oz'
-                  ? 'Ounces are driving. Nudge this one and metric takes over.'
-                  : 'Millilitres are driving. Nudge the ounce slider to hand it back.'
-            }
             onChange={handleMl}
           />
           <Slider
@@ -860,16 +849,11 @@ export default function BeersPerBeerPage() {
             quantize={quantizeAbv}
             accent="#e84393"
             onChange={setAbv}
-            hint={`Fine to ${ABV_FINE_MAX}%, then fives up to ${ABV_COARSE_STOPS[ABV_COARSE_STOPS.length - 1]}% for spirits.`}
           />
 
           <div className="bpb-readout">
             <div className="bpb-bignum">{fmtBeers(beers)}</div>
             <div className="bpb-bignumlabel">standard beers</div>
-            <p className="bpb-readoutdetail">
-              {ozValue.toFixed(1)} oz &middot; {mlValue} mL &middot; {abv.toFixed(1)}% ABV &rarr;{' '}
-              <b>{grams.toFixed(1)} g</b> of pure alcohol, or <b>{usDrinks.toFixed(2)}</b> US standard drinks.
-            </p>
             <p className="bpb-readoutdetail bpb-muted">
               A standard beer here is {STANDARD_OZ} oz / {Math.round(STANDARD_ML)} mL at {STANDARD_ABV}% ABV.
             </p>
@@ -1046,16 +1030,16 @@ export default function BeersPerBeerPage() {
           )}
 
           <div className="bpb-storagerow">
+            <button type="button" className={`bpb-clearbtn${confirmClear ? ' is-armed' : ''}`} onClick={handleClear}>
+              {confirmClear ? 'Tap again to wipe' : 'Clear everything'}
+            </button>
             <p className="bpb-sliderhint" style={{ margin: 0 }}>
               Saved in this browser under <code>{STORAGE_KEY}</code> &mdash; same idea as a cookie, but it uses
               local storage instead, so it stays on your device rather than riding along with every request, and it
               holds far more. No server, no account, nothing leaves your phone. Close the tab and come back later
               and the night is still here; drinks older than 24 hours are dropped when the page loads. Clearing it
-              below deletes the entry outright.
+              above deletes the entry outright.
             </p>
-            <button type="button" className={`bpb-clearbtn${confirmClear ? ' is-armed' : ''}`} onClick={handleClear}>
-              {confirmClear ? 'Tap again to wipe' : 'Clear everything'}
-            </button>
           </div>
         </section>
 
@@ -1150,7 +1134,7 @@ const BPB_CSS = `
 .bpb-bacvalue{font-size:2.5rem;line-height:1.05;font-weight:900;letter-spacing:-0.03em;color:var(--text-primary);font-variant-numeric:tabular-nums}
 .bpb-bacstatus{font-size:1rem;font-weight:800;color:var(--text-primary);text-align:right}
 
-.bpb-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0.5rem;margin-top:0.9rem}
+.bpb-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem;margin-top:0.9rem}
 .bpb-stat{display:flex;align-items:baseline;justify-content:space-between;gap:0.8rem;padding:0.5rem 0.75rem;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:var(--surface)}
 .bpb-stat span{font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);flex-shrink:0}
 .bpb-stat b{font-size:0.82rem;font-weight:700;color:var(--text-primary);text-align:right;font-variant-numeric:tabular-nums}
@@ -1204,8 +1188,7 @@ const BPB_CSS = `
 .bpb-remove{background:transparent;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);font-size:1rem;line-height:1;font-family:inherit;padding:0.1rem 0.45rem;cursor:pointer;transition:all var(--transition-fast,0.15s ease)}
 .bpb-remove:hover{border-color:var(--accent-warm);color:var(--accent-warm);background:rgba(232,67,147,0.08)}
 
-.bpb-storagerow{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1.1rem;padding-top:0.9rem;border-top:1px solid var(--border-subtle)}
-.bpb-storagerow p{flex:1;min-width:240px}
+.bpb-storagerow{display:flex;flex-direction:column;align-items:flex-start;gap:0.7rem;margin-top:1.1rem;padding-top:0.9rem;border-top:1px solid var(--border-subtle)}
 .bpb-storagerow code{font-size:0.68rem;background:var(--surface);border:1px solid var(--border-subtle);border-radius:4px;padding:0.05rem 0.3rem}
 .bpb-clearbtn{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-secondary);font-family:inherit;font-size:0.78rem;font-weight:700;padding:0.5rem 0.9rem;cursor:pointer;white-space:nowrap;transition:all var(--transition-fast,0.15s ease)}
 .bpb-clearbtn:hover{border-color:var(--accent-warm);color:var(--accent-warm)}
