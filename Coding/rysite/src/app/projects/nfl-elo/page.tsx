@@ -40,7 +40,7 @@ interface LiveScore {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-/** Key a game by its two clubs, which is stable across both feeds. */
+/** Key a game by its two teams, which is stable across both feeds. */
 function matchupKey(away: string, home: string): string {
   return `${away}@${home}`;
 }
@@ -505,8 +505,8 @@ function GameCard({ game, live }: { game: GameProjection; live: LiveScore | unde
           <span
             className="nfl-side-qb"
             title={side.adj === 0
-              ? 'Exactly this club\u2019s expected starter \u2014 no rating adjustment'
-              : `${side.adj > 0 ? '+' : ''}${side.adj} Elo vs this club\u2019s usual starter`}
+              ? 'Exactly this team\u2019s expected starter \u2014 no rating adjustment'
+              : `${side.adj > 0 ? '+' : ''}${side.adj} Elo vs this team\u2019s usual starter`}
           >
             {side.qb ?? '—'}
             {side.qb && (
@@ -549,12 +549,12 @@ function EloTable({ teams, throughWeek }: { teams: TeamRating[]; throughWeek: nu
   return (
     <div className="nfl-qb-wrap">
       <p className="nfl-qb-intro">
-        Every club&apos;s current rating, strongest first. The league mean is 1505, and a
+        Every team&apos;s current rating, strongest first. The league mean is 1505, and a
         400-point gap is about 10-to-1 odds — so roughly every 25 points is a point of
-        point spread. <strong>Preseason</strong> is where the club started the year after
+        point spread. <strong>Preseason</strong> is where the team started the year after
         reverting a third of the way to the mean; <strong>Change</strong> is what the season
         has done to it since.
-        {preseason && ' The season has not started, so every club still sits at its preseason mark.'}
+        {preseason && ' The season has not started, so every team still sits at its preseason mark.'}
       </p>
       <div className="nfl-table-scroll">
         <table className="nfl-qb-table">
@@ -612,14 +612,14 @@ function QbTable({ quarterbacks }: { quarterbacks: QbRating[] }) {
         a regression of ESPN&apos;s Total QBR yards-above-replacement onto box score numbers,
         adjusted for the defense faced and updated 10% per start. <strong>vs League</strong> is
         what a passer is worth against an average starter. <strong>vs Team</strong> is what
-        actually moves a line: the gap between him and his own club&apos;s recent quarterback
+        actually moves a line: the gap between him and his own team&apos;s recent quarterback
         level, which is why the adjustment fires on an injury and stays quiet otherwise.
       </p>
       <p className="nfl-qb-intro">
         A <strong>vs Team of 0</strong> is a result, not a gap in the data. A passer who has
-        taken every snap for one club has his rating and that club&apos;s baseline updated by
+        taken every snap for one team has his rating and that team&apos;s baseline updated by
         the same number after every game, so the two converge — about 90% of any starting gap
-        is gone within 20 starts. Reading it plainly: this club&apos;s expected quarterback is
+        is gone within 20 starts. Reading it plainly: this team&apos;s expected quarterback is
         exactly this man, so there is nothing to adjust for.
       </p>
       <div className="nfl-table-scroll">
@@ -676,7 +676,7 @@ function ModelNotes({ data }: { data: EloSeason }) {
     <section className="nfl-notes">
       <h2>How it works</h2>
       <p>
-        Each club holds a single rating around a league mean of 1505. The difference between two
+        Each team holds a single rating around a league mean of 1505. The difference between two
         ratings sets the win probability on a logistic curve where 400 points is about 10-to-1.
         After a game, ratings move by <code>K &times; (result &minus; expected)</code>, scaled by a
         margin-of-victory multiplier that grows with the log of the final margin and is damped by
@@ -686,7 +686,7 @@ function ModelNotes({ data }: { data: EloSeason }) {
       <p>
         Quarterbacks are handled as a <em>differential</em>. Team rating already contains the
         contribution of whoever has been playing, so adding a passer&apos;s full value would
-        double-count him. Only his gap from his club&apos;s recent quarterback level moves the
+        double-count him. Only his gap from his team&apos;s recent quarterback level moves the
         line, at 3.5 Elo points per point of VALUE.
       </p>
       <p>
@@ -714,8 +714,8 @@ function ModelNotes({ data }: { data: EloSeason }) {
       </p>
       <p className="nfl-disclaimer">
         Not affiliated with, endorsed by, or sponsored by the National Football League or any of its
-        clubs. Club names are used only to identify the teams whose games are described; no league or
-        club logos, wordmarks or photography appear here. Ratings are published for informational and
+        teams. Names are used only to identify the teams whose games are described; no league or
+        team logos, wordmarks or photography appear here. Ratings are published for informational and
         entertainment purposes — they are not betting advice.
       </p>
       <p className="nfl-generated">
