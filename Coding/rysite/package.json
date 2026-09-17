@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "build:nfl-elo": "node scripts/build-nfl-elo.ts"
+    "build:nfl-elo": "node scripts/build-nfl-elo.ts",
+    "build:antipode": "node scripts/build-antipode-data.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.21.1",
+    "d3-geo": "^3.1.1",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "lucide-react": "^0.561.0",
@@ -21,17 +23,23 @@
     "react-dom": "^19.0.0",
     "react-leaflet": "^5.0.0",
     "sanity": "^4.21.1",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "topojson-client": "^3.1.0",
+    "tz-lookup": "^6.1.25"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "1.13.16",
+    "@types/d3-geo": "^3.1.1",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/topojson-client": "^3.1.5",
+    "all-the-cities": "^3.1.0",
     "eslint": "^9",
     "eslint-config-next": "^15.1.0",
     "typescript": "^5",
+    "world-atlas": "^2.0.2",
     "wrangler": "4.100.0"
   }
 }

@@ -1,0 +1,4442 @@
+CNrGe1l6yugpV	Shanghai
+TRulSlJY0k5jO	Istanbul
+ARTsXVnzs6hvM	Buenos Aires
+INmyAs9P8rqjM	Mumbai
+MXm6GOYJxhm3L	Mexico City
+CNuMH0sVsgylL	Beijing
+PKo1ur6b743iL	Karachi
+CNt6s01NqsuyK	Tianjin
+CNoOB0Ihg+7xK	Guangzhou
+INqL-tuuy7vtK	Delhi
+RUz0qmr+m958J	Moscow
+CNoBC0R1tzj8J	Shenzhen
+BDobiwEo04h8J	Dhaka
+KRtW12kug467J	Seoul
+BRXoKXtYvt6xJ	São Paulo
+CNq380UGsh0qJ	Wuhan
+NGiS3gmngi1yI	Lagos
+IDdyly-p5+zkI	Jakarta
+JPssI41Y3mt+H	Tokyo
+USueeS1+9wv5H	New York City
+CNoLy0OMgwk0H	Dongguan
+TWo5+1mw8snwH	Taipei
+CDedhiuOtvztH	Kinshasa
+PEbt8STlq1jsH	Lima
+EGqsFljj2qhsH	Cairo
+COho5S1H+vmqH	Bogotá
+GByUGf+kk5zmH	London
+CNqgty8Vg6yjH	Chongqing
+CNq51ygCm5piH	Chengdu
+IQr2rn5Lg8m8G	Baghdad
+CNrZl1Hbsr16G	Nanjing
+IRssPpJD90p6G	Tehran
+CNq8wy3Awtm6G	Nanchong
+HKn690TDisg2G	Hong Kong
+CNsLkzXXm6smG	Xi’an
+PKrOHtN8o-ygG	Lahore
+CNu3A18Yxp9+F	Shenyang
+CNqxW1XKz1v+F	Hangzhou
+BRX2wYUrzw63F	Rio de Janeiro
+CNwRE2g-7ktzF	Harbin
+CNs3a00j4j6nF	Tai’an
+CNrIV1cGp1kjF	Suzhou
+CNoTw0v8gk0iF	Shantou
+THk4+x3e8647E	Bangkok
+INknLty1vt47E	Bengaluru
+RU1T7lY5glu5E	Saint Petersburg
+CLUGqTcLv9zzE	Santiago
+INoBbvtXg7qtE	Kolkata
+AUT9U64Zx8mtE	Sydney
+MMl+axGCm20oE	Yangon
+CNtCZ0zK1rqkE	Jinan
+INkp0uRY-zikE	Chennai
+CNsW70NE5m6hE	Zhengzhou
+AUSjh5xWn7yhE	Melbourne
+SAoxxoTlpsrgE	Riyadh
+CNvmg2R4x5+-D	Changchun
+CNt1d1nj1938D	Dalian
+USsG3K+pr5m5D	Los Angeles
+BDn8UwU1+q03D	Chittagong
+CNo5xyQsy-01D	Kunming
+EGrGAlUX8lq0D	Alexandria
+INoL9s54+wwxD	Ahmedabad
+CNs0r1Zqz1vxD	Qingdao
+KRsew28E7qowD	Busan
+CIh51fSe79mwD	Abidjan
+NGkREhg50i1uD	Kano
+CNoL-0HLg07tD	Foshan
+INmLlt8p4v5tD	Hyderabad
+CNqeT1UDw7xtD	Puyang
+JPsmT405r1itD	Yokohama
+NGin4gsc0x5sD	Ibadan
+SGgdWydlh1osD	Singapore
+CNrOX1Ynn1ksD	Wuxi
+CNotD0-gzy4rD	Xiamen
+TRuMZl1z+3qrD	Ankara
+CNsS3yzGg-5qD	Tianshui
+CNqn51m9t4xqD	Ningbo
+VNj2Sy9Nji6pD	Ho Chi Minh City
+CNrm6zsZg9ypD	Shiyan
+ZAT8AjRnh-4oD	Cape Town
+CNtdv0Ar3myoD	Taiyuan
+DEyrNiYlyhyoD	Berlin
+CNuF41Aqmi9mD	Tangshan
+CNrVE02Y81glD	Hefei
+ESuXsfV3o0rjD	Madrid
+KPt4O2WzwvqiD	Pyongyang
+MAr8UepZtm--C	Casablanca
+CNtFL0-Ss8v-C	Zibo
+CNnlJzqD7jo-C	Zhongshan
+ZAVYklhC6kn-C	Durban
+CNqBr0FW8ut+C	Changsha
+AFsRtsTBsm88C	Kabul
+CNvktvks8ru8C	Ürümqi
+VEjuqUHEg2x7C	Caracas
+AEo6pp1Srpn6C	Dubai
+INmlatITg+y5C	Pune
+INniUs8po1q4C	Sūrat
+SAnpBm922nw3C	Jeddah
+CNthp0Wg+vw2C	Shijiazhuang
+INpaOuSMxil2C	Kanpur
+UAx8HlbSx-r1C	Kyiv
+AOc26iWkoj30C	Luanda
+PHlNV1hS4-o0C	Quezon City
+ETjNXm42hjl0C	Addis Ababa
+KEfizmi4zi+zC	Nairobi
+USu4UQavi5gzC	Chicago
+BRbY1ZJ1gp4yC	Salvador
+INpkkteSum4yC	Jaipur
+TZdkum+z8sryC	Dar es Salaam
+CNs0fyddq6mwC	Lanzhou
+KRtUV2hngtmwC	Incheon
+CNoJvz6wgy3vC	Yunfu
+CAviaR4bgirvC	Toronto
+INmxMs+wgirvC	Navi Mumbai
+IQq2PofogirvC	Basrah
+JPsVe4Ft90jvC	Osaka
+SOguWoD6vx+uC	Mogadishu
+KRswP23EssquC	Daegu
+PKrK4s-mj7vsC	Faisalabad
+TRtqGk0x7-psC	İzmir
+SNlOXc5hwryrC	Dakar
+INpivuYuriurC	Lucknow
+EGqq4ljFj+xqC	Giza
+BReraZJdg4npC	Fortaleza
+COhONSZWt5gpC	Cali
+IDdbC0C2igvoC	Surabaya
+BRY6sYMFoztoC	Belo Horizonte
+CNqMt0mJvy+nC	Nanchang
+ITu5RiOWvx4mC	Rome
+IRs6YqlvpjtmC	Mashhad
+USudAS2n43mmC	Brooklyn
+USqlRPC+gtimC	Houston
+USuduS36jwrlC	Queens
+INnhMuDzy5-jC	Nagpur
+VEjyuTRNo78jC	Maracaibo
+BRaY7Xeqm-rjC	Brasília
+DOmkVTky1qmjC	Santo Domingo
+JPsgk4Vrv97iC	Nagoya
+AUWO97NH2x6iC	Brisbane
+CUoOZRWqwjhiC	Havana
+FRxXrgau3tohC	Paris
+IQs6xnqc9lh-B	Al Mawşil al Jadīdah
+ZAWrwk-El-69B	Johannesburg
+HKn700TJtm09B	Kowloon
+IQq2HogB7nw9B	Al Başrah al Qadīmah
+KZvYUtrRkgi9B	Almaty
+CNmenzd+gkh9B	Dadonghai
+COiOQSkQrjh9B	Medellín
+UZuq-sThs1r8B	Tashkent
+DZtD3gjI-pr8B	Algiers
+SDlh4lyJ3ro8B	Khartoum
+GHh+bf9wgo97B	Accra
+ECfOBRzE9oy7B	Guayaquil
+CNuFTzhEtln7B	Ordos
+YEldZn2+rhk7B	Sanaa
+LBsDQmT7kmv6B	Beirut
+AUUo60mPkj85B	Perth
+JPvUA5IPz8u5B	Sapporo
+CNvl22f+57t5B	Jilin
+ROvzEkpBjlp5B	Bucharest
+GNjY+dkQqsj5B	Camayenne
+INoE9tezx-h4B	Indore
+MXm4cOY5qnt3B	Iztapalapa
+GNjZCdkYg591B	Conakry
+CNufFzFzg421B	Bayan Nur
+VEjo6T+9wkx1B	Maracay
+IDhRixim79t1B	Medan
+PKr8hs-H9nm1B	Rawalpindi
+BYzKhk5pspl1B	Minsk
+HUw42jYoxnk1B	Budapest
+IQs60nqm4gj1B	Mosul
+DEzCkhxstri1B	Hamburg
+BRW9YXPY1ku0B	Curitiba
+PLykgjvE7n+zB	Warsaw
+IDdiezIUn87zB	Bandung
+ZAWqQk89nq3zB	Soweto
+ATxJAi6Rs6zzB	Vienna
+MAsF-eyQp+wyB	Rabat
+MXm+HOY6nnwyB	Ecatepec de Morelos
+ESut0gYkhxvxB	Barcelona
+ZAW2KlAtuvtxB	Pretoria
+SYs3xmmz428wB	Aleppo
+CAwLkS6vgw6wB	Montréal
+CNrKA1gLgw6wB	Kunshan
+PHlMU1gggw6wB	Manila
+INpGZvIpwt6wB	Patna
+INoRKtwqqt6wB	Bhopal
+BRe5aVVDi44wB	Manaus
+CNra+0RzssxwB	Xinyang
+NGjvihUo2gpwB	Kaduna
+KHkHGypto1gwB	Phnom Penh
+SYr6imc6yz8vB	Damascus
+USuNISozy26vB	Philadelphia
+USr5IME2xs2vB	Phoenix
+IRrnBpL888mvB	Isfahan
+INq-atfC4klvB	Ludhiāna
+ZWZqUlhU90ivB	Harare
+JPsVa4CE+00uB	Kobe
+IDdyHzBT3vsuB	Bekasi
+TWoCp1Y5-isuB	Kaohsiung
+SE1GEjNlpwnuB	Stockholm
+PHlNW1gVg74tB	Caloocan City
+MXnWSNnouk0tB	Guadalajara
+USugCS2bw1stB	Manhattan
+PYXAmVwG4untB	Asunción
+BRdIuZzIyujtB	Recife
+KRs7J2pW10gtB	Daejeon
+USqdjOfX1s7sB	San Antonio
+GHiYMfthhm6sB	Kumasi
+MYiLWyLT64xsB	Kota Bharu
+JPsc64Ik4txsB	Kyoto
+MYhHeyE938rsB	Kuala Lumpur
+IRsvYpEKrkmsB	Karaj
+NPp2XvKw-ugsB	Kathmandu
+IDe9oynx82-rB	Palembang
+PKqvJstQux7rB	Multan
+INjGmtz3km6rB	Tirunelveli
+MXmxNOiquu4rB	Puebla
+VNneby0Om31rB	Hanoi
+UAxxVmcelr1rB	Kharkiv
+INpqkt3pnx0rB	Agra
+ARU1KUlw23yrB	Córdoba
+IRtihoOshovrB	Tabriz
+RUzkfuvm-3prB	Novosibirsk
+KRsf92kAq3nrB	Gwangju
+TRuSqlKo9yjrB	Bursa
+INn7btA8kugrB	Vadodara
+BRfe3XYI53+qB	Belém
+CNu5J2CMm63qB	Fushun
+ECf6xSCkmg3qB	Quito
+USrodLK7wnyqB	San Diego
+JPr8l3L2h1vqB	Fukuoka
+MGZRnoc2p6uqB	Antananarivo
+CNsVPz-d1-tqB	Luoyang
+PKpB0sJ766pqB	Hyderabad
+USuhjS3k00oqB	The Bronx
+VEjnPT6O7zoqB	Valencia
+PKrbttMF3goqB	Gujranwala
+COj5mStKpikqB	Barranquilla
+CNqAw0M0g1jqB	Guankou
+CDb2pk4pqy9pB	Lubumbashi
+BRVUlW5Hly8pB	Porto Alegre
+IDdzay9N8+7pB	Tangerang
+INqLBtr2og1pB	Najafgarh
+BOZrQUxJlt0pB	Santa Cruz de la Sierra
+CNtA30WYuvupB	Handan
+UGgHMlytlvppB	Kampala
+RU0NsqxoskmpB	Yekaterinburg
+BDoHDv7Cj8+oB	Khulna
+CMhcHhuai36oB	Douala
+INqeGtc+6wtoB	Gorakhpur
+AEpAkp2d5ttoB	Sharjah
+SAnnknFIozsoB	Mecca
+IDeK11O313qoB	Makassar
+MXrRzNEtshqoB	Juárez
+JPsoS41qhl8nB	Kawasaki
+IDdw5y+Nxg5nB	South Tangerang
+CNubfzjvoo3nB	Baotou
+MXrjnLMw3v2nB	Tijuana
+USrp-Oyj8z1nB	Dallas
+SAosynCugx1nB	Medina
+CMhX-iDCp90nB	Yaoundé
+MLkf2ek+h8ynB	Bamako
+INnHDtHk5ornB	Nashik
+IDdg3zoV08pnB	Semarang
+CGee7it4hwmnB	Brazzaville
+INmnxtHw+vmnB	Pimpri
+RU0Byn0pkimnB	Nizhniy Novgorod
+JOrXJmY+x+9mB	Amman
+PHij72H1z77mB	Budta
+RSv7ijo2z57mB	Belgrade
+UYTlwWAtx+4mB	Montevideo
+ZMahalB1w31mB	Lusaka
+CNsGa0Pgg8zmB	Xuchang
+INm15tAHv1wmB	Kalyān
+INm01s+Kt+vmB	Thāne
+DExHYiDsn7umB	Munich
+LBsDamTu7smmB	Ra’s Bayrūt
+IRqhypVr20kmB	Shiraz
+TRtJomR782jmB	Adana
+KRtQk2lEkz9lB	Suwon
+MXngzN7Ly95lB	León de los Aldama
+ITwKjhojl73lB	Milan
+HTml9TI8251lB	Port-au-Prince
+AUTlL4o8zwslB	Adelaide
+INqTdt0HwwqlB	Meerut
+INm1nurNyqolB	Nowrangapur
+INqGgtvpl0nlB	Faridabad
+PKsF3suZ1mmlB	Peshawar
+PHig82VM4iglB	Davao
+MMn0CxFNj57kB	Mandalay
+CNqcb0Gwg8zkB	Yueyang
+DOm6oTbog8zkB	Santiago de los Caballeros
+SDlj-lxhg8zkB	Omdurman
+CNuny13WrlzkB	Anshan
+CNsJy00+5izkB	Tongshan
+INqMStxF3izkB	Ghāziābād
+IDduXy-WxhykB	Depok
+JPsxG40+mstkB	Saitama
+INm1Ss-hohtkB	Dombivli
+MZWxJlyu91rkB	Maputo
+MXm7lOYWs-lkB	Gustavo Adolfo Madero
+CNpRC1NboigkB	Fuzhou
+INn7Qsldy49jB	Rājkot
+ARUSRVOD9g6jB	Rosario
+CNpc6y+Mxl4jB	Guiyang
+BRaEeXPm733jB	Goiânia
+BRXqFXujpl2jB	Guarulhos
+CZxzxikEtoyjB	Prague
+INpAFuwe0jxjB	Varanasi
+IDgaJyfkgixjB	Batam
+DKzy7iO9vymjB	Copenhagen
+BGvLmkJYsxljB	Sofia
+LYrsXiWCtgkjB	Tripoli
+NGhsthPy53hjB	Port Harcourt
+JPsOy3i+hh9iB	Hiroshima
+MXnXkNntz27iB	Zapopan
+CNpjax0Sg+2iB	Lijiang
+MXpIPOKm480iB	Monterrey
+RUy6lo6lqk0iB	Samara
+RUzjYtCxh6uiB	Omsk
+NGiQOhAAi2qiB	Benin City
+PHii82IP21niB	Malingao
+AZuW0o3qhriiB	Baku
+NGkNliVshs+hB	Maiduguri
+RUz1fou5i72hB	Kazan
+MXm5eOZbp22hB	Ciudad Nezahualcoyotl
+AMuSVn6dt7rhB	Yerevan
+INrPltT6i7qhB	Amritsar
+BFkZYfujphlhB	Ouagadougou
+JPswi40tiv8gB	Yono
+RUwyxnD9yp5gB	Rostov-na-Donu
+INpDAujM+o4gB	Allahābād
+KRtY42jGt93gB	Goyang-si
+TRtLTmpV3-wgB	Gaziantep
+INmSUuypqougB	Visakhapatnam
+JPtmx5Cv-lugB	Sendai
+RUznDq67ngugB	Chelyabinsk
+CNuQW0I-mgkgB	Datong
+GEu0xn+G68ggB	Tbilisi
+CNrQH1dx0k-f	Changshu City
+TWole1dG1q4f	Taichung
+INjjztxhkvyf	Teni
+CNsNXzUyh7xf	Xianyang
+RUzdtp8y6jxf	Ufa
+UAxOtmOq2zwf	Dnipro
+KRtT72mi-3vf	Seongnam-si
+BRX2xXojisvf	Campinas
+INoPLuNp4guf	Jabalpur
+INoBvvs34yrf	Hāora
+CNrmb0zKnyrf	Huainan
+UStRrKVH86qf	San Jose
+UAxEymuG81of	Donetsk
+IEy9ne457gof	Dublin
+CAyJqLt9mhkf	Calgary
+BEyFIgxeukjf	Brussels
+INnEUtZO5zgf	Aurangabad
+RUxUon6V527e	Volgograd
+BRX6GYRnm0ye	Nova Iguaçu
+CNoXt0r+hwye	Jieyang
+UAwhnldq2iye	Odessa
+CNszF1Ohgywe	Zhu Cheng City
+INmlqtIRgywe	Shivaji Nagar
+JPsCU3Qxglue	Kitakyushu
+INmSHtfsh9te	Solāpur
+CNt0E0iBkqse	Baoding
+GTlNKP6K6zre	Guatemala City
+CNuri2AKlyke	Benxi
+GByqPfqYtohe	Birmingham
+RU0oDp--zs-d	Perm
+INsHotTHx-4d	Srinagar
+NGj81hX3xp4d	Zaria
+NIkUFQqq-o2d	Managua
+ZAT7Mkjc9-wd	Port Elizabeth
+MAsGcfHG7oud	Fès
+DEyHAhPEj6sd	Köln
+KRsoq2-Vxpsd	Ulsan
+INq7atprzoqd	Chandigarh
+INj6btrsvqpd	Coimbatore
+ITuhniiVu-od	Naples
+BRckDZpavzkd	Maceió
+COjspSk042hd	Cartagena
+CNrTB1Uz64+c	Changzhou
+SAotVnCZpw8c	Sulţānah
+LRiPXeFJkw1c	Monrovia
+JMmZhSWQk3zc	Kingston
+IQs3Xn0wg+uc	Erbil
+USqwvOn52-tc	Austin
+RUz6uwgngvpc	Krasnoyarsk
+MMnBTxFvoqnc	Nay Pyi Taw
+INpVvs+pk8jc	Jodhpur
+JPsqG46Nxlic	Chiba
+BRfGbYH713-b	São Luís
+INjhtt400y4b	Madurai
+MAsG5eyp9pyb	Sale
+CNsFG0w0-7xb	Huaibei
+BOZ0SUPS+pvb	Cochabamba
+CIh7PfSTg9ub	Abobo
+CNsX20Ujg9ub	Kaifeng
+IQr14n2ug9ub	Abū Ghurayb
+IRsUQpC2g9ub	Qom
+KGvPhtQqg9ub	Bishkek
+INpT1wT22gub	Guwahati
+NGh0MhT04wsb	Aba
+CNr-v0JHr6kb	Pingdingshan
+INpU3t5b649a	Gwalior
+CNw1Q2CY819a	Qiqihar
+MYhFGyCM7n7a	Klang
+ARUTjTw50q4a	Mendoza
+TRtdxlxmqg3a	Konya
+CDd0XkMZpo2a	Mbuji-Mayi
+INl3ouVk7i2a	Vijayawada
+SNlP+c6Iuy1a	Pikine
+ITwBmhXd4hya	Turin
+INkX2tn+5+va	Mysore
+USqyORe8-1va	Jacksonville
+CNp9I1c6osta	Wenzhou
+UStblKPJwxsa	San Francisco
+GBy-YfeH67ra	Liverpool
+RUyU1oLetvra	Saratov
+INqOEts2g7na	Rohini
+HNlAcQfyg9+Z	Tegucigalpa
+KRtVT2igr5+Z	Bucheon-si
+USuNVRPq6l+Z	Columbus
+RUyX0m91w78Z	Voronezh
+INoTLvKo2z6Z	Ranchi
+MNxCKzAFyg5Z	Ulan Bator
+KHj6GyoN7k4Z	Takeo
+IRrIrop65t1Z	Ahvaz
+PEaK1TSGqt1Z	Arequipa
+IDfqZx1zg10Z	Padang
+INldPtW22w0Z	Hubli
+CNrHT1l7gq0Z	Zhabei
+MArP2ek+g0zZ	Marrakesh
+IDc7K0e5hqvZ	Denpasar
+MYhHryDOjhuZ	Kampung Baru Subang
+USrorOstn5tZ	Fort Worth
+USuI8Qrt2oqZ	Indianapolis
+USshmRoM52nZ	Charlotte
+BRX5gYTN5k-Y	Duque de Caxias
+NGjh7hlL419Y	Jos
+ESuCJf7tgk7Y	Valencia
+NGjBWgzrwj7Y	Ilorin
+PEbtpSSkwm6Y	Callao
+BOaIiT4m-35Y	La Paz
+CAwJWSiuhj5Y	Ottawa
+VEjlBTq3yw2Y	Barquisimeto
+MXqLmNI8wo2Y	Chihuahua
+CNoHNzQZs+wY	Nanning
+SLjBIdpav6vY	Freetown
+MYghWych51vY	Johor Bahru
+ILrS6mQronuY	Jerusalem
+IDeEdyto8ytY	Bandar Lampung
+IDdp8y-BgotY	Bogor
+INqQjttJgotY	Narela
+KEejunDS09sY	Mombasa
+PHjqw2Bmq9rY	Cebu City
+OMoYqqYjoqqY	Muscat
+UAxAOmQY5xpY	Zaporizhia
+FRvZPg9O7loY	Marseille
+JOrZ1mam5imY	Zarqa
+MXm7POW4z0lY	Naucalpan de Juárez
+TRuMWl159zlY	Çankaya
+PKqGtsf5ztiY	Rahim Yar Khan
+IRsXYonfmthY	Pasragad Branch
+DZtEognjjigY	Boumerdas
+INrI0tb664+X	Jalandhar
+INjBFtrg549X	Thiruvananthapuram
+JPsS94FTjg8X	Sakai
+CNs1Y0Vap66X	Anyang
+ARWdmUZ6-26X	San Miguel de Tucumán
+BJiQ2gbgg35X	Cotonou
+INkJLt5O8k4X	Salem
+MXndTQEXvs3X	Mérida
+INj2Ht-Y8p1X	Tiruchirappalli
+SYsWOmh1sn1X	Homs
+CNugqz2Wtq0X	Hohhot
+NEkzggYA7i0X	Niamey
+TWoLK1XwjlxX	Tainan
+CNqrB1fPw+vX	Shangyu
+PLyaEjdkz3uX	Łódź
+SApZho6D6yuX	Dammam
+CNtBbyFxrxtX	Xining
+IRsOaoXYy3sX	Kahrīz
+INo9Cte4wmpX	Kota
+BRd8IZvZjlpX	Natal
+INnNTvQmjsoX	Bhubaneshwar
+CNuMq1Qpm9lX	Qinhuangdao
+CNpj40BWy5lX	Hengyang
+TRtH3ldPstkX	Antalya
+PLxzKji1qrhX	Kraków
+INp6dt4U3x-W	Alīgarh
+VNltozPTt7+W	Da Nang
+ZAVeDlZz9n9W	Pietermaritzburg
+TGiLdgN5kk8W	Lomé
+PEdHUR80695W	Trujillo
+IDdKa0Be8m5W	Malang
+VEi+CU3Snh5W	Ciudad Guayana
+INqFfuHw7+3W	Bareilly
+RWfTolWAt53W	Kigali
+BReMMYZAgi3W	Teresina
+CNsgx0Ozxl2W	Xinxiang
+BRXk1XuMs+1W	São Bernardo do Campo
+CNw1f3Khr81W	Hegang
+LV0P1kSRsl1W	Riga
+NLynyg3oko0W	Amsterdam
+NGiysgsuo6uW	Oyo
+PKqu2r6UrvsW	Quetta
+GBy0+fy657oW	Nottingham
+BRYu0WSP-hoW	Campo Grande
+TMtfkqYR00mW	Ashgabat
+MXm4gOXSo0lW	Álvaro Obregón
+PKsOGtD7ogkW	Muzaffarābād
+TRul3lIUupjW	Bağcılar
+IQspToE7iniW	As Sulaymānīyah
+MXn4BODF06hW	San Luis Potosí
+MXnx8N0QqqhW	Aguascalientes
+COizoTHB2vgW	Cúcuta
+INqQPuATzngW	Morādābād
+TDkTfirK5lgW	N'Djamena
+CNuDD0vu3n-V	Langfang
+CNrud0RZgk-V	Zhumadian
+CNtUy1lukv+V	Yantai
+UAxuFkRVr-8V	Lviv
+MXqWPMRV1p6V	Hermosillo
+CAzCjL0+n23V	Edmonton
+KRsvJ2mqg42V	Jeonju
+MXpChOCynh1V	Saltillo
+CNp5X0HZu30V	Zhuzhou
+MYhFQyDwo2zV	Subang Jaya
+INm3Ls-P7uyV	Bhiwandi
+IDgLwyCL0uvV	Pekanbaru
+EStSqe8Cm3uV	Sevilla
+RUzCGoxc-suV	Tol’yatti
+BRdF2Zxw9kuV	Jaboatão
+JPscD4mf5jtV	Shizuoka
+DOmk+Tjj16sV	Santo Domingo Oeste
+BDoqpvwFl3rV	Rājshāhi
+DOmktTlLgzrV	Santo Domingo Este
+IDfjv0x-gzrV	City of Balikpapan
+PKsVGs+1gzrV	Battagram
+CNshMz3V6jrV	Changzhi
+ZWY1elFN5-qV	Bulawayo
+HRwShi1y2yqV	Zagreb
+MAq0OeSym+pV	Agadir
+BAvlyjQ27soV	Sarajevo
+ARTlWVsm38lV	La Plata
+TNtF1hzq6+kV	Tunis
+CNugp0bE6rkV	Zhangjiakou
+CNqbryoHp5hV	Zigong
+MXrmdLeYvzhV	Mexicali
+CNu8F1oM68gV	Fuxin
+NGiSkhVU+2gV	Enugu
+MAst5e+AkngV	Tangier
+CNqwS0c-6+-U	Huangshi
+CNurK15by4-U	Liaoyang
+GBy+wfvU4p9U	Sheffield
+USw7TKQIjt8U	Seattle
+USuISNVgxx6U	Denver
+USrSrNEakl5U	El Paso
+JPrqg3O+nv4U	Kumamoto
+INnjLugz7h4U	Raipur
+PHiLG2QKk13U	General Santos
+TJts5sOjov3U	Dushanbe
+BRXogXrng-1U	Osasco
+USvDRRPI8n1U	Detroit
+MXo0HM6K99zU	Culiacán
+MZWxNlxT+yzU	Matola
+ESuz5f2BtwyU	Zaragoza
+INphFu0jmuyU	Gorakhpur
+CNp5v0EitsyU	Xiangtan
+MXpISOLTw6xU	Guadalupe
+MXl-aOPQn2xU	Acapulco de Juárez
+MYhoUx+GmxxU	Ipoh
+CAvfqR1ql8sU	Mississauga
+USvD4TXghwrU	Boston
+CNssf0cmy2qU	Puyang Chengguanzhen
+CNrY31fRr0qU	Nantong
+CNv2g3Cj7pqU	Mudanjiang
+GRtgVkN+uvoU	Athens
+BRXlhXufl7mU	Santo André
+MRmbjdKM48lU	Nouakchott
+CGeTUiG+s0jU	Pointe-Noire
+USsf2P-c6sgU	Memphis
+MXm8pOXYij+T	Tlalnepantla
+UAxCNl7y8i9T	Kryvyi Rih
+BRdeGZzVj07T	João Pessoa
+KRtRU2i8ov7T	Ansan-si
+LYrayjkVls7T	Benghazi
+DEx0Zhizw46T	Frankfurt am Main
+RUwBBm7d7z6T	Krasnodar
+CNo-Tzmzok6T	Guilin
+ITtjtiXuki5T	Palermo
+LKid0uMfi74T	Colombo
+MWbCLmAb+y3T	Lilongwe
+DZssWf4wg72T	Oran
+TRtevnJl701T	Diyarbakır
+PHlKg1hm5r1T	Taguig
+USseaP-WoyyT	New South Memphis
+RUzUQomho1xT	Ulyanovsk
+PKr6utI1ggxT	Kotli
+JPsUe3z2k1wT	Okayama
+CNnkRznc+6uT	Zhanjiang
+KWqVqojFjvuT	Al Aḩmadī
+IDdOezns03tT	Yogyakarta
+CAvj7R4bgjtT	North York
+MDwtolIV6itT	Chisinau
+PLyKzjBztgsT	Wrocław
+KRtBs2qik3rT	Cheongju-si
+KRtS42kJ-vrT	Anyang-si
+DZslohcb8urT	Tébessa
+CNrc+1PIo3pT	Zhenjiang
+USwL6KMO1vpT	Portland
+CAxvJOur-npT	Winnipeg
+CNuRK2HVllpT	Dandong
+USsnFOqeyxoT	Oklahoma City
+RU0NppdW+noT	Izhevsk
+BRdHYZxn4nnT	Jaboatão dos Guararapes
+CNo0V0MUtgmT	Shaoguan
+CNr3E1XH52lT	Yancheng
+MXnh1Qj4yylT	Cancún
+BRY6cYKxztkT	Contagem
+MXnUfOJz-5jT	Santiago de Querétaro
+INnioueeyviT	Bhilai
+CNupQ1spwsiT	Panshan
+DJkHtnq5zohT	Djibouti
+USs3LLh-jkhT	Las Vegas
+USt+ESYU5o-S	Baltimore
+IRsM1oXfsx+S	Kermanshah
+MXm4POXwg89S	Coyoacán
+BRYeGXgBin9S	Ribeirão Preto
+YElQunouvs7S	Al Ḩudaydah
+PHlL71hZ166S	Pasig City
+GByS4fidg66S	Bristol
+INoG4vUmy85S	Jamshedpur
+CNnIJznc7s5S	Haikou
+YEk1An02254S	Ta‘izz
+BRXwiX16ks3S	São José dos Campos
+MXm58OaK-g2S	Santa María Chimalhuacán
+CNrjV1USkg2S	Taizhou
+CNtLY0Wr7s1S	Xingtai
+INm1ss8+xqzS	Borivli
+MXpFQNnUkyyS	Torreón
+RU0fZnFrqwwS	Yaroslavl
+ZAWsElCOglvS	Benoni
+JPsVn4fFq9uS	Hamamatsu
+INjiLtjq4wuS	Cochin
+CNunb1iUtjuS	Jinzhou
+INncWt0n91tS	Amrāvati
+AEosZpq6krtS	Abu Dhabi
+VNnayy90nysS	Haiphong
+USt1ESTg7zrS	Washington, D.C.
+PKr-Ws-EgwrS	Islamabad
+IQsnFn5F5qrS	Kirkuk
+INl-htQX+jrS	Sāngli
+USvTXQX07iqS	Milwaukee
+CAxgsKHLg+pS	Vancouver
+CAvkDR6Pg+pS	Scarborough
+CNwlO3UOg+pS	Shuangyashan
+IDdQp0RLg+pS	Situbondo
+RUy+Pu5C7wpS	Barnaul
+NLydhgy93loS	Rotterdam
+MXnATOAwnwnS	Morelia
+CNtd90YeqknS	Luancheng
+IRtQPo0N+0kS	Rasht
+NGii1gmDsmjS	Abeokuta
+DEyS6hPy9ljS	Essen
+TRtxXmTvo+iS	Kayseri
+GBz3PfPjk4hS	Glasgow
+AUWC17RsxzhS	Gold Coast
+CNudW1ur3phS	Yingkou
+NGjOHhVRgygS	Abuja
+PHlI11ggwlgS	Las Piñas
+CNotz06pnggS	Zhangzhou
+DExWEhoah--R	Stuttgart
+MXpReOhs60-R	Reynosa
+DEyUPhU8u1+R	Dortmund
+RUvU43cbuo9R	Vladivostok
+RUymDyiqn+8R	Irkutsk
+MWaYzmOUtl7R	Blantyre
+JMmZxSWY2o6R	New Kingston
+TRulflKHqg5R	Üsküdar
+ITvychlx-z2R	Genoa
+INnRsvRHgt2R	Cuttack
+NO1TVh6Rgt2R	Oslo
+JPsrX4xMn61R	Hachiōji
+RUxPP4A84t1R	Khabarovsk
+RUxOO4Bg-30R	Khabarovsk Vtoroy
+GAgI7hrjsz0R	Libreville
+IRqxGqJbq-zR	Kerman
+PEdl6Rzl-6zR	Chiclayo
+IRtWhoA374zR	Orūmīyeh
+TRulBlIW-ozR	Bahçelievler
+CNrtl03TokzR	Bengbu
+INp9jtCKvwyR	Bīkaner
+MXnVsNowmuyR	Tlaquepaque
+MXm3EOXwxjxR	Tlalpan
+TRulWlLXx6vR	Umraniye
+DEyNkhNGh0vR	Düsseldorf
+IDe0d0XyltvR	Banjarmasin
+SE0hJiIJ-rvR	Göteborg
+CNvwHvS5krvR	Shihezi
+COiiJTADstuR	Bucaramanga
+USvDUTXnx8tR	South Boston
+MYgjRznVnhtR	Kuching
+PLyoijAnw-sR	Poznań
+EStDlfNtx-qR	Málaga
+CIivEfGx5lqR	Bouaké
+SDkSLkbFmvoR	Nyala
+ERldBm6962mR	Asmara
+NGkpPg7p10mR	Sokoto
+BRZRfXatwqmR	Uberlândia
+NGiL8hNNq9jR	Onitsha
+JPssZ44unzjR	Honchō
+USseXNCjxgiR	Albuquerque
+KPuMX2rEw+hR	Hamhŭng
+BRXpNXkCu4hR	Sorocaba
+FI1ZLkbt5rhR	Helsinki
+INmZmuJeq3gR	Warangal
+CUnHlShQ56+Q	Santiago de Cuba
+CNvWK2HI5y+Q	Siping
+JPrOU3NX4q+Q	Kagoshima
+IDdUDztAsp+Q	Surakarta
+CNr8U1KK+m+Q	Huai'an
+INnvOs08i-9Q	Bhavnagar
+ARSfSVxJv+8Q	Mar del Plata
+PKqc9svg-07Q	Bahawalpur
+IRqfMq0esh7Q	Zahedan
+YEkizoAaq25Q	Aden
+INm0Atvqk15Q	Nanded
+RUyaHpy58p5Q	Orenburg
+KRsho24Gwj5Q	Changwon
+XKvLCjw1wj5Q	Pristina
+CNwo83Ktt14Q	Jiamusi
+PHlM01iGn14Q	Antipolo
+CNqhLyrXmh2Q	Neijiang
+DEy3whkNl21Q	Bremen
+MAsDQfA4p90Q	Meknès
+TWo5N1mBuzyQ	Banqiao
+PKraIs63r8xQ	Sargodha
+CFhjPjTH51xQ	Bangui
+LTzcekfo+0xQ	Vilnius
+CNrhN1O6jivQ	Yangzhou
+RUzHPvfHg-uQ	Novokuznetsk
+CDgLuken2wuQ	Kisangani
+EGrHdlvhq4tQ	Port Said
+TRtFrmKHyntQ	Mersin
+MXl9YPcluwsQ	Tuxtla
+INn5vvFji8rQ	Raurkela
+NGh9jhBb3urQ	Warri
+CNqRN1VtgurQ	Guli
+NGiWNgnsjirQ	Ebute Ikorodu
+CNt3806ji4qQ	Tanggu
+CNoB50Goj+nQ	Jiangmen
+MXm6eOX83rnQ	Cuauhtémoc
+USrdOMR65lnQ	Tucson
+USs2+QklktmQ	Nashville
+SAnkAnL1gtmQ	Ta’if
+MZY8cmMYslmQ	Beira
+INly6uTaxkmQ	Guntur
+SNlR6dLS44kQ	Touba
+CAwpPTVvzmkQ	Québec
+IRsX3on-g8jQ	Hamadān
+CNtn60xrhqjQ	Cangzhou
+SVk3gQJQm1hQ	San Salvador
+INqyCt32h79P	Dehra Dūn
+BRadGWBvu29P	Cuiabá
+MYhGtyED6v8P	Petaling Jaya
+MOn5L0L5wm8P	Macau
+INm3Ns84tj8P	Bhayandar
+TRul9lIirh8P	Esenler
+RUzbDnDmt-7P	Ryazan’
+UStENKtQ077P	Fresno
+CAvYLRzft47P	Hamilton
+RU0Uhrpjv+6P	Tyumen
+INoXHvhX426P	Durgapur
+MXoilNZO1x6P	Victoria de Durango
+INpZ7tRO345P	Ajmer
+PTtxBeYFq15P	Lisbon
+CNqUoz24005P	Changde
+CNsh50IVkt5P	Jiaozuo
+INm1StASov4P	Ulhasnagar
+INl76tMluh4P	Kolhāpur
+RUytAnCOny3P	Lipetsk
+INpfzvuH2v3P	Siliguri
+DEynthuvki3P	Hannover
+TRuJIlbQ152P	Eskişehir
+IRsXroon2h2P	Āzādshahr
+ARXL-UXwu10P	Salta
+RUy6moAD6y0P	Penza
+ZAWwclBKn1zP	Tembisa
+INnYns+I-8yP	Bilimora
+UAwsulsD47yP	Mykolayiv
+BRaBLXPty5yP	Aparecida de Goiânia
+CLUDJTdAxuyP	Puente Alto
+PHlLG1hEvtyP	Makati City
+CNu1W2YwwhyP	Tonghua
+RUz0DpUUu9xP	Naberezhnyye Chelny
+GByt0fzH0-wP	Leicester
+CNrJG1C0k0vP	Wuhu
+JPteH4tk4ttP	Niigata
+INqL+tuQ5stP	Karol Bāgh
+DEyQQiMwrktP	Leipzig
+RU1VQlZxh6sP	Kalininskiy
+DEySXhM+mxsP	Duisburg
+INoa7vdrvusP	Āsansol
+IRsH2o1c-6rP	Arāk
+RUwetoiml4qP	Astrakhan
+CNn670MJvupP	Zhuhai
+KRsz32-4gpoP	Pohang
+DExlWh+ClxnP	Nürnberg
+CNqxpz9F8inP	Shashi
+RUvR8ocenpmP	Makhachkala
+IDdjnzHlikiP	Cimahi
+CNtfCyPukxhP	Wuwei
+INn-YsdM4wgP	Jamnagar
+UStt8KZq4m-O	Sacramento
+BRcHtZaN-1+O	Aracaju
+AEpCBp3Ozx+O	Ajman City
+CNoocx-sww+O	Jianshui
+SDm+Zmnc9n+O	Port Sudan
+ARUv0VNRhh+O	Santa Fe
+HNlgzQWe6-9O	San Pedro Sula
+MXm25OSL179O	Toluca
+MXm9DOWro29O	Ciudad López Mateos
+EGqqElyE918O	Suez
+DEyJricTmu7O	Dresden
+RU0FovG0vk6O	Tomsk
+CDecPivHv55O	Masina
+INqp7tySpw5O	Sahāranpur
+MXm-AOXJ9m5O	Cuautitlán Izcalli
+INmKftqP-o4O	Gulbarga
+INoIVvtz553O	Bhātpāra
+IQrYwn4jwo3O	Najaf
+BRbo3ZEp3z2O	Feira de Santana
+MYhGMyDN2r2O	Shah Alam
+UAwvrmrI6q2O	Mariupol
+JPsYR38l1m2O	Himeji
+BYypKlgb311O	Homyel'
+CNm13zo1g40O	Qionghai
+NGir1hG8q+zO	Okene
+KRta02lgl9zO	Uijeongbu-si
+ZAUQuk9k0uzO	East London
+IRrV1pqlx2yO	Yazd
+SOjZin1X01yO	Hargeysa
+PKrjYtP-0myO	Sialkot
+RUzrIvTbi9xO	Kemerovo
+CNq66zyK1xxO	Yichang
+KRtOq2i4pkxO	Hwaseong-si
+USt5uPL6ynwO	Kansas City
+CNtrWy5J9+vO	Yinchuan
+MKu7pjz1p4vO	Skopje
+ZAWhCk9v5xvO	Vereeniging
+NLyhBgw60lvO	The Hague
+USsAYK-R8gvO	Long Beach
+GTlM7P5G4-tO	Mixco
+FRwRBg3J9ntO	Lyon
+BRXtkW5444sO	Londrina
+USr4iMHtx4sO	Mesa
+CNqNC1mF04rO	Jiaojiang
+JPsuM43wlorO	Matsudo
+BRYQvYSxxlrO	Juiz de Fora
+JPsV+4Dx99pO	Nishinomiya-hama
+RUzRQmsA56pO	Tula
+USubAS0d63pO	Staten Island
+JPsuw41l1ypO	Kawaguchi
+MXpKrOMF1moO	Ciudad Apodaca
+CNp2BzAX0rnO	Zunyi
+CNq7x1d31lnO	Jiaxing
+BRX5-YSNwlnO	Belford Roxo
+INro6tT1-0mO	Jammu
+CNvQS2PwhrmO	Liaoyuan
+GBz5Nfbo+imO	Edinburgh
+USr-+Q-2mglO	Atlanta
+CDd51j-D61kO	Kananga
+ZAVpVkqQ4mkO	Bloemfontein
+CNrZIz79sjkO	Xiangyang
+PLzUzjULphjO	Gdańsk
+NGhw1hevk-iO	Calabar
+CNpcHyFLp2iO	Dadukou
+BRWpbXUP4viO	Joinville
+SYsfcmiO65hO	Ḩamāh
+INloMt334shO	Kurnool
+BEyNigyE9ghO	Antwerpen
+JPtA24SY5lgO	Kanazawa
+TRtpNk0vwo-N	Karabağlar
+PHidP1s738+N	Zamboanga
+RU01Zo1Bn1+N	Kirov
+INoPhteKi0+N	Ujjain
+MYiH90opuz+N	Kota Kinabalu
+UStzrNXX479N	Colorado Springs
+BRX3RYVlo49N	Niterói
+CNtan0kak19N	Hengshui
+SAqGQmgG648N	Tabuk
+IDf-Rzb3lw8N	Pontianak
+GBzIKfuYzu8N	Leeds
+KPtxf2S24q8N	Namp’o
+PHjyu125yn8N	Bacolod City
+BRX5FYShhm8N	São João de Meriti
+PHjx613Omw7N	Mansilingan
+UStGmSfipk6N	Virginia Beach
+INmr0uH-l15N	Rāmgundam
+UAxRKm-Vgt5N	Luhansk
+IDghu2Mf1p5N	Manado
+KZxtQs-v4m5N	Karagandy
+USsuASBR6v4N	Raleigh
+CNslq0ub343N	Jining
+DZs7ghLQxx3N	Constantine
+CNoToyiIwu3N	Wenshan City
+SShuZlnVwu3N	Juba
+TRtHfleCwu3N	Muratpaşa
+JPtAF43jpq3N	Utsunomiya
+MXpM5Oqn3o3N	Heroica Matamoros
+TRtNwm5Ytg3N	Şanlıurfa
+CNuj40+Gt52N	Chengde
+JPr0P3ZTrs2N	Ōita
+GByTcfb0350N	Cardiff
+ARUyWT0Noy0N	San Juan
+RUz9UoZn9p0N	Cheboksary
+ZAWrilBhw3yN	Boksburg
+PHjBB2KMv1yN	Cagayan de Oro
+USuqzO8atvxN	Omaha
+JPsCB3mk69wN	Matsuyama
+MXpJwOKyp8wN	San Nicolás de los Garza
+JPsV-4Ev95vN	Amagasaki
+HTml6TIQs5vN	Carrefour
+INoHlvtakzvN	Shyamnagar
+PHlGE1f-0wvN	Dasmariñas
+TRtormz9tuvN	Malatya
+USpKgRvkr1uN	Miami
+INoAMvrs+xuN	Nangi
+COhthSiv25tN	Pereira
+INj-9teNyztN	Kozhikode
+MMl3PxWytysN	Mawlamyine
+PEeqrS+i0rrN	Iquitos
+JPsS93x9tqrN	Kurashiki
+KPuBS2Y1o4qN	Sunch’ŏn
+TRunZlIdn2qN	Sultangazi
+CMjTqiYbj1qN	Garoua
+EStgafzJm0qN	Murcia
+TZfGul2UhyqN	Mwanza
+NGhy8haQ+rqN	Uyo
+CNxKV2ga8mqN	Bei’an
+CMkS0irA7qpN	Kousséri
+INnTntQCilpN	Mālegaon
+INlJMtf449oN	Davangere
+RUzc3jpXq4oN	Kaliningrad
+IQrmMn05yooN	Karbala
+KRsfV2jDjmoN	Masan
+BRfg7XZok5nN	Ananindeua
+IDfjK0xPq2nN	Balikpapan
+CAviCR0cu0nN	Brampton
+FRvgPgQb-8mN	Toulouse
+ILraAmLu83mN	Tel Aviv
+UZuk7sveoqmN	Namangan
+NGknnhWf1gmN	Katsina
+ZAWDXkwLo6lN	Welkom
+COj-ySzyl1lN	Santa Marta
+EGrAwlims+kN	Al Maḩallah al Kubrá
+MXm6cOYai8kN	Venustiano Carranza
+INnd7tbxynjN	Jalgaon
+JPsi541Gg+iN	Yokosuka
+INnXQtsE55iN	Akola
+INloutPsw1iN	Belgaum
+MXm0eO6HjpiN	Veracruz
+PSrTPmQ4woiN	East Jerusalem
+CNqKW1k+y7hN	Luqiao
+RUy7xmHEknhN	Bryansk
+TRujglLtghhN	Maltepe
+SAolqoaj0q-M	Al Kharj
+VEjmpUgB76+M	Barcelona
+CNoaQ0u5z6+M	Chaozhou
+MXm8cOxUz5+M	Xalapa de Enríquez
+NGiteg7Z0s+M	Ado-Ekiti
+SKxHojCo559M	Bratislava
+INo0QvHJs49M	Gaya
+INovdtGsg88M	Udaipur
+CDcGEkwOuw8M	Likasi
+EGpIylzZnw8M	Luxor
+COhlASoB157M	Ibagué
+CNqqt1b6jt7M	Shaoxing
+RU0Q-nSKn-6M	Ivanovo
+TRuMInVoz66M	Erzurum
+NGilCg7Fy36M	Akure
+EGpqglizp36M	Asyūţ
+IDfblya7jv6M	Jambi City
+EGrCPllCjr6M	Al Manşūrah
+UStcQKQ1ju5M	Oakland
+INn8fus5qq5M	Korba
+INodSvR-l34M	Bokāro
+PRmkNUP38q4M	San Juan
+CDcMLkhwwm4M	Kolwezi
+NZS5f-Ea2j4M	Auckland
+PKp2ZsPdn-3M	Sukkur
+INkl8tTsrz3M	Mangalore
+CNr7w0Rjsy3M	Luohe
+PHlKz1guq42M	Pasay
+UAv3El9Znw2M	Sevastopol
+MXm7bOXf3-0M	Azcapotzalco
+KZvCjsX4wq0M	Shymkent
+CNtdd0MFy2zM	Yangquan
+RUy-kqf0n1zM	Magnitogorsk
+INpDVt+D-nzM	Jhānsi
+BRWMBXXn0hzM	Florianópolis
+DEzDUhyu+4xM	Wandsbek
+BRXewXw1r4xM	Santos
+VEjdxUxH8qxM	Maturín
+USv-iPa37pxM	Minneapolis
+INjHgt4-okxM	Thoothukudi
+IRtmZoldhkxM	Ardabīl
+JPrpP3Fx8ywM	Nagasaki
+CNux81ai1swM	Chaoyang
+PSrM1mIJwswM	Gaza
+RUyZTmbu36vM	Kursk
+MXnVUNpb3lvM	Tonalá
+KRr6h2fis5uM	Jeju City
+PAjMpR3PozuM	Panamá
+MXm2JOYbtquM	Xochimilco
+PLy-zilljouM	Szczecin
+VNj5Dy-ao1tM	Biên Hòa
+GTlKhP5VuptM	Villa Nueva
+BRY+MYKZyotM	Ribeirão das Neves
+JPsYM4HY75sM	Hirakata
+MAsVMfqSl4rM	Oujda-Angad
+EGq8mlgultrM	Tanda
+ZAWIWlUjmrrM	Newcastle
+INlI0uOE+1qM	Nellore
+TWo0a1gWt0qM	Hsinchu
+CNwG23R-vpqM	Jixi
+TZdzvm9+qmqM	Zanzibar
+USs2sO70xhqM	Tulsa
+TWo4v1kF+yoM	Taoyuan City
+SDlfmmeJlioM	Kassala
+NGiR2guj47nM	Lekki
+ESuEageJ27nM	Palma
+ZMbcrlBAywnM	Kitwe
+IQrCvoOT57mM	Nasiriyah
+RU0N1mYd06mM	Tver
+ILrTNmQug0mM	West Jerusalem
+JPsov4yohzmM	Machida
+CNnxVz543rmM	Yangjiang
+UAxknkzKqglM	Khmelnytskyi
+JPsmE4UByskM	Gifu-shi
+INj87twHxmkM	Tiruppur
+TWo7z1pJrmkM	Keelung
+MAsiKfTN8riM	Al Hoceïma
+GBzA+fmi7niM	Manchester
+CAxdcKKhg3hM	Surrey
+BRYxYY1ky1hM	Vila Velha
+CNtDW1LHsvhM	Weifang
+JPskY4y7gshM	Fujisawa
+ZMbZHlF02ohM	Ndola
+INjKGtnXz9gM	Kollam
+BRY19Y1Yp9gM	Serra
+TRurVmdbi6gM	Samsun
+EE1IhkZoo5gM	Tallinn
+CMiHnhzcrzgM	Bamenda
+SDksAlXz-igM	El Obeid
+COiQNSkUr3-L	Bello
+CNsTV1Lw8n-L	Xinpu
+MYiE50-6gj-L	Sandakan
+SApXDn0Vol+L	Buraydah
+AFrPYrro2g+L	Kandahār
+BRXlAXtipv9L	Diadema
+UStZtOsht68L	Wichita
+USqpoP-Jxv8L	New Orleans
+BDoV4wNejp8L	Comilla
+THk1dx4k457L	Samut Prakan
+MZaoBm+wut7L	Nampula
+USro6OvI9g7L	Arlington
+USuwVRefo-6L	Cleveland
+GWkN9dOi896L	Bissau
+PHjza1yghz6L	Iloilo
+SAmgbnmNhv6L	Khamis Mushait
+BRYRBYpw5q6L	Campos dos Goytacazes
+ARWPHVg52i6L	Resistencia
+LYrgtiruoi5L	Mişrātah
+BRXlbXvX1g5L	Mauá
+BJiSvgaz724L	Abomey-Calavi
+DEyTfhSGh24L	Bochum
+MXm41OX0-s4L	Benito Juárez
+ROvy4kpv-s4L	Sector 3
+JPsXf4FVru3L	Toyonaka
+MXm5WOYfmq3L	Iztacalco
+BRY5nYJHgg3L	Betim
+JPsQr3taiq2L	Fukuyama
+AOcsbipq8j2L	N’dalatando
+HTml-TJWo+1L	Delmas 73
+COgbnSQt8o1L	Pasto
+TRteJnT-mh1L	Batman
+NZRUg-Ejs+0L	Wellington
+ESp-bdQo380L	Las Palmas de Gran Canaria
+MXoQrNFVv00L	Mazatlán
+BRVoRW5s2q0L	Caxias do Sul
+RU0l+qqR8l0L	Nizhny Tagil
+MXnWgN+ytg0L	Irapuato
+DEyT8hRpgjzL	Bochum-Hordel
+CNtUO0rWj1yL	Dezhou
+ZAWuZk8Bl+xL	Krugersdorp
+INoEVvtfx6xL	Pānihāti
+BDo46v4St6xL	Shibganj
+JPsXI4bHmwxL	Toyohashi
+CNr9V0YRlnwL	Zhoukou
+CAwM9S5jtgwL	Laval
+PEbtcSoVx6vL	Huancayo
+UAxFWmvgi5vL	Makiyivka
+CNpC41KEu3vL	Putian
+TRtXQmkItnvL	Kahramanmaraş
+JPsKl4BsrxuL	Minato
+ALusbjhfxguL	Tirana
+BRYmPXOLr9tL	São José do Rio Preto
+LTzhVkQCz7tL	Kaunas
+MXpxPOTu9+sL	Nuevo Laredo
+USsk7K11o8sL	Bakersfield
+CNucG0c8u1sL	Zhangjiakou Shi Xuanhua Qu
+MYg+HyH01lsL	Seremban
+MXm6OOXU5ksL	Miguel Hidalgo
+GBy2IfnInhsL	Stoke-on-Trent
+CNp0b0PZ7srL	Pingxiang
+TRtr9ntmhgrL	Van
+USnk2D77p+qL	Honolulu
+IRqyYollkwpL	Abadan
+CNp7rze-wqpL	Fenghuang
+VEjoaUgowqpL	Puerto La Cruz
+CZxfdi8938oL	Brno
+BYzK5lZQwxoL	Mahilyow
+BDorfv0dyvoL	Natore
+USp79RVzztoL	Tampa
+ROvzKkoAwknL	Sector 6
+AUTdG6gvoknL	Canberra
+JPsVR4JJ53mL	Nara-shi
+INmygtSWkxmL	Ahmadnagar
+INnbntSzksmL	Dhūlia
+BRdJwZzbilmL	Olinda
+MAsLoe1Iq-lL	Kenitra
+PLy42jM407lL	Bydgoszcz
+MYhWpyXn10lL	Kuantan
+ITv0eiBA1xlL	Bologna
+KRtFj2mt6xkL	Cheonan
+VEjuZUH4skkL	Petare
+PKpzHsIGhwjL	Larkana
+SDk-XmSlptjL	Al Qadarif
+NZQhY+sL2sjL	Christchurch
+RUwA+ndj4xiL	Stavropol’
+JPseV4Ydv8hL	Toyota
+NZS2N-FvwwhL	Manukau City
+CNoMfz-jxvhL	Zhaoqing
+TRukmlLSvkhL	Ataşehir
+INo+cvdisihL	Bhāgalpur
+PKrRptJy36gL	Shekhupura
+BRXouXrH40gL	Carapicuíba
+DEyOXhRV9qgL	Wuppertal
+GHjV6f2cjkgL	Tamale
+RUybWzIU26-K	Ulan-Ude
+JPtB-4kNw3-K	Nagano
+BFj+VfPGq1-K	Bobo-Dioulasso
+PLyONkAwsz-K	Lublin
+CNvqcuYIgy-K	Huocheng
+USuIDNXQv-+K	Aurora
+GByoifuy+6+K	Coventry
+CAv38Usrn2+K	Halifax
+CNq2W0zulo+K	Anqing
+KZvQNsr-p49K	Taraz
+PHlRG1hOku9K	San Jose del Monte
+COhzWSky2t9K	Manizales
+KRtUz2jcpl9K	Kwangmyŏng
+IRtClonx-i9K	Zanjān
+JPtLF5C7998K	Iwaki
+PHlJB1gAuz8K	Bacoor
+JPvkB5Tyko8K	Asahikawa
+MXm2gOaKgg8K	Xico
+KRshx26Yy87K	Kimhae
+RU28onNSz27K	Arkhangel’sk
+IDer52ybso7K	Ambon
+IDf0z002466K	Samarinda
+MXm5aOXzp26K	Benito Juarez
+ESvYdfetsx6K	Bilbao
+ARWHgUk2ks6K	Santiago del Estero
+JPsY-4HAkl6K	Takatsuki
+GRuc3kE5y-5K	Thessaloníki
+MXmZTPeqpp5K	Villahermosa
+VEjENThMil5K	Barinas
+COhCnSnd3y4K	Neiva
+MXpLBOKn8l4K	Ciudad General Escobedo
+JPsbT4Yppj4K	Okazaki
+IRpqpqAWt93K	Bandar Abbas
+UAxgUlEDz73K	Vinnytsia
+AEpK2p8gn23K	Ras Al Khaimah City
+CNpVVy1Sg23K	Anshun
+JPsXA4F3us3K	Suita
+JPsK-4B4442K	Wakayama
+USsB8LCZ2w2K	Anaheim
+TWohm1nlko2K	Hualien City
+PHjqn2CQjo2K	Lapu-Lapu City
+INn5+tlLw51K	Punāsa
+ZAWx4k+tw51K	Diepsloot
+INqent0Fqw1K	Muzaffarnagar
+ITvkNh-9wj1K	Florence
+IRsjmoWv4-0K	Sanandaj
+INmiotnKn50K	Latur
+BRdbdZnwo40K	Campina Grande
+CAvhXR2ts5zK	Etobicoke
+CUnmhSJeqtzK	Camagüey
+CAvSGRjwt0yK	London
+CNvB11Ji+wyK	Chifeng
+KPuKY2sAi-xK	Hŭngnam
+KZyMoss5kwxK	Nur-Sultan
+ROvzikpV6oxK	Sector 2
+RUx-qmgMpmxK	Belgorod
+SDkrhlzos-wK	Kosti
+CNwRX3Qyp+wK	Taihecun
+QAo-YpKTr7wK	Doha
+VEjowUAS8zwK	Turmero
+RUztyrnW5ivK	Kurgan
+BDpJ4v3eyivK	Rangpur
+PKruWtK207uK	Bhimbar
+BYzn4lXqs1uK	Vitebsk
+PHi7Q2Fm6yuK	Iligan
+COj4dStW8wuK	Soledad
+CNoAY0KEipuK	Shiqi
+BRX64Xh3hmuK	Piracicaba
+CHw12hhRi3tK	Zürich
+INmN4t8Kt2tK	Kūkatpalli
+PKrHjs2z6mtK	Jhang Sadr
+TZezYmhXwktK	Arusha
+INkqDuQD5htK	Ambattūr
+JPtTD49PwysK	Kōriyama
+BGu-JkZmuwsK	Plovdiv
+MXnTBOE8jtsK	Celaya
+ZWZmHlhkossK	Chitungwiza
+JPswD44n9nsK	Kashiwa
+SYsoimXN1msK	Latakia
+CNupKuRZ0hsK	Aksu
+GMkxydCPghsK	Serekunda
+JPsuo4y1rvrK	Tokorozawa
+ARWO9Vim7jrK	Corrientes
+RUzY1mcuihrK	Kaluga
+BRgA4W6+4-qK	Macapá
+USsuWSA+n6qK	West Raleigh
+MXmurOW+62qK	Cuernavaca
+FRvifhSq81qK	Nice
+KPtgC2f5rnqK	Kaesŏng
+VEi4-UtDwiqK	Ciudad Bolívar
+JPsxH4zBrgqK	Kawagoe
+BDofqwEkr1pK	Tungi
+RU1UtlavjmpK	Krasnogvargeisky
+ZAWuNk+l9kpK	Randburg
+INlYktrOp5oK	Bellary
+BRXpkXwqn5oK	Itaquaquecetuba
+UAv-BmEGsyoK	Simferopol
+JPr7c3vTy2nK	Kochi
+GBzhYfwR3xnK	Sunderland
+USr-5LC7oxnK	Santa Ana
+BRYENXRzwlnK	Bauru
+CRjiCRDU-knK	San José
+EStojf6hl9mK	Alicante
+JPsNR31LvsmK	Takamatsu
+CNvCZ2BCzimK	Tieling
+IRs5Uo47j6lK	Qazvin
+INpSbvLjwslK	Muzaffarpur
+INoD5vtglllK	Kāmārhāti
+MXnpdNWh-hlK	Tepic
+SDlHtl9Yq9kK	Wad Medani
+CNsn30Dyq7kK	Jincheng
+BRaDLYM97ykK	Montes Claros
+DEygChhFikkK	Bielefeld
+BIezClOE09jK	Bujumbura
+PHjq62B94xjK	Mandaue City
+IRq0sokOu7iK	Khorramshahr
+INpx2tzuv4iK	Mathura
+IRr6BomLhjiK	Khorramabad
+SVk3+QJys-hK	Soyapango
+INqyUtlKowhK	Patiāla
+KPt682qB3vhK	Wŏnsan
+GByVHf8jsshK	Brent
+KZylutrtqphK	Pavlodar
+EStePfJss3gK	Córdoba
+INnF-uGM-0gK	Chānda
+BRVXNW5pjzgK	Canoas
+RUvgHnD-49-J	Sochi
+KPu3E3Ej4q-J	Chongjin
+CNvQY3Bgtp-J	Yanji
+INpAytRP-4+J	Bhīlwāra
+MAspmfC61z+J	Tétouan
+BRXouXyeyj+J	Mogi das Cruzes
+JPtDI4ZN889J	Toyama
+PEeJzRql669J	Piura
+GBy+-fdsw09J	Birkenhead
+INjvTtjL2v9J	Thrissur
+INm3cvEw2j9J	Brahmapur
+BRXetXwKp78J	São Vicente
+RUy1Pmafoz8J	Orël
+USp4nOr2qv8J	Corpus Christi
+CNrRm0J0pr8J	Suizhou
+ARWRPWEB7k8J	Posadas
+IQrUboYZm37J	Al ‘Amārah
+RUxWJn9f927J	Volzhskiy
+USsEnLIT476J	Riverside
+MXm3iOa7-26J	Ixtapaluca
+COheQS6S1l6J	Villavicencio
+BRXwYXqk1h6J	Jundiaí
+PAjN8R3z9+5J	San Miguelito
+RUzellsi-u5J	Smolensk
+PYW7gWSpuo5J	Ciudad del Este
+BRUtDWseil5J	Pelotas
+UAwlrlzH9+4J	Kherson
+INp6duNLy94J	Shāhjānpur
+JPuHx46Nly4J	Akita
+SNlQic-agw4J	Thiès
+CMjxAii4lu4J	Maroua
+ARTrgVlC+t4J	Morón
+BRaMeXTBjj4J	Anápolis
+INk9Btby+h4J	Shimoga
+UZuGWr52m83J	Samarkand
+RU4hpl4h-43J	Murmansk
+GByUuf+0n13J	Islington
+CUnbTScT+z3J	Holguín
+KZxxHur37y3J	Ust-Kamenogorsk
+IQrYAn-Jxq3J	Ad Dīwānīyah
+CNqHb097xp3J	Shangrao
+IDc8r0pJym3J	Mataram
+UZugAs3Hz+2J	Andijon
+GByS6f08+x2J	Reading
+ROwxTk6B8x2J	Iaşi
+ESuz4fKQot2J	Valladolid
+UAxohmI-3s2J	Poltava
+INqLntuolr2J	New Delhi
+JPsws42e9-1J	Koshigaya
+RUvTUn8N691J	Vladikavkaz
+BYzFtkPF191J	Hrodna
+PLx3pjYfk81J	Katowice
+INqRgtna951J	Rohtak
+CNwN011bqx1J	Baicheng
+PEcxQSB9mx1J	Chimbote
+ROwoMkMgsq1J	Cluj-Napoca
+PHlDZ1ilkm1J	Calamba
+NGjqnhwA130J	Bauchi
+RU1BmmvN6q0J	Cherepovets
+UStu+P9wlp0J	St. Louis
+COhnKSi6g+zJ	Armenia
+IQrj2oJT64zJ	Al Kūt
+ROwRJjxgt1zJ	Timişoara
+RU1DqnFy0wzJ	Vologda
+TRumWlJz8pzJ	Şişli
+USth1Q-D4jzJ	Lexington-Fayette
+GBzG+f8Li1yJ	Kingston upon Hull
+COhoNSzl5yyJ	Soacha
+MAsEEexamlyJ	Temara
+GBzHZfhO0-xJ	Preston
+AZudwoPe0+xJ	Ganja
+CNufn1fC-8xJ	Lianshan
+TRtbklK828xJ	Denizli
+NGiWGgmBs7xJ	Ikeja
+DEyCfhQul5xJ	Bonn
+CZxuAjQAg4xJ	Ostrava
+BGvXak9oiuxJ	Varna
+BRYxnY1DwqxJ	Vitória
+CNrAS08GsoxJ	Wusong
+PHi7u2HYjgxJ	Iligan City
+PEbMSTNLs6wJ	Cusco
+BRXq8WxDstwJ	Maringá
+JPrWR3XOj9vJ	Miyazaki
+IDhSfxk234vJ	Percut
+PEdBVSvv+uvJ	Pucallpa
+CNqan01jlpvJ	Jingdezhen
+BRXeBXxt4kvJ	Guarujá
+KPtsP2W006uJ	Sariwŏn
+RUz9anLno4uJ	Vladimir
+CLXlxTfDoyuJ	Antofagasta
+ZAVmAkwFyuuJ	Botshabelo
+IDephyLjwuuJ	Bengkulu
+PHjLp2UZtuuJ	Butuan
+MXn7HOmXr4tJ	Tampico
+CAvm9R+3r0tJ	Oshawa
+PHlEx1iJpwtJ	Cabuyao
+RUygA0LY0otJ	Chita
+AUUSr6+60itJ	Newcastle
+COjuFS+itgtJ	Valledupar
+DZsZChBLz4sJ	Biskra
+DExmJhgV43sJ	Mannheim
+UAyUClj8kvsJ	Chernihiv
+JOrk0mX54osJ	Irbid
+INkvlttP-ksJ	Tumkūr
+KRsg12xUqhsJ	Chinju
+GByV5fd480rJ	Newport
+MYhgl09V+orJ	Tawau
+CNtUe1EKyorJ	Shengli
+INpp1t7-pnrJ	Fīrozābād
+EGqa9le65mrJ	Al Fayyūm
+BRc4nUo6kgrJ	Porto Velho
+ARXZcUZEj3qJ	San Salvador de Jujuy
+ZAWq+lCx8wqJ	Brakpan
+UStfvKb-6vqJ	Stockton
+PHlL21hKotqJ	Mandaluyong City
+INmo4t4l+oqJ	Nizāmābād
+INocBvcF9nqJ	Kulti
+MXocQOX8jgqJ	Ciudad Victoria
+MXm24OZi09pJ	Tláhuac
+BRYsoXkrx8pJ	Franca
+INmC9uick1pJ	Rājahmundry
+USuYPRx0nopJ	Pittsburgh
+ROvwckOyugpJ	Craiova
+ROvtWlFynpoJ	Constanţa
+RUzQ+oB-ipoJ	Saransk
+AFtDVr7kyloJ	Mazār-e Sharīf
+INoRMvnn90mJ	Barddhamān
+SEzxViT6q0mJ	Malmö
+PKrlPtKziumJ	Gujrat
+JPpUk2sv73lJ	Naha
+BYyhgkNgr1lJ	Brest
+PKsKMszwoslJ	Mardan
+RU1xxtDUvqlJ	Surgut
+GByWpfTIgqlJ	Swansea
+CNvcMuzMg-kJ	Xinyuan
+CNoz5zpHg-kJ	Yangshuo
+KZv8prpWg-kJ	Kyzylorda
+MYh7Ix1lg-kJ	George Town
+PHlGX1hng-kJ	Biñan
+PKo3mr8pg-kJ	Malir Cantonment
+SSjNEk5sg-kJ	Winejok
+TRuNfl0Zg-kJ	Batikent
+VEjDdTWZg-kJ	Mérida
+PHlYv1b9-rkJ	Angeles City
+GBzIGfsEupkJ	Bradford
+PHlZB1byg-jJ	Santol
+US1xCFWen2jJ	Anchorage
+MXpxdMdHh0jJ	Ciudad Obregón
+JPsiE4Wb9yjJ	Kasugai
+IDdGC0Np5yjJ	Jember
+JPugz5BO6sjJ	Aomori
+JPscc4J20ljJ	Ōtsu
+INoFCvuuvkjJ	Bārāsat
+TRtwDm+R0gjJ	Elazığ
+CAx6DKyEh0iJ	Okanagan
+UAxkxlsygziJ	Cherkasy
+ESvBBecw0riJ	Vigo
+JPsUm4AE-piJ	Akashi
+INoDYvtHtgiJ	Bāli
+USt6WQ+av-hJ	Cincinnati
+INqXatdj0vhJ	Hisar
+INqPluDJivhJ	Rāmpur
+JPsbr4SYh9gJ	Yokkaichi
+KRsW-2sgyzgJ	Yeosu
+GByUxgIIusgJ	Southend-on-Sea
+JPuHZ5F9kogJ	Morioka
+CLUQgTR530-I	Viña del Mar
+UAyGvmL84x-I	Sumy
+JPtbB4+M9q-I	Fukushima
+ROwJ7k-Jnm-I	Galaţi
+BRWbbXRv9h-I	Blumenau
+INqIctyL0g-I	Greater Noida
+INqKWtv10g-I	Noida
+BRW6pWS6z0+I	Foz do Iguaçu
+SApBLo0M7p+I	Al Hufūf
+INmB8unr7h+I	Kākināda
+INqcutruo+9I	Pānīpat
+KZx7euRQs99I	Semey
+NGiv-hg9l59I	Makurdi
+AUTwq600+q9I	Wollongong
+BRXE8XFRxq9I	Ponta Grossa
+NGjazhKfhi9I	Minna
+PLy5EkHjvg9I	Białystok
+TZc1el8lh68I	Mbeya
+THk7ax3oj38I	Mueang Nonthaburi
+KRs1y20L+l8I	Gumi
+RUyv7nXh1j8I	Tambov
+ITtVJirdvj8I	Catania
+SApCKo0Oy-7I	Al Mubarraz
+CMh8ph2hw+7I	Bafoussam
+PKrEHtPEz67I	Kasur
+NLyhWg6Rh37I	Utrecht
+CNnHIzm5wm7I	Xiuying
+BRdLTZzOzl7I	Paulista
+IQriun5Zt96I	Al Ḩillah
+BRX+hXkrh86I	Limeira
+INm2dtpe966I	Parbhani
+CAxOLKEi566I	Victoria
+CNno3zZTg56I	Beihai
+CNoN60Vyxt6I	Huizhou
+TRuk2lI3n-5I	Zeytinburnu
+HKn9E0SW4+5I	Tsuen Wan
+UStrGRTJp85I	Ironville
+UStqGRS9p85I	Meads
+DZs3ig9mt25I	Sétif
+MAre-eW5jt5I	Safi
+KPuQg2HXwr5I	Sinŭiju
+ROvxykpM0i5I	Sector 4
+VNl2mzIMxv4I	Huế
+INpTGvRUut4I	Darbhanga
+DEzC7hyu9r4I	Marienthal
+TRuf+lZ6ji4I	Adapazarı
+TRukFlNC+83I	Sultanbeyli
+USs0GLjxj-2I	Henderson
+USs02R0J+02I	Greensboro
+BRVTfW7e1y2I	Viamão
+EGq4Clmapt2I	Zagazig
+USv+uPczss2I	Saint Paul
+MYh5SyVgps2I	Kuala Terengganu
+EGq4alvLtk2I	Ismailia
+VEjDiTg-h01I	Alto Barinas
+IQtG7npHgr1I	Dihok
+DExbOhfn3k1I	Karlsruhe
+PGcoV6KP1i1I	Port Moresby
+USrvYOzym90I	Plano
+JPsoM451r80I	Ichihara
+KRsx62kdt70I	Iksan
+VNkWpzaYx50I	Nha Trang
+BRXoRXxFy10I	Suzano
+INpzMtn08y0I	Alwar
+PHlLv1iGkx0I	Cainta
+HTmlQTJjst0I	Pétionville
+JPs8T4ud3i0I	Maebashi
+INn2cumvxi0I	Bilāspur
+AUWLD7OCxh0I	Logan City
+CLUQQTRBw6zI	Valparaíso
+IDfrV1T2-5zI	Palu
+IDcYj1+X84zI	Kupang
+UAx3zlGRwyzI	Zhytomyr
+USue9S0F4qzI	Newark
+COiMuSj29nzI	Itagüí
+MXm+9OWHnmzI	Nicolás Romero
+TRugflO286yI	Gebze
+BDogYwIK4vyI	Narsingdi
+DZspFhGP+myI	Batna
+CNrfg1B9mgyI	Chuzhou
+TRtcRlKb14xI	Merkezefendi
+JPsjR4Uer4xI	Ichinomiya
+PEZmETgrixxI	Tacna
+DEzDchxmguxI	Hamburg-Nord
+PKsXbs3UqrxI	Mingora
+USu0FRJVtnxI	Toledo
+MXrVQLRW1mxI	Ensenada
+NGiuOg4A34wI	Efon-Alaaye
+RU0I1og48xwI	Yoshkar-Ola
+RUwy4m6jwwwI	Taganrog
+VEjo2UJgqrwI	Santa Teresa del Tuy
+UAxL5mw92gwI	Horlivka
+CAvCjRPd9vvI	Windsor
+MXm+rOYYnuvI	Coacalco
+NGitkg18wsvI	Ilesa
+RU0ignRp4kvI	Kostroma
+ESvere-lyhvI	Gijón
+ITunui-8r8uI	Bari
+USugbO0Jk7uI	Lincoln
+IRrnxpKX26uI	Khomeynī Shahr
+TNsWih6b+4uI	Sfax
+FRwycfuU14uI	Nantes
+ECe9-R9GkvuI	Cuenca
+NGijwg-k+iuI	Owo
+ARSO6U7eiiuI	Bahía Blanca
+IDdikzAl+9tI	Sukabumi
+ROwOwkjV4ztI	Braşov
+RUx+S4W3kutI	Komsomolsk-on-Amur
+JPu2o5BQyotI	Hakodate
+DZtDugkNultI	Bab Ezzouar
+CMj0cidCn5sI	Mokolo
+BReq+ZINrysI	Caucaia
+FRxRjhYI9ssI	Strasbourg
+GBzaYe8lyqsI	Belfast
+CNuCLtgl9osI	Kashgar
+IQr4gnsvrjsI	Ramadi
+INl70tPMv+rI	Ichalkaranji
+JPsYQ4GdoyrI	Ibaraki
+JPsTt4G095qI	Yao
+AFsNmrDsmtqI	Herāt
+CUnKZSoShtqI	Guantánamo
+RUvd0nwSgtqI	Nal’chik
+PHl1k1cEqqqI	Baguio
+BRX-4YUuzpqI	Petrópolis
+QAo-hpJFxiqI	Ar Rayyān
+DExzphd2whqI	Wiesbaden
+COjHESgpkhqI	Montería
+SIwX6ilC86pI	Ljubljana
+SAqHAoLC6opI	Hafar Al-Batin
+JPsXM3+DyopI	Kakogawachō-honmachi
+ROvyEkoo3mpI	Sector 5
+IDdZQzPTn5oI	Tasikmalaya
+INl+2tde42oI	Bijapur
+USqJZRiF2yoI	Orlando
+CNsd41CetqoI	Linyi
+GBy0SfvMkkoI	Derby
+PHlGw1hPo8nI	San Pedro
+DEyebhWwo7nI	Münster
+DEyUBhQvs2nI	Gelsenkirchen
+KRsYL2eDyjmI	Mokpo
+MXpINOJA7hmI	Santa Catarina
+JOrYlmaIt+lI	Russeifa
+NAX+pjCXk7lI	Windhoek
+CDdt-jsqmmlI	Tshikapa
+EGrEdlWzqjlI	Kafr ad Dawwār
+JPsHM37ExilI	Tokushima
+ILrqzmOFkhlI	Haifa
+RUzEQp8l-+kI	Sterlitamak
+SApyRnaW93kI	Ha'il
+ESut0gYmtnkI	Eixample
+BDoDjv9n0kkI	Bagerhat
+CNrAK0L++0jI	Chengzhong
+CNoWXzyi2zjI	Wuzhou
+USrmvLL29wjI	Chula Vista
+CNwyJ1+qgkjI	Hulan Ergi
+INob9we6zjjI	Aizawl
+DEyDchFN4-iI	Aachen
+AZuboo1H+9iI	Sumqayıt
+PHi512FTo6iI	Mantampay
+RU198mGyh6iI	Petrozavodsk
+SDkE0kpQ+wiI	El Daein
+NGh9uhVR2uiI	Umuahia
+MXm5tN213niI	Uruapan
+USueyS1KijiI	Jersey City
+CNrMEynCo+hI	Mianyang
+TRuIfmlK26hI	Sivas
+ZAWzSlMm7qgI	Witbank
+KZx4IqK45pgI	Aktobe
+ARUt6VPU3kgI	Paraná
+INnDftfay8-H	Jālna
+INmKwt9zj7-H	Lal Bahadur Nagar
+DEyMvhJSuz-H	Mönchengladbach
+CAvmNR6Ilu-H	Markham
+INoKmthVij-H	Dewas
+COjTuSmJji-H	Sincelejo
+CNvgb1vG2-+H	Tongliao
+BRY+nXepr3+H	Uberaba
+USr15MHf82+H	Chandler
+USun8Q3bmn+H	Fort Wayne
+GBx6OfQ3rj+H	Plymouth
+INoDNvtio-9H	Baranagar
+CNwNTvF0g99H	Karamay
+CNuajucng99H	Aral
+KEf5Amaa-59H	Nakuru
+VNjkZyzouw9H	Cần Thơ
+DExMth8A8j9H	Augsburg
+JPsj54xVs-8H	Hiratsuka
+INmSxuy0g88H	Gajuwaka
+CNqj80n1338H	Jiujiang
+CNulm0G4l28H	Jining
+COg3eSYU9y8H	Popayán
+SAmOEn2Etw8H	Najrān
+YElK6ou70i8H	Mukalla
+USvP5R+i3g8H	Buffalo
+GBycif7Qi-7H	Luton
+IDdjPzf2587H	Pekalongan
+VEjt4Ulv337H	Cumaná
+INovRuXoy37H	Satna
+BRcdBT8eqz7H	Rio Branco
+USszDR+Tkz7H	Durham
+INphTuDFot7H	Etāwah
+MXpF2Nmcoq7H	Gómez Palacio
+BRXIHWfz0k7H	Cascavel
+USp38RTT7h7H	St. Petersburg
+ESutKgX5ug7H	L'Hospitalet de Llobregat
+NGihag3At-6H	Ondo
+MZZM-l89o96H	Chimoio
+USr+KLDc-86H	Irvine
+FI1Z-kYf436H	Espoo
+ESuXEfVYk06H	Latina
+MXpK7Mn2lz6H	Los Mochis
+RUz9UyEI4y6H	Bratsk
+MXnJxOcooy6H	Pachuca de Soto
+TRtIFmNAiv6H	Tarsus
+USpx6OT1xv5H	Laredo
+IRtAApbtkt5H	Sari
+INniOucvzp5H	Durg
+UAx-8kqaik5H	Rivne
+MXmEVOzg1h5H	Oaxaca
+MXn47ODjnh5H	Soledad de Graciano Sánchez
+CNvRSv2p094H	Turpan
+NGh16hXx264H	Ikot Ekpene
+CNsh40h0q04H	Heze
+JPtmB49Dqy4H	Yamagata
+IDdnZzTI6q4H	Cirebon
+BRVcpW6Qx83H	Novo Hamburgo
+BDnn3wW3863H	Cox’s Bāzār
+PLzYmjS2i53H	Gdynia
+ESuXHfVou33H	Carabanchel
+INoI9vt9lp3H	Naihāti
+BRattYvVxm3H	Vitória da Conquista
+CNrg9z2h4l3H	Laohekou
+CLS8TTAGoh3H	Talcahuano
+ZAVxBlshoh3H	Richards Bay
+GBysmfn2372H	Wolverhampton
+SDk2Hkgah22H	El Fasher
+SGgguyc4yz2H	Woodlands
+SNlQZc+9gt2H	Thiès Nones
+ETjaSncV3r2H	Dire Dawa
+COigtTAcrr2H	Floridablanca
+CNwlT2k61q2H	Suihua
+BRXpAXqp6i2H	Barueri
+IRsDWoqr2h2H	Borūjerd
+DEzDGhxSjg2H	Eimsbüttel
+CNpdKyox8-1H	Liupanshui
+IRsmMpKz691H	Qarchak
+PEbr1ST1g41H	Santiago de Surco
+BRX0BX5r531H	Taubaté
+CNruz0AXs01H	Nanyang
+PHlWH1dHwr1H	San Fernando
+TZdkymsf2g1H	Morogoro
+BRZTCYit+-0H	Governador Valadares
+INk2SuHnl+0H	Tirupati
+IDh+Gw8rl80H	Banda Aceh
+CNuFi1sL-20H	Wafangdian
+INqTytsT500H	Sonīpat
+CUn94RyLw00H	Santa Clara
+NGitvgvkry0H	Iwo
+PHjLh2T7xv0H	Libertad
+NGjqJh-Dys0H	Gombe
+DEzCjhxBwq0H	Altona
+INkqbuPd8l0H	Āvadi
+BRXdvXwCrl0H	Praia Grande
+HTnFvTDWwk0H	Port-de-Paix
+MXm5IOXwwk0H	Colonia del Valle
+RSvZ3j5Nwk0H	Niš
+SDkrMmCDwk0H	Singa
+CLUDmTbmig0H	San Bernardo
+BRab8WBV48zH	Várzea Grande
+PTuoYeeBh5zH	Porto
+BRX-eYKMs3zH	Volta Redonda
+PHlNv1gI3zzH	Navotas
+UAxP8lvCuzzH	Kropyvnytskyi
+BRVchWbzjszH	Santa Maria
+USr8FN5HymzH	Lubbock
+USvUJQG03jzH	Madison
+MXmkKOr1s8yH	Tehuacán
+JPs0q4N5j8yH	Fukui-shi
+UAxP5mJs-3yH	Kamianske
+FRvgYgsH8tyH	Montpellier
+NGjTKiNv0qyH	Jimeta
+PLyD5jZl9pyH	Częstochowa
+INkrauRp7nyH	Tiruvottiyūr
+COhQiSb1ylyH	Palmira
+UZuJFrdD86xH	Bukhara
+GByT2f+d+5xH	City of Westminster
+USr29MIG23xH	Gilbert
+INoedt-3lxxH	Saugor
+THmMTyRe-txH	Udon Thani
+DEyEyiTG0txH	Chemnitz
+PEa-4SiY8hxH	Ica
+RUyNMqaW0hxH	Orsk
+ZAWgKk8ui-wH	Vanderbijlpark
+VEiwvTKP35wH	San Cristóbal
+JPs7K4+Aq4wH	Mito
+UStGdScD5zwH	Norfolk
+CNsmK1PIzzwH	Rizhao
+GByGVfwB5twH	Southampton
+MMloDxd5xpwH	Kyain Seikgyi Township
+ESva7egeopwH	A Coruña
+INpOUu2vipwH	Mau
+JPsEj3R66gwH	Shimonoseki
+PEafSTiCr9vH	Juliaca
+CNppE0cNoovH	Ji’an
+IRtGXprcpmvH	Gorgān
+RU1qltnApmvH	Nizhnevartovsk
+DEylVh3xr-uH	Braunschweig
+CNsw50TQ29uH	Hebi
+MMmKexJv40uH	Bago
+INo9dvNEmwuH	Bihār Sharīf
+VEjtbUHG4vuH	Baruta
+ARTrJVjyouuH	Merlo
+ESuXLfWV3tuH	Puente de Vallecas
+TRulFnEAzruH	Trabzon
+BDoPPv3DzouH	Jessore
+TRtuok4DjouH	Manisa
+UStmfQwQ39tH	Louisville
+BRY+IYNEv5tH	Santa Luzia
+KRsyt2hsu2tH	Gunsan
+KRtR82vu71tH	Wŏnju
+AEoqTpr4t0tH	Musaffah
+RUyrfyd-2utH	Angarsk
+RUzyVmtI4ptH	Mar’ino
+INqNwt09ontH	Hāpur
+INqvYtUowjtH	Bathinda
+SYskFnItl8sH	Deir ez-Zor
+CNsSjzkT45sH	Huayin
+SOjtjoAKo1sH	Berbera
+MXm-1OZfgzsH	Ojo de Agua
+CAwK2SirsusH	Gatineau
+CNqObymk-tsH	Yibin
+ARSJoT5pstsH	Neuquén
+PHj-22ORptsH	Tacloban
+RUv5umttgmsH	Novorossiysk
+USuDgKsyl5rH	Reno
+EGokMl2UtzrH	Aswan
+USs1eRvAiyrH	Winston-Salem
+INpvTuJbgwrH	Farrukhābād
+TRulBlMlorrH	Sancaktepe
+JPs6y4ts5mrH	Takasaki
+INlOAtzA65qH	Anantapur
+COhYSSTjj4qH	Buenaventura
+AZtx3orzs1qH	Lankaran
+USr7MMDk+vqH	Glendale
+JPsgO4p5usqH	Fuji
+RUz39mp3-qqH	Khimki
+GBzInfdTx5pH	Blackpool
+CNqzG0Kuu5pH	Xiantao
+JPuZm5J8mupH	Hachinohe
+CAvlgR3fyopH	Vaughan
+BRVWpW706lpH	Gravataí
+JPsXH4HI1+oH	Neyagawa
+MXm36OXM-6oH	Magdalena Contreras
+BDojcv+m26oH	Nāgarpur
+JPr2I3M+1zoH	Kurume
+TRuGPk9RnyoH	Balıkesir
+CLSOdTF-xxoH	Temuco
+DEyQLhKkgtoH	Krefeld
+OMoaoqWD4noH	Seeb
+INn5vvuX3moH	Bārāsat
+DKz93h0Lv-nH	Århus
+JPryw3D+k8nH	Sasebo
+PHk5C1hX65nH	Batangas
+SApmyo0l62nH	Al Jubayl
+MMl90w11hxnH	Pathein
+IDdjrzZx8wnH	Tegal
+USpMZRuntwnH	Hialeah
+BJjc7gS9wvnH	Djougou
+BDo2lwVSounH	Sylhet
+USrs8O0dhrnH	Garland
+INoS5tVyrpnH	Ratlām
+USr6hMG1npnH	Scottsdale
+USrqsOw8-hnH	Irving
+SKxUgjx3zgnH	Košice
+UAxK5knJ62mH	Chernivtsi
+PKqrtsju9xmH	Dera Ghazi Khan
+MXmc-PNbvumH	Coatzacoalcos
+CNtZb0Co5smH	Yuci
+ESuufgZBnmmH	Sant Martí
+PKq50s-uvlmH	Sahiwal
+UAxnnkjJ8kmH	Ternopil
+ESvPEfhltkmH	Gasteiz / Vitoria
+RU2Dn3EEwimH	Yakutsk
+UStF1ScKl9lH	Chesapeake
+BRdDgZmrr7lH	Caruaru
+EGpTYl0Wi7lH	Qinā
+BRhAKVNru0lH	Boa Vista
+IDdOIz6fn0lH	Kediri
+GYia1VqUpwlH	Georgetown
+INmqxuIO4vlH	Ramagundam
+SOf32nkEkrlH	Kismayo
+YEk90n2t1qlH	Ibb
+TMt5IrTYhqlH	Türkmenabat
+USs3uLiO3plH	North Las Vegas
+EStOOfW916kH	Granada
+RUzyCpNp55kH	Nizhnekamsk
+BJiT1gdn41kH	Porto-Novo
+DEyTfiIT7zkH	Halle (Saale)
+CAvcKRr9knkH	Kitchener
+ZAWzklAsq9jH	Centurion
+PHipe2XXm5jH	Magugpo Poblacion
+DEzCjhx941jH	Hamburg-Mitte
+RUz-znubm1jH	Dzerzhinsk
+GHhvdfr+3ujH	Takoradi
+DEzUGhzT2pjH	Kiel
+CNs1Oz012jjH	Linfen
+UStWbKUCu4iH	Fremont
+CDgLLlPVgyiH	Beni
+FRv8Xf5ZktiH	Bordeaux
+INqo2tIh+siH	Gangānagar
+JPskG4yGpniH	Chigasaki
+BEyJqgqSliiH	Gent
+PHlLS1iNkhiH	Taytay
+JPsve42m1giH	Sōka
+CMimviak99hH	Ngaoundéré
+KRsbU2qhsshH	Suncheon
+KRtAr2oT39gH	Sejong
+ARTulVjWg6gH	José C. Paz
+RU17MpCK73gH	Syktyvkar
+EStmrf4Bg3gH	Elche
+SOgnDn9Z02gH	Marka
+UZvGCqmO2zgH	Nukus
+ARTpuVpFwzgH	Quilmes
+EGqnDlkIwzgH	Ḩalwān
+NGiI0hMxwzgH	Atani
+GBygOf3Z1xgH	Milton Keynes
+DEyiMiEUiugH	Magdeburg
+BRZq-W8jzogH	Rio Verde
+PKpVFsKRgkgH	Nawabshah
+LBsPjmX02ggH	Tripoli
+INprVtxqoggH	Bharatpur
+CAwMFS7hy+-G	Longueuil
+JPsmh4xtv6-G	Atsugi
+HTmmuTKOn4-G	Croix-des-Bouquets
+ZAT-1kg9wx-G	Uitenhage
+ROv+2koAzv-G	Ploieşti
+MYiAgx3Urv-G	Sungai Petani
+IDhR7xgi7s-G	Binjai
+PHk9A1nu2s-G	Lucena
+BRZE-YcBqs-G	Ipatinga
+INmjluETps-G	Karīmnagar
+USq0wPyfun-G	Baton Rouge
+VNjj1yrlkg-G	Rạch Giá
+FRyALgizo-+G	Lille
+MYhkG0Q907+G	Miri
+ESuYWfWdr6+G	Ciudad Lineal
+GBySlgBsg1+G	Bexley
+BRX4rXmNp0+G	Sumaré
+EGrCMlaqnz+G	Damanhūr
+BSo6NSQAkz+G	Nassau
+PYW-YVxrkx+G	San Lorenzo
+CLY0CTh2rl+G	Iquique
+UAxckl8Pml+G	Kremenchuk
+INkPjuMSzi+G	Puducherry
+PLx4TjZW-+9G	Sosnowiec
+CUoNYRW79+9G	Diez de Octubre
+EGp-Pld9u69G	Al Minyā
+RUyPRmujh19G	Staryy Oskol
+CNs9k0nkyz9G	Liaocheng
+NGkU8hL0px9G	Gusau
+DEyisiEXjx9G	Neue Neustadt
+PLyRsjwmqv9G	Radom
+ARTv4Vhs1m9G	Pilar
+INoFwvtItg9G	Shrīrāmpur
+CNwlW2Mp6-8G	Fendou
+IRs4CqQSn88G	Sabzevar
+AObdRizEh78G	Huambo
+RUvZloH1058G	Groznyy
+AUSb85qfy38G	Geelong
+INlwwtwIq18G	Rāichūr
+CNoay0zMk18G	Huanggang
+INmOPt8r4w8G	Quthbullapur
+NGjpqiW8pt8G	Mubi
+ROv0ckoXtl8G	Sector 1
+CDfHUlIKtj8G	Bukavu
+UStgcQ+12i8G	Lexington
+BRdb3ZAru+7G	Juazeiro do Norte
+BDozVwEnm77G	Mymensingh
+INqjptr6547G	Karnāl
+ZAWsqk9Io37G	Roodepoort
+TZeMpm82sz7G	Tanga
+CNq5d0G0nz7G	Jingling
+BOZO4UZdmy7G	Sucre
+MZa0nnO67w7G	Nacala
+ILrTcmKPws7G	Ashdod
+JPsnt4yiv46G	Minamirinkan
+ESvare9fl46G	Oviedo
+SRiFfWMUtw6G	Paramaribo
+TRtbWmzfgw6G	Adıyaman
+INpFivDR8t6G	Arrah
+PKq9GtDtgt6G	Okara
+BDoZVwFums6G	Nārāyanganj
+CNseJzZIzr6G	Tongchuanshi
+INo0hws3jp6G	Imphal
+IRrmnpIa6m6G	Najafābād
+USs1aLh5-95G	Paradise
+UZt0Srshy15G	Qarshi
+INn4YvyWsx5G	Gosāba
+PHjdn1G8xu5G	Puerto Princesa
+CNsw707w7n5G	Xintai
+ESqHzdHDxm5G	Santa Cruz de Tenerife
+KPtho2WW8l5G	Haeju
+ATwvBivy2j5G	Graz
+NGintgvow+4G	Ikire
+BRXl2Xq7lx4G	Embu
+ARWsJVqHnm4G	Formosa
+RUw9pnJjgk4G	Shakhty
+RUx4I2rHwj4G	Blagoveshchensk
+PHlRc1Yi6-3G	Olongapo
+BAv69jDoy93G	Banja Luka
+VNjwezC5m73G	Thị Xã Phú Mỹ
+IRs4Dqc9h43G	Neyshābūr
+CNqnQ0iu1v3G	Wuxue
+BYy5MlMelr3G	Babruysk
+ILrXgmL0sq3G	Rishon LeẔiyyon
+MXnDjP6Bln3G	Campeche
+UStWjSOrhk3G	Richmond
+PHlgY1gU6i3G	Cabanatuan City
+ESuZjfVi192G	Fuencarral-El Pardo
+INo8Lura972G	Mirzāpur
+ITtlHiw8s52G	Messina
+LKibpuMwz12G	Dehiwala-Mount Lavinia
+JPsX44EDt02G	Takarazuka
+INn8Wvhjxw2G	Kharagpur
+INodovXh0v2G	Dhanbād
+INj1buEbzt2G	Tanjore
+ESuvNgZk7s2G	Badalona
+JPsyj40fpo2G	Ageoshimo
+PHlJJ1i5ki2G	Binangonan
+DEyTahOFoh2G	Oberhausen
+THkwEx898g2G	Chon Buri
+ITwJxh8+-+1G	Verona
+RUzKpvaq471G	Prokop’yevsk
+KEgL1mRSuq1G	Eldoret
+CNuHCy-U7p1G	Wuhai
+CMhoKibs--0G	Bertoua
+BReCPXjp6-0G	Imperatriz
+DOmj7Trbr50G	San Pedro de Macorís
+INm05tAe010G	Amarnāth
+MYhuXx6Hvx0G	Taiping
+MYiLSx134o0G	Alor Setar
+IDdXHza1mk0G	Purwokerto
+BRXAeXP8o9zG	Colombo
+USud9S4Qi5zG	Jamaica
+RU0o1m5800zG	Rybinsk
+AUQwQ6MRwyzG	Hobart
+PHlFr1h+qyzG	Santa Rosa
+KEf9rmLg-szG	Kisumu
+USsIJLJgshzG	San Bernardino
+PHlIW1f-jhzG	Imus
+RUzzhmuNg+yG	Vykhino-Zhulebino
+DExEKhZV+8yG	Freiburg
+GByk+f1878yG	Northampton
+IDdqyzGd73yG	Purwakarta
+RUz56mnCv1yG	Zelenograd
+GByVcf+ezzyG	Archway
+PKpE5sRNpzyG	Mirpur Khas
+CIicfe2nkzyG	Daloa
+ETkzHnBI6vyG	Mek'ele
+RUyrfvJdmsyG	Biysk
+CLS5-TA21ryG	Concepción
+RSwFujhsoryG	Novi Sad
+CNt5v1o36qyG	Jinzhou
+MXpkRN+EnnyG	Monclova
+VEi-hTWq7myG	Mucumpiz
+MXolaMZBqkyG	La Paz
+RU0zrljy2gyG	Velikiy Novgorod
+NGh8yhQB+-xG	Owerri
+RU1TwlZbhzxG	Centralniy
+NGib1gpf+wxG	Shagamu
+BRXmYXrn7vxG	Taboão da Serra
+ETjCjm+xr-wG	Nazrēt
+INi6HtxAi7wG	Nāgercoil
+UAyDDkgV90wG	Lutsk
+NO1eRg8kxywG	Bergen
+ROwGLk+ShywG	Brăila
+IRsyJo-ysswG	Naz̧arābād
+CNriOy0B1rwG	Guangyuan
+IRs-DoNwzqwG	Būkān
+USw8hLH74owG	Spokane
+GBytkgOxulwG	Norwich
+BRXtrX1A2jwG	Jacareí
+JPsrc4zvx-vG	Chōfu
+IDfyv00Rw6vG	Loa Janan
+CLT2bTbF32vG	Rancagua
+PLyjrjvV+1vG	Mokotów
+MXrIcMRu1xvG	Nogales
+USr6xQkYtvvG	Birmingham
+MYh6Cx3FprvG	Bukit Mertajam
+PHk9P1ij-pvG	Lipa City
+BRYGgXHu6nvG	Marília
+DEzJ0h5mvnvG	Lübeck
+MYg9SyFryivG	Sepang
+EStXuf0x8gvG	Cartagena
+TRulllGSisuG	Esenyurt
+UStYfKfViquG	Modesto
+TRuKsl9OimuG	Kırıkkale
+CNxfk1R66juG	Hailar
+ESux3gW89-tG	Terrassa
+SAmehnjnm+tG	Abha
+LYriEibHp4tG	Tarhuna
+EGrIalYu23tG	Idkū
+JPs4g4hvr3tG	Matsumoto
+CNoHw0IirvtG	Daliang
+VNk5fzatittG	Qui Nhon
+USuyoPW86stG	Des Moines
+INpKetCQ3ltG	Pāli
+CUoMPRWvlktG	Arroyo Naranjo
+BDo1fv41witG	Bogra
+KZy66rT5witG	Kostanay
+TRs35mbYwitG	Antakya
+USvWASM6q8sG	Rochester
+KRtd22tUy6sG	Chuncheon
+VNjrbzCYz4sG	Vũng Tàu
+NLySjg+U02sG	Eindhoven
+IDhDWxnLu2sG	Pematangsiantar
+KPukR2gQ6zsG	Kanggye
+BRYIhW3T+ysG	Presidente Prudente
+CNpVT06OkxsG	Sanming
+EGpcUlonrwsG	Sohag
+FRxGzfs8-usG	Rennes
+BRVayW6DtqsG	São Leopoldo
+NGibLgsk3osG	Ijebu-Ode
+INqtktvUjhsG	Yamunānagar
+THlUqyJst8rG	Nakhon Ratchasima
+PLy2WjTmt6rG	Toruń
+BOZmxUD-s5rG	Oruro
+PLyFljqs22rG	Kielce
+INouPuc7tyrG	Rewa
+DOmjUTvP1xrG	La Romana
+BWXO+kmx7wrG	Gaborone
+CNt9I08LxvrG	Hangu
+USr6WMDr9prG	Maryvale
+USwzQKO3sirG	Tacoma
+AObmpiaA8hrG	Lobito
+NZS6m-EQ5-qG	North Shore
+IDdyEy99y-qG	Ciputat
+IRqeLp5h94qG	Sirjan
+USt0wSSur4qG	Arlington
+PHlAI1ka52qG	San Pablo
+EStC0e6Ls1qG	Jerez de la Frontera
+USsHyLH2kzqG	Fontana
+USsKLK0C2sqG	Oxnard
+IDdq2y+AsrqG	Ciampea
+JPsyz42CjiqG	Kasukabe
+ROwujj5Y24pG	Oradea
+DZtHrhYXq3pG	Annaba
+ESuxVgYA90pG	Sabadell
+ESuVjfUBu0pG	Móstoles
+MGZjAoyFlxpG	Toamasina
+BDpHKvwf6spG	Dinājpur
+MXm+MOXrhopG	Buenavista
+BRavjZBF86oG	Itabuna
+JPsQT4EK53oG	Kishiwada
+CNr9Z0y9qqoG	Suzhou
+BRYK+XfHrnoG	São Carlos
+ATxLPiiiuhoG	Linz
+ESuZMfZx+4nG	Alcalá de Henares
+CNq8Uy3NwynG	Gaoping
+JPset4r-+wnG	Numazu
+UAxZOkZJotnG	Ivano-Frankivsk
+USsEQLKLmtnG	Moreno Valley
+INmOUt9o2snG	Secunderabad
+JPtNU4k0prnG	Jōetsu
+HUw5mj2C8qnG	Debrecen
+INmXgtx8npnG	Bīdar
+ITwJRiHOt+mG	Padova
+CUnc-SUek9mG	Las Tunas
+VNjqLyzRk6mG	Sa Dec
+BRX32Xmvt4mG	Hortolândia
+PRmiqUPTr3mG	Bayamón
+CNwkB2ONg3mG	Daqing
+MXnVJNSuuymG	Puerto Vallarta
+INoeZwOjgwmG	Agartala
+DEyICh9h2vmG	Erfurt
+INpBavX47smG	Monghyr
+CMhWehzStsmG	Edéa
+RU1T+lYOypmG	Vasyl'evsky Ostrov
+JPsiQ4vU7omG	Odawara
+GHiBpf8Q0lmG	Atsiaman
+TRtLomca1imG	Osmaniye
+CAxhFKJEvhmG	Burnaby
+IRs-vpXXshmG	Bābol
+INnk4tjUn+lG	Burhānpur
+FI13ckOp-9lG	Tampere
+MXlTJPmUw9lG	Tapachula
+CNqKjz+Cw7lG	Yiyang
+TRuomk8Ty6lG	Çorlu
+DEzAhhxmr6lG	Harburg
+CNsqGyWQi1lG	Linxia Chengguanzhen
+BDoEqwENiwlG	Barisāl
+IDdufzA8uulG	Cileungsir
+INoEas8-zqlG	Nadiād
+BReJ9ZXG1olG	Mossoró
+RU0jklCjmolG	Pskov
+USsdoR+irnlG	Fayetteville
+CNsc9zu2+mlG	Yuncheng
+LYrm7iiR3mlG	Al Khums
+USr99LBbrllG	Huntington Beach
+ATxH7i6Z6klG	Favoriten
+PKrR0s+V1hlG	Chiniot
+BRXoIXp-0glG	Itapevi
+INpKpvEO97kG	Chāpra
+IDdz2zEz33kG	Rengasdengklok
+BRZFCYIk2zkG	Sete Lagoas
+CLUDyTcV6ukG	La Pintana
+USujaS3M8skG	Yonkers
+USsI7K+h8pkG	Glendale
+THmrlxmO4nkG	Chiang Mai
+KZzghsSx4mkG	Petropavl
+VEjsoTTCyjkG	Cabimas
+INjr8t3P9ikG	Dindigul
+USu2SQTH1+jG	Aurora
+USrghQqG68jG	Montgomery
+USriqQ5Cj8jG	Columbus
+CYsgbl7mk4jG	Nicosia
+ECf6PR7Kl3jG	Santo Domingo de los Colorados
+AFsPYshlr0jG	Jalālābād
+NGiELhb80yjG	Ugep
+SAokKmxDhvjG	Yanbu
+BEx7IgykkujG	Charleroi
+BRV+BXQogqjG	São José
+CAxdDKHmgqjG	Ladner
+EGqrWlmDgqjG	New Cairo
+IDdj7zL2gqjG	Sumedang
+ILraKmM8gqjG	Petaẖ Tiqwa
+INq6etqYgqjG	Panchkula
+KEfofmlwgqjG	Thika
+KGuaPs8SgqjG	Osh
+KZyN1pIbgqjG	Oral
+LYrpZiQzgqjG	Az Zāwīyah
+MAsFnezTgqjG	Salé Al Jadida
+NGkHCht9gqjG	Chakwama
+NPqDOu7XgqjG	Pokhara
+PKrOatEGgqjG	Shahkot
+RUz42mrOgqjG	Severnyy
+INp0UtW78njG	Sīkar
+NLyVKg5799iG	Tilburg
+RUyf6of308iG	Balakovo
+RUv-wnT587iG	Armavir
+PKrXntMfr7iG	Kamoke
+BDpKlvzY+3iG	Saidpur
+IRs94pTo22iG	Āmol
+UAxtblWm7viG	Bila Tserkva
+GByqqfoSzsiG	Dudley
+DEyQvhVA8piG	Hagen
+CAyiSNCWupiG	Saskatoon
+PLx4ijUfzliG	Gliwice
+CNvpavhV4jiG	Changji
+PHlRy1ej8iiG	Malolos
+USshfN5Y1-hG	Amarillo
+INqGWt120+hG	Bulandshahr
+PYW-BVyZ58hG	Capiatá
+ESvOUftT76hG	Pamplona
+INpKnvjQ15hG	Purnia
+CNobQyXX34hG	Kaiyuan
+DEzO0iKI10hG	Rostock
+MYg0Vz4O-yhG	Sibu
+TRupJlG-1whG	Arnavutköy
+ECe12RyOrvhG	Machala
+USsWrPl9orhG	Little Rock
+INlbdtlH2mhG	Hospet
+ESuUrfU1smhG	Fuenlabrada
+CNuMz0o4skhG	Mentougou
+USum0Rgfm9gG	Akron
+CLTZ2TQun7gG	Talca
+INqHntsY82gG	Gurgaon
+MXn60Om2gzgG	Ciudad Madero
+USrkIPVV0ygG	Shreveport
+VNkP2zR0osgG	Ðà Lạt
+IRrr4qhz2rgG	Bīrjand
+CIhsDe0fvkgG	San-Pédro
+LAmY1yPW7jgG	Vientiane
+GB0UVfoI+hgG	Aberdeen
+JPsK+3kTwggG	Kure
+TRufolUh7+-F	İzmit
+FRxhDgt11+-F	Reims
+EHppndp8r3-F	Laayoune
+BRcYoXaJw1-F	Palmas
+BRd17XIOj1-F	Parauapebas
+KRtQT2qAm0-F	Icheon-si
+AUZJl6GU7z-F	Townsville
+INqKdt98tw-F	Sambhal
+BRX6jXle2t-F	Americana
+RUyTioMkrt-F	Engel’s
+INoQTs6+xs-F	Gandhinagar
+BGvHPk4h+r-F	Burgas
+INoecuSswo-F	Murwāra
+JPtUM4rz23+F	Nagaoka
+KRtXk2mjk1+F	Guri-si
+VEkDgTnR70+F	Coro
+JPss84zo8y+F	Nishi-Tokyo-shi
+CNn+-0GO5x+F	Xinhui
+USvRpQxS5w+F	Grand Rapids
+IDele1x8+t+F	Kendari
+BRcqIYzM6i+F	Petrolina
+CIibNfD9i-9F	Yamoussoukro
+DEyPvhsFl+9F	Kassel
+INqMnts2759F	Nāngloi Jāt
+RU29LnFL039F	Severodvinsk
+USq6dQWRw39F	Mobile
+GByD9fzlmz9F	Portsmouth
+NGiI+hOsju9F	Nnewi
+IDdt4y+Yqr9F	Parung
+BRY1nYBPop9F	Divinópolis
+TRunFlHs2m9F	Başakşehir
+CNqzx0ai0j9F	Ezhou
+BRenyZIh5-8F	Maracanaú
+JPsXi4Ej0-8F	Itami
+VNnQ+y4D7+8F	Nam Định
+JPsZ84JI9s8F	Uji
+INlwWubL7p8F	Machilīpatnam
+KPuuH2yXol8F	Hyesan
+USufhMG7gl8F	Salt Lake City
+CUnPnSX+4j8F	Bayamo
+INpFJvkWrh8F	Katihar
+IDgU2ykft-7F	Tanjung Pinang
+BDo0bv0Cw+7F	Pār Naogaon
+GBzi8fto+77F	Newcastle upon Tyne
+LTzzojwgz57F	Klaipėda
+PLx5KjVvx17F	Zabrze
+IRtUwqMRpx7F	Bojnūrd
+VEjuVUK5-s7F	Guatire
+CNoHQ0NVzs7F	Humen
+DZsgwf405o7F	Sidi Bel Abbès
+THifex3Mwm7F	Hat Yai
+CNuhm10ljl7F	Haicheng
+JPsZy4SA1-6F	Suzuka
+NEk6MhmQg+6F	Zinder
+IDdxay8Xu96F	Curug
+COigxS3sr96F	Barrancabermeja
+RUzncqmsm86F	Zlatoust
+PHj6d2Jwg36F	Ormoc
+INqPMtiTns6F	Bhiwāni
+USsWTQm22j6F	Huntsville
+CNslj0yzpi6F	Zoucheng
+IEyc9efnw95F	Cork
+IQr24nyLv25F	Al Fallūjah
+NGip3g9tvz5F	Ise-Ekiti
+FI1cBkc6qz5F	Vantaa
+JPsrn4okwx5F	Kōfu
+ZAUAXjX5wx5F	Paarl
+USq0oRBEzu5F	Tallahassee
+PKqELsd40t5F	Saddiqabad
+EGqVmlh04l5F	Banī Suwayf
+BRacmXh3k-4F	Planaltina
+USs4ALiu894F	Sunrise Manor
+RUy5pond684F	Syzran’
+PLx5sjXai44F	Bytom
+CDdggkK1534F	Mwene-Ditu
+PHkAB2OSi14F	Panalanoy
+JPsQr4E7904F	Izumi
+BRfIaWRi3z4F	Santarém
+CNq9OzRA0x4F	Wanxian
+ZMa3QlDpzx4F	Kabwe
+MZZpKmjtkx4F	Quelimane
+ARV4KUTgss4F	San Fernando del Valle de Catamarca
+EStGRfkAqs4F	Almería
+BRbfDZL92q4F	Camaçari
+IDc+q1UD0p4F	Labuan Bajo
+IDdsgy-w3n4F	Cibinong
+CNoKJ0jv6l4F	Donghai
+CUoLiRWdxl4F	Boyeros
+CNs-pyhO1j4F	Baiyin
+PHlaa1b0y03F	Mabalacat City
+BRX6OXkigz3F	Santa Bárbara d'Oeste
+CNtOE1Uqgz3F	Laizhou
+INnyWvtymx3F	Kultali
+PLyk1jv5lu3F	Praga Południe
+BRUnBWvP+t3F	Rio Grande
+USrpJOwYht3F	Grand Prairie
+MAr+ier-8p3F	Mohammedia
+GByQff9uwm3F	Sutton
+UZuaPsnK1i3F	Qo‘qon
+RUy3D8NFy82F	Petropavlovsk-Kamchatsky
+MXmPXOT2z72F	Chilpancingo
+ITwOxicvw12F	Trieste
+BRYlkYsOr02F	Cachoeiro de Itapemirim
+ATxJki7R-z2F	Donaustadt
+CDeNSjWFvz2F	Kikwit
+CUn+GRHuuz2F	Pinar del Río
+PHiyE18bkv2F	Pagadian
+BDoiRv3U9s2F	Pābna
+CUn4BRss0o2F	Cienfuegos
+ILrHJmL2on2F	Beersheba
+USt3DPK3zk2F	Overland Park
+INpU5ucPhi2F	Raebareli
+ZAWqqlDI6g2F	Springs
+EGq3Plg0p-1F	Shibīn al Kawm
+JPtA25ARj+1F	Hitachi
+MGY78oXIt81F	Antsirabe
+LYrpSiQ0r41F	Zawiya
+IDdSYz04z31F	Madiun
+INqpet5S-21F	Haridwar
+ESuVqfVLy21F	Leganés
+SDkMRmG7j21F	Ad-Damazin
+CLZbmTgKv01F	Arica
+FRxmQgBO0z1F	Le Havre
+GByVOfrvpo1F	Swindon
+INomrusqsn1F	Singrauli
+CAvmTR4Llm1F	Richmond Hill
+ESvZmfphtg1F	Donostia / San Sebastián
+DEyYAhY+v-0F	Hamm
+USsyTRFLr+0F	Knoxville
+SOgBlnmV290F	Jamaame
+MXnTPOrI680F	Poza Rica de Hidalgo
+LKiaHuM3n20F	Moratuwa
+TRuBHlVJw10F	Kütahya
+DExxaheMl10F	Mainz
+PHlPW1gQnw0F	Meycauayan
+ITwMLh0O6v0F	Brescia
+USvBtTPDvv0F	Worcester
+CNrbE0C49l0F	Zaoyang
+BDocIwEtsl0F	Paltan
+INnpsshr-j0F	Jūnāgadh
+ZWZQUlzut8zF	Mutare
+CDgBGjPw57zF	Mbandaka
+IDdjKzch16zF	Pemalang
+CNo271FPv6zF	Quanzhou
+ARUKWUNQu1zF	San Luis
+CHwbWhF7t1zF	Genève
+PHlgQ1cI6zzF	Tarlac City
+PKquds6lrzzF	Būrewāla
+USpNaOqsvyzF	Brownsville
+CNu6V2eXoyzF	Baishan
+INp2UtPQgwzF	Sūjāngarh
+CNsZX05gxrzF	Zaozhuang
+JPvR65qq8pzF	Kushiro
+FRxb5gXpmkzF	Cergy-Pontoise
+TRuatmNs6jzF	Çorum
+INl8Uuay7izF	Ellore
+NPp1yvKrugzF	Pātan
+ECfqGRpr+7yF	Manta
+IDdk-zIc66yF	Lembang
+ESutdgYgw6yF	Sants-Montjuïc
+INne2teQ52yF	Bhusāval
+THk8mx3cu0yF	Pak Kret
+INnwntks5xyF	Khandwa
+ESvdDfUtstyF	Santander
+BEyAMg-WlqyF	Liège
+VEjnQUHB+oyF	Cúa
+JPssv47i1oyF	Sakura
+RU0D1rApknyF	Kamensk-Ural’skiy
+BRX6cYYWinyF	Itaboraí
+DZs95ggLvlyF	Blida
+UStL2SZ8xjyF	Newport News
+USsOmK7QjjyF	Santa Clarita
+NPpZ-vg70hyF	Biratnagar
+ZAWoJk3ughyF	Carletonville
+INpzdugXq+xF	Bahraigh
+CAvyWR1k54xF	Barrie
+MMn3Fw6b73xF	Monywa
+CAxe4KG+w3xF	Richmond
+ITvmhh+Q8xxF	Prato
+IDdPj0II4sxF	Probolinggo
+INqgFtVqnsxF	Sirsa
+VEjuQUKBsrxF	Guarenas
+CNwf52Ry3gxF	Anda
+DExgThPwr-wF	Saarbrücken
+CNsP70j1i-wF	Shangqiu
+JOrXImXh8+wF	Wādī as Sīr
+NLy7BhKtq+wF	Groningen
+ITuYyjEO66wF	Taranto
+MYgx+yLQ-twF	Malacca
+INoIPvtbvswF	Chandannagar
+KRtbF26RjswF	Gangneung
+INokgvsGjqwF	Baharampur
+TZdzjmWo9pwF	Dodoma
+GByLGf968owF	Crawley
+BRYCBXi2z9vF	Rio Claro
+BDon0v-Cw9vF	Tāngāil
+CDd7IiZLt8vF	Matadi
+ESuN5f-cl5vF	Castelló de la Plana
+CAwHpSicg5vF	Nepean
+KZwwKpOUg5vF	Atyrau
+RUzxXmq5g5vF	Yasenevo
+KRtc62lrz2vF	Yangju
+BRXynXm1n2vF	Indaiatuba
+INoFKsvMstvF	Surendranagar
+IRsj0pLnzsvF	Varāmīn
+COhuHSjE-rvF	Dosquebradas
+BRV83WrupqvF	Passo Fundo
+CNqnG0UumpvF	Xianning
+PHkrC1-45ovF	Legaspi
+CNu2RvUNpovF	Korla
+PHikY2FppnvF	Cotabato
+RUztNmrSomvF	Podolsk
+INmcQu1C+kvF	Vizianagaram
+USu3uTTengvF	Providence
+NGi2bg3z4-uF	Ila Orangun
+CNq0P0Edn8uF	Qianjiang
+CNpLF0GE+6uF	Chenzhou
+ESvDffV424uF	Burgos
+ZAWc9kvap3uF	Klerksdorp
+THkrxx8Xk3uF	Si Racha
+DZsk4gO+j3uF	Tiaret
+PTtx3eW+q1uF	Amadora
+GBygogNJz0uF	Ipswich
+JPssP4z0zxuF	Kamirenjaku
+NGjFPgmn1vuF	Saki
+DZs29gPL4tuF	Chlef
+USpSbRwJ+suF	Fort Lauderdale
+USudGS21gpuF	East Flatbush
+JPsbf4XqinuF	Anjō
+USs1pLgx7muF	Spring Valley
+GEvB0nlxiluF	Kutaisi
+CUoPCRXS57tF	Ciudad Camilo Cienfuegos
+CNqyoz8e22tF	Jingzhou
+INlPpt9sl0tF	Proddatūr
+MMnKbwg+vytF	Sittwe
+SYsyHm70kvtF	Ar Raqqah
+MMnbFxCpiptF	Meiktila
+CMhrXhuw1otF	Loum
+INkl9uEW59sF	Vellore
+INoJTvtwt7sF	Hugli
+INjX8tkav0sF	Alappuzha
+SVk+cQFA1wsF	Santa Ana
+USsdeQ1XsusF	Chattanooga
+IRsMjore9tsF	Malāyer
+PLxtujYtjssF	Bielsko-Biala
+RUwsd5YAkrsF	Yuzhno-Sakhalinsk
+NLyntg7UwpsF	Almere Stad
+HRveEi7C6lsF	Split
+FRwJ3gx84ksF	Saint-Étienne
+INqRtt8z9jsF	Amroha
+CAx8ANZr3hsF	Regina
+CNrej1L4m8rF	Zhenzhou
+SNlsfdEYg8rF	Saint-Louis
+FI1fmj9Xp6rF	Turku
+USr4XMGuy2rF	Tempe
+CNqmf0K-x0rF	Xindi
+USrzYLIfryrF	Oceanside
+DOmj9TkLjyrF	Bella Vista
+JPs3v46BlvrF	Tsukuba
+IRsc7o88ttrF	Sāveh
+GBzCZfh-tprF	Wigan
+USsAiLCFhprF	Garden Grove
+IRttOn-cqorF	Khowy
+MWb7GmDFxnrF	Mzuzu
+TRtbIm-VtnrF	Siverek
+USsIGLGDkkrF	Rancho Cucamonga
+USpccRbm9jrF	Cape Coral
+CNvst2XsrgrF	Jiutai
+JPubt4+Q87qF	Hirosaki
+UStquKLy87qF	Santa Rosa
+PHk1615hz6qF	Naga
+BRXm4XqKs3qF	Cotia
+JPvKO5LI22qF	Tomakomai
+INkmGuPqj2qF	Tambaram
+IDdvqy+c9uqF	Pamulang
+SLi1Pd6cyoqF	Bo
+INrebtcwinqF	Pathānkot
+JPsk44wDpmqF	Hadano
+CNsC50lN8hqF	Bozhou
+IDdyFy705+pF	Cikupa
+INpciuAaz+pF	Bhind
+VEjuUT6Kw9pF	Puerto Cabello
+JPvQm5dVi6pF	Obihiro
+JPsEY3VVl1pF	Ube
+UAxUtmrTk0pF	Kramators’k
+INrDytt+-tpF	Shimla
+GByRQf+3iopF	Croydon
+MMkbExh2ynpF	Myeik
+USudZS3YukpF	East New York
+PSrJKmGU-jpF	Khān Yūnis
+GQgqahvH2-oF	Bata
+ZAWwmlACx+oF	Midrand
+MXm51Oau37oF	Chicoloapan
+INlgyuOuo6oF	Ongole
+USwOhKMY85oF	Vancouver
+INle0tcWt4oF	Gadag-Betageri
+CNoSG0PEn3oF	Licheng
+IDdZKzpKlzoF	Salatiga
+HUxGmjsa9yoF	Miskolc
+TRtbWlbnupoF	Isparta
+CNsRJzd9hpoF	Weinan
+SNlCCdJIxooF	Kaolack
+GBysmfpbtjoF	Walsall
+DEyUyhSNsioF	Herne
+RUzy9mtng-nF	Lyublino
+GBy5EfyW29nF	Mansfield
+PLzHyjpL74nF	Olsztyn
+BRXuNXsJu4nF	Francisco Morato
+JPsrw4yDh4nF	Hino
+ILrfwmMo80nF	Netanya
+CNpeU1Aj60nF	Nanping
+NGjOohEYo0nF	Bida
+USve-Ozx4wnF	Sioux Falls
+XKvAmjr+ounF	Prizren
+CNu3g1+A+tnF	Dongling
+ROwjqkyNksnF	Bacău
+GByZpfxt0rnF	Oxford
+THk2zx32lqnF	Phra Pradaeng
+PHltE1ZHnonF	Dagupan
+USr8JMC-lnnF	Peoria
+USsHILFZumnF	Ontario
+INncjs9tljnF	Navsāri
+DEySXhOR4-mF	Mülheim
+MYh6Fx4Kp8mF	Kulim
+INnChvQf56mF	Puri
+INn1-vqfn2mF	Haldia
+USre+P95y1mF	Jackson
+KZxzBs+LozmF	Temirtau
+PKqDksKq8ymF	Jacobabad
+INmIeuP2nwmF	Khammam
+PRmiQURjktmF	Carolina
+CDeyvlLh3smF	Uvira
+ECfoARsn2qmF	Portoviejo
+INpG1vqqsomF	Rāiganj
+JPtEQ4W89imF	Takaoka
+INo4-vq53hmF	Ingrāj Bāzār
+BRYdYXCMohmF	Araçatuba
+CNrsp0lunhmF	Fuyang
+MYguNyXgk7lF	Kluang
+ESt3Vfq403lF	Albacete
+CNtJZ1dc6zlF	Laiyang
+INpKCusykzlF	Jaunpur
+MXmoSPrL6vlF	Ciudad del Carmen
+ITtjOiyM0llF	Reggio Calabria
+LKjcAuOTuklF	Jaffna
+ROwa7jyipjlF	Arad
+ETkH0mpbj+kF	Bahir Dar
+BYy5Dkn+k6kF	Baranovichi
+MXm2TOaxw4kF	Chalco
+FRvVUhDc93kF	Toulon
+PSrNamIW4zkF	Jabālyā
+BRYQDXb30wkF	Araraquara
+DZs03g2K6skF	Bordj Bou Arreridj
+FRw4Sf5x3qkF	Angers
+ESuufgYq8kkF	Horta-Guinardó
+GRtmRj3SijkF	Pátra
+ESuWFfUe-gkF	Alcorcón
+DZs3pgOSzgkF	Ech Chettia
+BDo3Dv-Z8+jF	Jamālpur
+BRXoUXwb8+jF	Ferraz de Vasconcelos
+UZuvpsXsi9jF	Chirchiq
+ECfOfRzbo7jF	Eloy Alfaro
+CNrCLz8om6jF	Jingmen
+RU1H4qGfk6jF	Berezniki
+NGiNXhQd65jF	Awka
+RUw5Mnflz5jF	Volgodonsk
+MArsOexb53jF	Khouribga
+NLyV4g2V53jF	Breda
+ROv8lka713jF	Piteşti
+USsH7K9tw3jF	Hollywood
+NGix1g5pw2jF	Ijero-Ekiti
+RUzkkqr5syjF	Miass
+ARTo5VpqqyjF	Berazategui
+CIjXOe-8-tjF	Korhogo
+RUzGUwQQ5rjF	Abakan
+DEyqJiY0wqjF	Neukölln
+MGYX1oXu7pjF	Fianarantsoa
+ESuVLfVh8njF	Getafe
+IDdnbzSLhmjF	Plumbon
+EGq1Iliz1jjF	Banhā
+RUw3FnIJ+hjF	Novocherkassk
+UStqAKbEhgjF	Elk Grove
+UStO2Pae68iF	Springfield
+USpPtRvOz2iF	Pembroke Pines
+BRciEZe4i1iF	Arapiraca
+CNqj+zF6rziF	Fuling
+TMu4AqqSkziF	Daşoguz
+INpN-uXdwyiF	Fatehpur
+DEylfhbl+xiF	Osnabrück
+MArf2e3w-viF	Beni Mellal
+INoNRsd90viF	Gāndhīdhām
+ESuvBgYxmtiF	Nou Barris
+VEjmPUIQ4liF	Ocumare del Tuy
+CNnzPztL1liF	Gaozhou
+JPsje4zxgkiF	Kamakura
+CNwYp1tC2+hF	Ulanhot
+SApWAo7Qn9hF	Khobar
+ILrYamLt78hF	H̱olon
+CNoGa0gZj6hF	Shanwei
+CAvcuR1Yh6hF	Oakville
+USr+fMEK44hF	Deer Valley
+COhc8SdE9zhF	Tuluá
+GBy++fipwyhF	Warrington
+IRqTMpCZhwhF	Bushehr
+INlgNt895uhF	Nandyāl
+JPr0P3Kh0rhF	Saga
+ECgV0R1tgrhF	Esmeraldas
+PKqsUsqBoqhF	Muzaffargarh
+CNs5q1VXilhF	Jiaozhou
+INkvbtScokhF	Udupi
+IDdfrzIG4ihF	Banjaran
+HUwcgjlPzghF	Szeged
+CNwE13RXs-gF	Fendou
+INqOQtvYq+gF	Loni
+IDd02y3y-8gF	Serang
+BRWHCXDZk6gF	Lages
+USptFRty73gF	Port Saint Lucie
+USv+sKIIl2gF	Salem
+CHw6NhWKo0gF	Basel
+INpzLuV-zygF	Sītāpur
+BAvt1jLtnygF	Zenica
+CAvbRRzo-xgF	Burlington
+DEyMehQmnwgF	Solingen
+UZuW9swvivgF	Fergana
+TZeRBlRFstgF	Kigoma
+PKrTrtM42sgF	Muridke
+USsC2LGXisgF	Corona
+INpChtzn3rgF	Shivpuri
+KWqbeoid0rgF	Ḩawallī
+CZxsBiYN0qgF	Pilsen
+NGiymgxQhqgF	Inisa
+RUvXon9ajpgF	Nazran’
+TNsvOh5B7ogF	Sousse
+DZtEZg52nogF	Bejaïa
+BRX+-YJb0mgF	Barra Mansa
+BRcI-ZZl5kgF	Nossa Senhora do Socorro
+INk7ItdW-hgF	Bhadrāvati
+GByUHf5Oh+-E	Slough
+VNmo6yyiv9-E	Vinh
+BJjUegd7p9-E	Parakou
+GRtfYkNCo7-E	Piraeus
+INljntvNv5-E	Ādoni
+GByCKfqnw4-E	Bournemouth
+LBr7nmSci3-E	Sidon
+NEkzMhQz-0-E	Maradi
+JPsWX4RQl0-E	Tsu
+USvqbKHjk0-E	Eugene
+GBysVf9Lzx-E	Peterborough
+CNuMC0vW+v-E	Tongzhou
+INnbwsgo+v-E	Verāval
+DExl9hgG8r-E	Ludwigshafen am Rhein
+OMmDLpnckq-E	Şalālah
+TRulclFOkq-E	Büyükçekmece
+TRtdLk8wum-E	Aydın
+COiMiSj7-l-E	Envigado
+SDkyHj-Zll-E	Geneina
+CNoVl0vk0k-E	Anbu
+USrzbO0vyi-E	McKinney
+INnocu7dni-E	Sambalpur
+ATxJ8i6m7++E	Floridsdorf
+DEyJNhPdy9+E	Leverkusen
+DZtHIhOnu8+E	Skikda
+ARVivUHZ85+E	La Rioja
+INlfHtcfp4+E	Gadag
+CDd62iUh52+E	Boma
+IRtEjoINi0+E	Mahābād
+MXmtpOXl7z+E	Jiutepec
+BRYGWWQb6s+E	Dourados
+NGjQ6hRr3q+E	Suleja
+BRVzbXOSil+E	Criciúma
+AFtDysPbuj+E	Kunduz
+SVky0QUr4i+E	San Miguel
+NGiGHhAl289E	Sapele
+INpcFuTxn89E	Unnāo
+ESuZAfWk979E	Hortaleza
+INp+BuESz49E	Budaun
+CLVWZTUUlx9E	Coquimbo
+INqbGtkSsv9E	Jīnd
+VNkLDzRCwu9E	Đưc Trọng
+USubiNUY3s9E	Fort Collins
+INoETvuUmr9E	Madhyamgram
+USsVkK-3vq9E	Lancaster
+RUyUPub8pp9E	Rubtsovsk
+JPsv24yMri9E	Sayama
+PEeQaRp+1g9E	Sullana
+SSjY7loO9-8E	Malakal
+VNj4szN9s88E	Phan Thiết
+VNjykzKMs88E	La Gi
+RUz4SmtS+48E	Mytishchi
+JPsYR4Evo48E	Kawanishi
+MXm4wOWSr38E	Delegación Cuajimalpa de Morelos
+PSrNdmPS228E	Hebron
+CNq-w0QL118E	Xiaogan
+SVk4SQJP9x8E	Mejicanos
+INobavewyv8E	Jāmuria
+MXnUHOAqpt8E	Salamanca
+BRWXaWpU9s8E	Chapecó
+MMnZExQEzr8E	Taunggyi
+YElK7n5Oyr8E	Dhamār
+CLRQWTCF2p8E	Puerto Montt
+CNvkuualgo8E	Qapqal
+TRtAjmbk9m8E	İskenderun
+JPs6B42mgm8E	Oyama
+RUy+xp8G1k8E	Salavat
+SNkd-dG2ih8E	Ziguinchor
+USsudR-p5g8E	Cary
+MYgi-ybZ1-7E	Skudai
+JPs6y4yo397E	Ashikaga
+OMoYhqYd-37E	Bawshar
+BDoqcvyuu17E	Puthia
+CNqxYz0q307E	Zhicheng
+IDdNt0CN007E	Lawang
+CUoNjRXTpx7E	San Miguel del Padrón
+BOYV8Ufhlx7E	Tarija
+DEy5Qhddyv7E	Oldenburg
+RUz1YmqV4o7E	Khoroshëvo-Mnevniki
+RUz3pmrz4o7E	Bibirevo
+KRtNa2lxio7E	Osan
+ITv3+h8Tml7E	Modena
+NLybshClsg7E	Nijmegen
+INpi7v45o+6E	Jaigaon
+IDdSB0Eoo86E	Pasuruan
+INkLhuLkp76E	Cuddalore
+FRwEDhBB466E	Grenoble
+IQsKJnzUs56E	Sāmarrā’
+GByj1gBUi36E	Cambridge
+PLxytj6Tu16E	Rzeszów
+USr4WMGVg16E	Tempe Junction
+USsS3LAGv06E	Palmdale
+DZs0pg0p9z6E	El Achir
+CNq+d1WYwz6E	Huzhou
+BRbrdYAH0y6E	Barreiras
+UStZKKS-xy6E	Hayward
+INpPauH-5x6E	Orai
+VNjsWyvnpu6E	Long Xuyên
+CUoOhRW4nu6E	Centro Habana
+INrNptft+t6E	Hoshiārpur
+GBzB8fzI9t6E	Doncaster
+MXrijLmKps6E	San Luis Río Colorado
+MXl8vPh8rq6E	San Cristóbal de las Casas
+RUz2RmuOwp6E	Gol’yanovo
+UAwqEmSYwp6E	Melitopol
+BResHY06sp6E	Sobral
+IDhRYxiB6m6E	Sunggal
+RU1TPlYkpm6E	Admiralteisky
+CAwh5Rmhhl6E	Greater Sudbury
+EGrCpllAph6E	Ţalkhā
+ARTt8Vj-865E	San Miguel
+UStCnKX1k25E	Salinas
+ESuYNfW3315E	San Blas-Canillejas
+IDhRMxl52v5E	Perbaungan
+INknFuP75u5E	Pallāvaram
+RUvkw3dPss5E	Ussuriysk
+CNunN1d10r5E	Nanpiao
+MDwp7lRHoq5E	Tiraspol
+TZezxmox-o5E	Moshi
+PHjsI1+u0n5E	Toledo
+PKp8JsM8ln5E	Shikarpur
+ZAWpGk6l-k5E	Westonaria
+JPsnc3pzrk5E	Matsue
+JPs8O4+9rk5E	Hitachi-Naka
+DZs5thadpi5E	Souk Ahras
+NGiw1gz22g5E	Osogbo
+KHjxayZ7zg5E	Sihanoukville
+HUwYZjPbp-4E	Pécs
+BGvlzknSuy4E	Ruse
+MYgqNyTIsy4E	Batu Pahat
+MXm-hOYh-w4E	San Pablo de las Salinas
+THmgQxsArv4E	Lampang
+JPsv743xgr4E	Nagareyama
+MAsHRfHogr4E	Fès al Bali
+JPs764+8gq4E	Katsuta
+GQhVdhj67p4E	Malabo
+JPs2R4x8ll4E	Kumagaya
+GHiBBf-zmk4E	Tema
+CNw9726Tyj4E	Yichun
+BRWbsXWVki4E	Itajaí
+KRr0s2f-rh4E	Seogwipo
+INqhJtNsnh4E	Hanumāngarh
+ESukQe-jj-3E	Salamanca
+RSv8fjoHn+3E	Zemun
+NGjOrgr0273E	Kisi
+BRavXZD0r73E	Ilhéus
+PHlRm1gd-33E	Guyong
+KRsvn2+Ilz3E	Gyeongju
+MUY1NqON6y3E	Port Louis
+INkkEuKz1s3E	Kanchipuram
+CNqqe1fj4r3E	Lianghu
+ESuYrfV74r3E	Tetuán de las Victorias
+CNu2-1eM3r3E	Beipiao
+CNrPh0RCzk3E	Guangshui
+ZAW1elPPyi3E	Middelburg
+MGaaXoO+hh3E	Mahajanga
+RUzy9mvI6g3E	Lyubertsy
+CDgDOlNR9-2E	Butembo
+CLVXgTVW582E	La Serena
+CNqgtycmt72E	Leshan
+CDdmgkQi552E	Gandajika
+USryWOyXn52E	Frisco
+CNwYS2ZZm52E	Zhaodong
+ILraAmMVg52E	Bnei Brak
+ECfjkSBhh42E	Ambato
+MXmsCOaV232E	Cuautla
+USu+CTGFl32E	Springfield
+DZsU-glI502E	Djelfa
+IDdzly8E6z2E	Pasarkemis
+RU0CbnWHwz2E	Kovrov
+TRtPCnEUzx2E	Viranşehir
+JPsn033Ryv2E	Tottori
+DOmjFTia4t2E	San Cristóbal
+USsd7Q2Dot2E	East Chattanooga
+CNtqB0Cpzs2E	Xinzhou
+CYsVQl35ws2E	Limassol
+ETkeumqS6p2E	Gondar
+USqjoPEv4l2E	Pasadena
+INkn4uQkvl2E	Alandur
+ITve3h1ftl2E	Livorno
+ARUOGUj19k2E	Río Cuarto
+GBzL1fzr1j2E	York
+CNoO50Ecyj2E	Sanshui
+INow2tvo5i2E	Guna
+PKrZytGZ4h2E	Hafizabad
+NLykQhOd3h2E	Enschede
+BRX0eYHwjh2E	Angra dos Reis
+INqM6trWtg2E	Bahādurgarh
+CNs+M08r8-1E	Boshan
+CNn4az31r+1E	Yangchun
+INntrs+W491E	Bharūch
+UStzBSTYn91E	Alexandria
+ATw-siUah51E	Salzburg
+BRYE9YcFx41E	Nova Friburgo
+INn+Nvhil41E	Medinīpur
+USsG8LEPy11E	Pomona
+PEbO2Sdy0v1E	Chincha Alta
+AUZ+556fzv1E	Cairns
+INphSumr3u1E	Fyzābād
+INpHYvHpsr1E	Dinapore
+CNqQn1iWpr1E	Linhai
+CNtsY0cYmr1E	Dingzhou
+BRaJMWSXwq1E	Rondonópolis
+IQrI+oDW6p1E	As Samawah
+TRtwClOk+o1E	Uşak
+UZuRBsDuii1E	Jizzax
+NZSkO-KUhi1E	Hamilton
+PRmZ1UJ+6h1E	Ponce
+USuhkS2ylh1E	Washington Heights
+USuHfNUa1g1E	Lakewood
+CNtVi1tYzg1E	Weihai
+IQsAFn7gm-0E	Baqubah
+DEyNChMDp80E	Neuss
+CNoV30wll80E	Chenghua
+KPtx32Vjp70E	Songnim
+INo09wf1p60E	Silchar
+INpDwuSB600E	Bānda
+TRtpLmDIp00E	Aksaray
+VNjxZy9ro00E	Cần Giuộc
+ARTsbVnkm00E	Balvanera
+CNrEYyjoi00E	Deyang
+CNp5X0Vnpz0E	Yichun
+ESvGWfkHrx0E	Logroño
+JPs6B4xrox0E	Ōta
+CNwi22PZqw0E	Longfeng
+INpa-t3aku0E	Morena
+RUz2Lmpqgu0E	Strogino
+VNkGxzKmrr0E	Bảo Lộc
+ROwSMkSx2q0E	Sibiu
+MXpHnONI1q0E	Ciudad Benito Juárez
+UStSWKTgqm0E	Sunnyvale
+VEjosT7tom0E	Guacara
+CAxcVKRCjk0E	Abbotsford
+MYhID0GEhi0E	Bintulu
+BRXkTXq91h0E	Itapecerica da Serra
+USrxpLL078zE	Escondido
+PKr8Lss7j8zE	Kohat
+INpTbteTj5zE	Tonk
+USt6DPLWq4zE	Kansas City
+CNobT0GE33zE	Qingyuan
+MXmlTQTTr2zE	Chetumal
+IRs44oOfl2zE	Saqqez
+AObh0iYh61zE	Benguela
+JPsi44VzxvzE	Komaki
+VEjKRUk83uzE	El Tigre
+IDdf9zHU0szE	Soreang
+BRW+OW2ciqzE	Guarapuava
+CNs761SgpozE	Gaomi
+INngEuZ7jnzE	Rāj-Nāndgaon
+CNp3Hz6P8kzE	Loudi
+ESqIMdGUlkzE	La Laguna
+JPskZ4SYqhzE	Ōgaki
+JPstn4y18gzE	Higashimurayama
+INmOEt659-yE	Serilingampalle
+CNqL81juw9yE	Huangyan
+KHkqKyWKs9yE	Battambang
+CLS+-TLo87yE	Chillán
+INm6us8b16yE	Virār
+BRd5YZuyn6yE	Parnamirim
+PHjvs11kq3yE	Bago City
+IDdevzt++1yE	Purwodadi
+MXqNFOIRi1yE	Piedras Negras
+TRtOPnNr+0yE	Kızıltepe
+USufyS2110yE	Astoria
+UZuxfqx3+yyE	Urganch
+RUz1+mv43yyE	Balashikha
+GByCBfpasyyE	Poole
+GBycOfmelxyE	Gloucester
+ZAWIFleV8vyE	Vryheid
+DZsldgBmwvyE	Mascara
+INmNCt9cwvyE	Malkajgiri
+KRs192xtwvyE	Gimcheon
+PKsFes2dwvyE	Tordher
+RUzzemupwvyE	Zhulebino
+TLc9P2UvwvyE	Dili
+INoRAvuK-uyE	Shāntipur
+MXnVYQhOjtyE	Playa del Carmen
+FRw0tg5F2oyE	Dijon
+USpP5RwFgnyE	Hollywood
+ESuXvfV32myE	City Center
+IDeLpyuJ2gyE	Metro
+GBzIPfmlu9xE	Burnley
+JPsuR4wRr6xE	Ōme
+ITt8thnwp4xE	Cagliari
+USucpS2Fg4xE	Borough Park
+SE1SHjIs93xE	Uppsala
+USs-QQeD41xE	Clarksville
+GBzEzfrs5wxE	Huddersfield
+UAwIHmfAkuxE	Kerch
+DEyriiYvusxE	Prenzlauer Berg
+IRqnzpYx6rxE	Marvdasht
+CNva92zGsrxE	Dunhua
+EStQAexCmqxE	Huelva
+ESuXUfV89pxE	Arganzuela
+ZMbi5k9Q0ixE	Chingola
+SArA2nS68hxE	Arar
+CNoDCzlQlgxE	Yulin
+USsB8K9j7-wE	Torrance
+USsPxK6fo-wE	Valencia
+AMugSny398wE	Gyumri
+CNq5t04o38wE	Chizhou
+JPsWX4Gc+7wE	Moriguchi
+ESt0rewsu7wE	Badajoz
+USvB5QKT25wE	Rockford
+VEjqgT+f34wE	El Limón
+IDe1CySVz4wE	Lubuklinggau
+FRvldgxms4wE	Nîmes
+INoGDvtXu2wE	Bārākpur
+IDfNv0QHr1wE	Palangkaraya
+CNuz+17Ux0wE	Sujiatun
+BReRbYStozwE	Caxias
+VNncvzCQizwE	Hạ Long
+IDdlOzT+vywE	Astanajapura
+DZtF4hBkgxwE	Jijel
+UStKzSbh5wwE	East Hampton
+GByurfkIswwE	Telford
+CNwf42M4pwwE	Honggang
+PEceBSci3vwE	Huánuco
+ESuuGgYVouwE	Sarrià-Sant Gervasi
+USuw7QVz1swE	Joliet
+USujFS0FqpwE	Paterson
+ESuu4gY60owE	Sant Andreu
+GB0E+feJ+nwE	Dundee
+DZs5NgfV7nwE	Médéa
+ESuX-fWI7nwE	Salamanca
+RUzlWm5NqnwE	Kolomna
+IRqz6p9FgnwE	Rafsanjān
+PLyitjvg8mwE	Ursynów
+ITwLLiLUumwE	Mestre
+KWqbgoi-hmwE	As Sālimīyah
+USupDS-RtlwE	Bridgeport
+NLyn8g0wmkwE	Haarlem
+THl2QySA7jwE	Khon Kaen
+MAr0xefM9iwE	El Jadid
+DEyqpiYgsiwE	Kreuzberg
+RSvpnjt+xgwE	Kragujevac
+KZvhRpGKz-vE	Aktau
+BRX5AYSDx6vE	Nilópolis
+INkCHt0Xm6vE	Erode
+NO2jYh2Rj2vE	Trondheim
+USu22QVF80vE	Naperville
+BHpU0o-ji0vE	Manama
+VNkgQzNO-wvE	Buôn Ma Thuột
+CDd4qlMK+wvE	Kalemie
+RUvOP3nzovvE	Nakhodka
+ROwjGkXavtvE	Târgu-Mureş
+UGg-IlvfqtvE	Gulu
+FRvegg+AlsvE	Aix-en-Provence
+INqy4tpyjrvE	Ambāla
+VNkPRzZ+zqvE	Cam Ranh
+CUoMTRf1tpvE	Matanzas
+FRxV0gW+mlvE	Saint-Quentin-en-Yvelines
+BRYQNXuP8kvE	Poços de Caldas
+GBzHGfjv5ivE	Blackburn
+ITv7bh1f77uE	Parma
+PLx3pjWit4uE	Ruda Śląska
+TRtx7lbg42uE	Afyonkarahisar
+ZWZFZlTP50uE	Gweru
+CNpD4yc0-yuE	Qujing
+DOnCaTbuwyuE	Puerto Plata
+USvgcLV3jyuE	Boise
+CNrwozBqiyuE	Hanzhong
+ESuYGfV2uwuE	Chamberí
+DKzsjh2MrwuE	Odense
+INoUmvu0mwuE	Krishnanagar
+CNtef0ew3vuE	Xinji
+BReFiXQ-kuuE	Marabá
+ZAWaDkvepsuE	Orkney
+INpMzvZRkruE	Saharsa
+USraERlRqouE	Savannah
+MYghgyd5nnuE	Kampung Pasir Gudang Baru
+IDdt6zGm0muE	Cikampek
+JPsJ23XyrjuE	Yamaguchi
+INrT1tXo8huE	Batāla
+CNn6V0DLghuE	Taishan
+DEyoXiUqs8tE	Potsdam
+TZeN2l1fs8tE	Tabora
+ARU1oVr265tE	Concordia
+JMmZZSUZ6ztE	Spanish Town
+PKrtctG5oztE	Jhelum
+FRxNJfM9jwtE	Brest
+TJuUpsYJhvtE	Khujand
+GByVdgFN7utE	Basildon
+USrpnO060stE	Mesquite
+MLkBie-hystE	Sikasso
+CNmfIzd6xrtE	Sanya
+CNwMa2kt5otE	Acheng
+GRuF9j-DrotE	Lárisa
+NIkbBQjh6ktE	León
+FRxERgCVjktE	Le Mans
+CMhpghre9gtE	Kumba
+RUz1hm1bjgtE	Elektrostal’
+CNtsGyKur-sE	Jinchang
+CNoos0pJ06sE	Meizhou
+IDgMO14Lj6sE	Gorontalo
+USvTlSdnu4sE	Syracuse
+CDfZ5lMj83sE	Goma
+RUv3EnIU31sE	Maykop
+GHh-Df+xt0sE	Teshi Old Town
+DZtDZguCg0sE	Tizi Ouzou
+RUzw5mssg0sE	Biryulëvo
+RUzxfmtPg0sE	Orekhovo-Borisovo
+PLykvjuz8zsE	Wola
+EGrD9lgBizsE	Kafr ash Shaykh
+BYzR+lEUvxsE	Barysaw
+JPvWy5ESwtsE	Otaru
+IDgl7yCMwssE	Dumai
+JPsrs43nussE	Urayasu
+VEjZaTst4qsE	Acarigua
+CAxNvTXbsqsE	Saguenay
+PHi2H2GErosE	Marawi City
+BRaOKXebxnsE	Luziânia
+BGvFkkjvnisE	Stara Zagora
+DZrPcfmx2gsE	Béchar
+DExkShi4x-rE	Heidelberg
+SLizPeArh5rE	Kenema
+BRdDgZxZh4rE	Cabo
+FRxvfgaKu3rE	Amiens
+CLYA-Tvzs3rE	Calama
+BRYCnYkm11rE	Macaé
+GHh0Lfx0n1rE	Cape Coast
+RUzzemtg40rE	Novyye Kuz’minki
+RUzzemuF40rE	Kuz’minki
+INl4Zufj3zrE	Bhīmavaram
+RUvqWnp6xwrE	Pyatigorsk
+GBzZ6fx8zrrE	Middlesbrough
+PLxz+jS9ulrE	Rybnik
+IDhDgxvfqlrE	Tanjungbalai
+EGp3Ele5olrE	Mallawī
+USqqLP+I5krE	Metairie Terrace
+BAv1fjUY2krE	Tuzla
+PKqL4sj66irE	Khanpur
+BDovkvsX5grE	Nawābganj
+USsJDK-yq9qE	Pasadena
+CNqWV1RR+7qE	Jinhua
+DEyY5hjmx6qE	Paderborn
+ZAVyLkZvp4qE	Kimberley
+CUnw+R-3r2qE	Ciego de Ávila
+RUzw-mrvw1qE	Chertanovo Yuzhnoye
+CNr070gjp1qE	Jieshou
+HKn+30RcsyqE	Yuen Long Kau Hui
+MAsKdfSYiyqE	Taza
+ZAWkOlKtttqE	eMbalenhle
+MMnoVw9TxsqE	Myingyan
+NLye1hDQqrqE	Arnhem
+RUz0emwiwqqE	Zheleznodorozhnyy
+MXnGxN0P7pqE	Zamora
+FRw2fgIA1pqE	Tours
+GTlJ-P5nvkqE	Petapa
+INo96vyF8iqE	Bālurghāt
+BRY4ZYKt+hqE	Ibirité
+JPsmT3tB4hqE	Yonago
+GBzDUfkUzgqE	Bolton
+BRbalZL7g-pE	Lauro de Freitas
+BOZCXUT4j+pE	Potosí
+PKp43r14r9pE	Khuzdar
+ESuXEfV5l8pE	Usera
+FRwS9gOM47pE	Limoges
+HRwHbikU07pE	Rijeka
+BRW7XXX512pE	Paranaguá
+AFr7isKeo2pE	Ghazni
+USsA2LDGg2pE	Orange
+IRr9boQLs0pE	Īlām
+CNvd42MKtzpE	Gongzhuling
+MXmtuOxNgzpE	Córdoba
+ARPsVUACyxpE	Comodoro Rivadavia
+MYh5Nx04xxpE	Kampung Sungai Ara
+USsCuLCRvxpE	Fullerton
+USrEFOoFmwpE	Killeen
+RU4qKvrjgwpE	Norilsk
+ZAWmilEAkrpE	Nigel
+VEjrZUFMpqpE	Los Teques
+INqmJtlQ8ppE	Kaithal
+USuIuRCF3ppE	Dayton
+RUzhYpTO1kpE	Al’met’yevsk
+DExu2hiahjpE	Darmstadt
+UZtPDr9ehjpE	Tirmiz
+ESunogOOjhpE	Tarragona
+USpUROiXt-oE	McAllen
+INp7+uXF-9oE	Lakhīmpur
+ZAVZllck56oE	Mpumalanga
+NLypmg2x15oE	Zaanstad
+INoh9vLO-4oE	Hazāribāgh
+JPsdn4S-z4oE	Kuwana
+INoXWt1Tt4oE	Vidisha
+PEbUkSzgh4oE	Ayacucho
+CAxhfKLBg3oE	Coquitlam
+CNuOR1Seg3oE	Shanhaiguan
+ECf7gSC4g3oE	Tutamandahostel
+ESuYufWKg3oE	Chamartín
+IDekq1REg3oE	Parepare
+GRthDkNjt2oE	Peristéri
+NLyizg9Tq0oE	Amersfoort
+KRsqG2kBkzoE	Jeongeup
+USw7ZKRosxoE	Bellevue
+RUz4WmuX2woE	Korolev
+PKpgQsDJowoE	Dadu
+PKrE0s6+uuoE	Gojra
+SE1IUjMP2qoE	Sollentuna
+INqY+uI2pnoE	Haldwani
+NGiqJgxi9moE	Gbongan
+KHkwDydsimoE	Siem Reap
+CIioreqDtioE	Man
+CNxA0vqwtioE	Altay
+INoHxvwthhoE	Hābra
+INj5cuHSggoE	Kumbakonam
+IDdWh0Ce19nE	Sidoarjo
+KWqZwoiy78nE	Şabāḩ as Sālim
+JPscD4Wj38nE	Kariya
+HNljUQXS86nE	Choloma
+GBy-Xfncs5nE	Stockport
+HUw4VjYlp5nE	Budapest XI. kerület
+CNvRp2iGn5nE	Huadian
+IDdnSzSh83nE	Weru
+GByEnf+a53nE	Brighton
+RU1PplcBj3nE	Kolpino
+ARTtgVm4+1nE	Belgrano
+MXnP9OOR+znE	San Juan del Río
+GHhwHfsA4znE	Sekondi-Takoradi
+INnsesX-4znE	Porbandar
+CNwEK2MIwunE	Fuyu
+FRwRvgjH5tnE	Clermont-Ferrand
+INlDptlQ7qnE	Chitradurga
+USqqTP+QxnnE	Metairie
+CNrPE09D-mnE	Chaohu
+NGiz1gxF1jnE	Ejigbo
+INqqDtqLnhnE	Thānesar
+INkWOuDsjgnE	Tiruvannāmalai
+INoBMs+E54mE	Anand
+BRe95Ykr44mE	Parnaíba
+HTme7TGtu3mE	Jacmel
+GHiNIftBg0mE	Obuase
+BRXunXl1yrmE	Itu
+EGrDclnemqmE	Dikirnis
+JPssg4z3nomE	Musashino
+CNoHD0l4knmE	Jieshi
+BRfijXet+lmE	Castanhal
+MXm2CNj0nlmE	Colima
+ZAUUik4OnimE	Bhisho
+LKikBuMWngmE	Negombo
+REYk0p25r-lE	Saint-Denis
+GRsj5keEi+lE	Irákleion
+USpPWRvIs9lE	Miramar
+CNq9-1f348lE	Jiashan
+CNvOtwn4w7lE	Hami
+RUzy+moIx6lE	Odintsovo
+ITuvaiw8o6lE	Foggia
+INoKdvuH63lE	Kānchrāpāra
+GTlO7P4r21lE	San Juan Sacatepéquez
+NGkGOhTMrzlE	Funtua
+MMlAcxdMvylE	Dawei
+NGjJGgqv8xlE	Igboho
+NLykEhD6+ulE	Apeldoorn
+CNt8xy+y6rlE	Shizuishan
+ROw8dkMJprlE	Baia Mare
+PHjjM11WjplE	Kabankalan
+MEvFxjbL5olE	Podgorica
+UStKoSbXmolE	Hampton
+BRXmcXuWlolE	São Caetano do Sul
+USsJ7K8U7nlE	Van Nuys
+USud9MFrwglE	West Valley City
+CNoTlyVpn+kE	Gejiu
+INl9At3Tn+kE	Mahbūbnagar
+ETj9WnC847kE	Desē
+ESuzAgHFv3kE	Lleida
+INpNowqV01kE	Dimāpur
+MYh8tx3cqzkE	Tasek Glugor
+CLRkuS-69ykE	Osorno
+CNx7Q2EKwykE	Jiagedaqi
+BRX7FYQc9xkE	Queimados
+BDof6v1+sxkE	Kushtia
+CDe9Akm8ywkE	Kindu
+PHlUT1fi-vkE	Baliuag
+GByrFfpTiukE	West Bromwich
+VNnePzE11pkE	Cẩm Phả Mines
+NGhrxhOEsnkE	Buguma
+CNoKJ0JwskkE	Shiqiao
+MMmsXw7askkE	Pyay
+SDkr7l0gxjkE	Rabak
+INkm0t6myhkE	Robertsonpet
+LBr1JmQbkhkE	Tyre
+TDjC8i2---jE	Moundou
+PEdc-SC246jE	Cajamarca
+MMmRnw+Fj5jE	Hinthada
+KRtWP2nT23jE	Hanam
+IDfGW5BDv3jE	Jayapura
+PLyl8juMm2jE	Bielany
+INn16uCJ-1jE	Chhindwāra
+INkc8tq691jE	Mandya
+COhsASgTr1jE	Cartago
+HTnBoTKj-0jE	Okap
+IDeiCyhLnzjE	Baturaja
+DZr3ChOFrxjE	El Oued
+JPsni4x9vwjE	Zama
+ESs+7fIa-ujE	Marbella
+NLyYcg8W4rjE	's-Hertogenbosch
+PHlP31i+gpjE	Rodriguez
+LYq72jmI2mjE	Ajdabiya
+RUv3pndOpmjE	Nevinnomyssk
+PHlOd1iH3ljE	San Mateo
+PLykfjvHiljE	Śródmieście
+ESvJYfAnhljE	León
+USt0wPJLhljE	Olathe
+JPshw4X4mjjE	Seto
+NGi0Dg1GgjjE	Ikirun
+MXqbQODZ5ijE	Ciudad Acuña
+HTmlOTFmuhjE	Léogâne
+IDdiIzZrshjE	Adiwerna
+GBzC5f-JwgjE	Grimsby
+NGiP7hcU2+iE	Abakaliki
+USvG4RPfo9iE	Warren
+CNpGMx0M48iE	Dali
+INoQqveru6iE	Bānkura
+TRuP-lPyn6iE	İnegol
+JPvU85Khh6iE	Ebetsu
+VNnrYy0T13iE	Thái Nguyên
+USsFsRmAr1iE	Columbia
+IDdHa0dc40iE	Singaraja
+DExtFhxOjziE	Würzburg
+ZAWsKk7L2wiE	Randfontein
+INpIevJfmviE	Hājīpur
+RU0O6qqBgviE	Pervoural’sk
+INppZukcvuiE	Gondā City
+ECfPcR2ZksiE	Milagro
+UZuY9swEyriE	Marg‘ilon
+INoRJsYrzqiE	Bhuj
+USuLNNVqrqiE	Thornton
+GByFOgGhupiE	Hastings
+CLR2AS+orpiE	Valdivia
+INk6qtxryliE	Hindupur
+ITv5Ih49wliE	Reggio nell'Emilia
+NGhr6hQm3kiE	Okrika
+NPpmyvFw2jiE	Birgañj
+GByW1f3e0iiE	High Wycombe
+USrt4OxmwhiE	Carrollton
+PHjpH2BI8giE	Talisay
+ETigsm1xp-hE	Hawassa
+EGo4al2Eo8hE	Idfū
+ECgIASHJx7hE	Ibarra
+USrYHN2l26hE	Midland
+CNqkN0Pu74hE	Puqi
+JPsRF4G2p4hE	Tondabayashichō
+JPsZa4lK73hE	Fujieda
+JPsZz4Ck63hE	Sandachō
+INpF1wVaq3hE	Shillong
+IRtJMoMnz2hE	Mīāndoāb
+RUvnRnmEj1hE	Kislovodsk
+NLymKg1W+zhE	Hoofddorp
+GNiwfebr4zhE	Nzérékoré
+INj1JtoJ4zhE	Pālghāt
+ILrVxmMF-xhE	Reẖovot
+CNrnpzYXuxhE	Ankang
+USrp2RykhwhE	Charleston
+ATwzeiBptshE	Innsbruck
+IDdHuz8OgqhE	Blitar
+USrN6OuskohE	Waco
+CUoN1RWo-nhE	Cerro
+DZsZrfxC1nhE	Tlemcen
+JPsl74VOxkhE	Kakamigahara
+GTlRkPuumkhE	Quetzaltenango
+RUzRqo0iikhE	Dimitrovgrad
+CNxEe10dgkhE	Zhalantun
+BRX2WX6v6jhE	Pindamonhangaba
+PHiyH185+-gE	Muricay
+USvI7RPT0+gE	Sterling Heights
+CAvWYR6Z18gE	St. Catharines
+JPrvs3MOm8gE	Ōmuta
+INoGRtFkp6gE	Godhra
+IRs8tpxgx5gE	Shahrud
+CNt4ay6io5gE	Dawukou
+PHlXN1c3q3gE	Bulaon
+VEkKCThSo2gE	Punto Fijo
+JPswK45E71gE	Abiko
+INpdEtTql1gE	Kishangarh
+JPsWe4Ghv0gE	Kadoma
+CNo5nyPywzgE	Majie
+IDeyY0a55rgE	Martapura
+FRwRbg3h1rgE	Villeurbanne
+IRtPppzr4qgE	Gonbad-e Kāvūs
+INoZZvfW9lgE	Rānīganj
+AUWM27A56lgE	Toowoomba
+CNoVL0l4mlgE	Hepo
+IRprAqydglgE	Iranshahr
+USrz0Ou2k--D	Denton
+MMoJ6xYKo+-D	Lashio
+INqLhuL-g+-D	Pīlibhīt
+JPrSG3TPy9-D	Miyakonojō
+RUzNCmzlm9-D	Novomoskovsk
+ROwDakxTq8-D	Buzău
+BRVZIW6B57-D	Sapucaia
+JPsSl4GQn5-D	Matsubara
+BYyiFko552-D	Pinsk
+INpR8tNm52-D	Beāwar
+CNrGVzHH91-D	Dazhou
+SYs7omq151-D	Al Bāb
+CNwH92c020-D	Shuangcheng
+JPs6Z4vxk0-D	Isesaki
+INqt8tMLrx-D	Abohar
+PLx5Xjagpx-D	Dąbrowa Górnicza
+LTz4ykJS7w-D	Šiauliai
+INq9LtXQ1v-D	Moga
+LYrpZiM0yv-D	Al Ajaylat
+UAw6gmHWku-D	Nikopol
+RU1UjlY43s-D	Petrogradka
+USu76PtTlr-D	Cedar Rapids
+CNqaA1X5zq-D	Dongyang
+COkC6TKFsp-D	Maicao
+COgkvSjxhp-D	Florencia
+PSrdNmRH2o-D	Nablus
+USur-TCPyo-D	New Haven
+CNoIo0op6n-D	Jiazi
+COhh3Ss3xn-D	Girardot City
+UStx0KcB9m-D	Roseville
+CLUP-TTJ3m-D	Quilpué
+CNrCP1jJql-D	Songjiang
+HNlmnQknql-D	La Ceiba
+BRWlSXRuyi-D	Jaraguá do Sul
+USqivRXVwi-D	Gainesville
+SDk0xl96qi-D	Sinnar
+NIkQeQschi-D	Masaya
+USs6tKyu4h-D	Visalia
+DZstOgGUuh-D	Relizane
+MXmzANc0z-+D	Manzanillo
+BDoaKwHAw++D	Sonārgaon
+CNp5Lxucw++D	Shangri-La
+DZsxogBAw++D	Mostaganem
+HUw5SjZYw++D	Zugló
+LYpnQikKw++D	Sabhā
+PLx05jXyw++D	Tychy
+RUzzemqqw++D	Ramenki
+UAxZ1m18w++D	Syevyerodonets’k
+INo2qu9zy8+D	Dehri
+CNuC1y+Ii8+D	Wuda
+IDhD6xtZ37+D	Kisaran
+KRsvL24vv7+D	Gyeongsan-si
+SOhG2nwov5+D	Baidoa
+PKrlitEKl2+D	Mandi Bahauddin
+UZuQIrn391+D	Navoiy
+TRuVXmf6m1+D	Tokat
+CFhg3jRh3z+D	Bimbo
+INpbDu5Oix+D	Deoria
+JPsV74HDxv+D	Daitōchō
+USpV0Rustu+D	Coral Springs
+CAwJGTN8nt+D	Sherbrooke
+DZrXBg8l6r+D	Ouargla
+ITu2WiMSyq+D	Acilia-Castel Fusano-Ostia Antica
+USsJkK357p+D	Thousand Oaks
+KRtAF24knp+D	Andong
+MZaQWl+Ikp+D	Tete
+CLWRQTfygo+D	Copiapó
+IDe751Xk5n+D	Palopo
+MAsgRfensn+D	Nador
+EGq0OlnG7l+D	Bilbays
+VEjpEUHU+k+D	Charallave
+IRrfmpCohk+D	Shahr-e Kord
+DExbXiJs-j+D	Regensburg
+JPsYg4FWnj+D	Mino
+CNpYz0EF8i+D	Leiyang
+AUbkc3Qrmh+D	Darwin
+PHj5F16v9g+D	Cadiz
+MXoGGNw2z-9D	Zacatecas
+USudVSzpv-9D	Elizabeth
+RUzxlmtso-9D	Zyablikovo
+ILrYtmLZz+9D	Bat Yam
+BDoEvv1b289D	Sātkhira
+VEjngT-hr79D	Palo Negro
+USumMS7Sq79D	Stamford
+BRYDAXp3h79D	Mogi Guaçu
+EGrEamAj369D	Arish
+SYsxnmgzo69D	Idlib
+IQtFmnpso49D	Sīnah
+UStgNKTk709D	Concord
+RUx0AoEuyz9D	Kamyshin
+FI3HYkhxqz9D	Oulu
+INkn+thzzw9D	Hassan
+RUz81ocL0u9D	Novocheboksarsk
+FRwzKhEeqt9D	Besançon
+USr9RMB5mt9D	Surprise
+DZs2rhAv-q9D	El Eulma
+INoE+vti6q9D	Khardah
+SAqp+nJdsq9D	Sakakah
+ETiunmjFyp9D	Jimma
+SDlELl3Vpp9D	Al Manāqil
+IDd1Ny9Tzo9D	Teluknaga
+HUw9DjIppo9D	Győr
+EGpXVlq26n9D	Jirjā
+CUnO4SSi8l9D	Manzanillo
+INnQDt49vl9D	Yavatmāl
+INoJ1vuAsl9D	Hālīsahar
+RUzhompp+k9D	Serpukhov
+LYrGLi8v7j9D	Sirte
+ILraDmME-i9D	Ramat Gan
+JPsuw40W6h9D	Asaka
+INmwGs-0uh9D	Panvel
+RUzxlmswgg9D	Orekhovo-Borisovo Severnoye
+RUz0-mudgg9D	Ivanovskoye
+MYguhyPA588D	Muar
+CIiE1fDC778D	Divo
+IDddizoKk68D	Ungaran
+USr6RMEK048D	Alhambra
+CNrAV1HKu48D	Xuanzhou
+INoFhvtfn48D	Titāgarh
+ARUJdVS8+38D	San Nicolás de los Arroyos
+JPsc04K-g28D	Kusatsu
+PLyBEjL8818D	Opole
+USqvwPpBp18D	Lafayette
+ZAUCWjdRtz8D	Worcester
+PLzQQjc1my8D	Elbląg
+DZsYlgBupw8D	Saïda
+BDosiv8r5v8D	Sirajganj
+BRbEoY37zv8D	Jequié
+PLyrujgNyv8D	Płock
+PLyDUi5Rnu8D	Wałbrzych
+AZucSoYdot8D	Yevlakh
+SSivPk+d4s8D	Wau
+MZXF7l+yms8D	Xai-Xai
+SE1FsjNq7q8D	Södermalm
+CNpzNzjm6q8D	Huaihua
+NGiDvhZLkq8D	Amaigbo
+USt4kO-Zhp8D	Topeka
+NGjBShg4ko8D	Lafia
+CNrS3ync5n8D	Jiangyou
+PKpDXsN2in8D	Tando Allahyar
+THjP-xqLhn8D	Surat Thani
+CDg-Hk6Nkj8D	Isiro
+CUnzBR4H9i8D	Sancti Spíritus
+INlJfuA1ih8D	Cuddapah
+INph5vBdgh8D	Bettiah
+UZulWseEt-7D	Angren
+USw2LKRPo-7D	Kent
+MMnlfw526+7D	Pakokku
+RUzwoneWz+7D	Murom
+PKrfjtN8s+7D	Daska Kalan
+IDdvSy44+97D	Rangkasbitung
+INpz8t4Di97D	Hāthras
+IDdQpzqcv77D	Klaten
+RUvYMoSDt77D	Khasavyurt
+RUz8Zppb167D	Neftekamsk
+ESuWLfV5y67D	Villaverde
+USsL0K4ik67D	Simi Valley
+CNp6yyLhj67D	Xichang
+ESs-Le4cu57D	Cadiz
+PKqyetDAy37D	Pakpattan
+CNoGy0WYt37D	Danshui
+PKq3MtDBs37D	Bahawalnagar
+PKqqotBc507D	Bahawalnagar
+JPs8W4lVu07D	Ueda
+COiCCTCL3y7D	Sogamoso
+USsGOK-egx7D	East Los Angeles
+INox1t8Orw7D	Lalitpur
+TRu0YkuJmw7D	Edirne
+IDdUSz89hw7D	Jombang
+TZcM5mVnxv7D	Songea
+INkq9t48pv7D	Kolār
+CAwpBTWK8t7D	Lévis
+NIkfYQgpzt7D	Chinandega
+LYpniij1yt7D	Al Jadīd
+PYW-OVwkpt7D	Lambaré
+CNrFh0cs+s7D	Macheng
+PSrILmFnhr7D	Rafaḩ
+MYhHryF3tq7D	Ampang
+BRXnKXdQjp7D	Itapetininga
+BRZZOXuu6o7D	Patos de Minas
+UStSAKUbno7D	Santa Clara
+IDdeYzKHln7D	Paseh
+USsvrQpEml7D	Murfreesboro
+ESuXnfWGqj7D	Retiro
+USuc6S16wh7D	Sunset Park
+IDfPjy3Vt-6D	Pangkalpinang
+CNoMQ0rH-+6D	Huicheng
+NGkk9h9n576D	Gashua
+HTmd-S47n76D	Les Cayes
+ITudlioUl76D	Salerno
+GByXcf7fr46D	Watford
+CNsX800dj36D	Xiazhen
+IRsirqhyh26D	Torbat-e Ḩeydarīyeh
+PKpKXsNN+06D	Tando Adam
+JOrfwmWy1z6D	‘Ajlūn
+IDfr-3Vd-y6D	Sorong
+PHiT+2Me+x6D	Koronadal
+TRufclTOtx6D	Derince
+JPpXS2uFrx6D	Okinawa
+CLSrWTIx2v6D	Los Ángeles
+CNoPx0uyzv6D	Haimen
+GByQ3gQH6t6D	Saint Peters
+BYzYWlaFjt6D	Orsha
+CNtIj0W0sm6D	Shahecheng
+CAxvHKwh1l6D	Kelowna
+BRX1sXubol6D	Bragança Paulista
+BJijWgXgkl6D	Bohicon
+JPr1S3YJpk6D	Beppu
+CWkTiTvsoi6D	Willemstad
+IQtCDn6zoi6D	Soran
+MDw+3k9xoi6D	Bălţi
+RUzxqmqloi6D	Tyoply Stan
+INojxtWH8h6D	Mandsaur
+IDdkZzGyyg6D	Padalarang
+CNq2OyxL8-5D	Suining
+INnoVuQZh-5D	Gondiā
+MXm4iOVnu95D	Huixquilucan
+IRspkpfe685D	Semnan
+UAxX+mr-g85D	Sloviansk
+DOm3MTgr765D	San Francisco de Macorís
+CNv7c2fqg65D	Yushu
+TWohJ1b4155D	Yuanlin
+SVk3OQIM245D	Santa Tecla
+MXn0iOZek35D	Ciudad Valles
+MXoFoNxkv25D	Guadalupe
+PKpycsOU615D	Khairpur Mir’s
+JPsRR4JApz5D	Kashihara-shi
+ECfZ+SBL+x5D	Riobamba
+KZy8fsVn8w5D	Kokshetau
+PLywDitRuw5D	Gorzów Wielkopolski
+BReMFYYnrw5D	Timon
+PKryStHIgu5D	New Mirpur
+NEmCPha6kt5D	Agadez
+PLyl7jve8s5D	Targówek
+USsHAK+A5r5D	Koreatown
+CNo7z0Jqsr5D	Lecheng
+BRW7DXQHgq5D	São José dos Pinhais
+IRtqjoI0-o5D	Marand
+INjXGtyYoo5D	Rajapalaiyam
+FRxCDgVq1n5D	Orléans
+CNs3l06qsm5D	Laiwu
+ZAW37k19gl5D	Rustenburg
+USu2WTFAmj5D	Hartford
+KZy1brOIgj5D	Rudnyy
+BRYB5YXAri5D	Teresópolis
+FRxduhGOqg5D	Metz
+CNumf125j+4D	Jiupu
+INpnJvsR184D	Dārjiling
+CNwjd3XTv84D	Baoshan
+DOmnlTyQr84D	Salvaleón de Higüey
+ZAXgClPSl74D	Polokwane
+MMmA-xT2v64D	Thaton
+HUw51jYsr64D	Budapest III. kerület
+ZAWgDk0V144D	Potchefstroom
+IDdZTzQ0134D	Ciamis
+IDdG60IPq34D	Lumajang
+DZs9thUfm24D	Guelma
+PHlRj1dqr04D	Hagonoy
+INq6Ito78y4D	Mohali
+BRVa6V2d4y4D	Uruguaiana
+INomBs4L+s4D	Pālanpur
+IDdwCzQb-r4D	Indramayu
+ZWZo5liYyr4D	Epworth
+DZtEOgkUur4D	Bordj el Kiffan
+CIiLie8Swp4D	Gagnoa
+BRaJrZDilp4D	Porto Seguro
+CNoPE0ULoo4D	Luoyang
+DEyo8h6q4l4D	Wolfsburg
+JPsEy3stzl4D	Niihama
+CNvi52oxqk4D	Minzhu
+RUzxymsY4j4D	Tsaritsyno
+EStQYe8o-h4D	Dos Hermanas
+IDdmRzvXh93D	Pati
+INoDCvuD-63D	Dam Dam
+BRbr2ZK4g63D	Alagoinhas
+IQqzloev053D	Az Zubayr
+INpvYuPtr43D	Hardoī
+MXpH6OJmj43D	San Pedro Garza García
+CNq050aKj23D	Huangzhou
+USubrS2rm13D	Sheepshead Bay
+INoS5vWnl13D	Puruliya
+THlawyo8l13D	Ubon Ratchathani
+JPslK44H803D	Kisarazu
+ZAWAekxrm03D	Virginia
+ZAW4qk8Eh03D	Brits
+TRukklF20y3D	Beylikdüzü
+DEyWfhR4my3D	Recklinghausen
+BRWK6XWR3x3D	Palhoça
+CNqkNz+2rx3D	Xiulin
+CNtFx08fix3D	Zhoucun
+CNuJ7xeR8w3D	Jiayuguan
+NLyFEhAuqw3D	Maastricht
+USvR-R-b+v3D	Amherst
+VNjrvy6Imu3D	Mỹ Tho
+TRukek5Avt3D	Tekirdağ
+USsR4LJfxr3D	Victorville
+DK0SJhw2rr3D	Aalborg
+BRYc-YN9jr3D	Barbacena
+GByxpftT3q3D	Burton upon Trent
+PKqmDs893q3D	Chishtian
+GTlJkP57yq3D	Villa Canales
+INpxUw31rp3D	Dibrugarh
+DEyUshxAlp3D	Göttingen
+ALusVjdWyl3D	Durrës
+MXpH1OJp5k3D	San Pedro Garza Garcia
+RUz0BmuTwk3D	Veshnyaki
+RUz0nmrOwk3D	Presnenskiy
+IRrCHq7rlk3D	Zābol
+INqActvytj3D	Palwal
+JPrlc3aE9i3D	Nobeoka
+GBycwgKSjg3D	Colchester
+INmEFuF4i-2D	Nalgonda
+GEuzlnZsu+2D	Batumi
+ESuxTgb0672D	Mataró
+USriYORQ572D	Abilene
+INoHYvtF+52D	Bhadreswar
+CHwsUhUv-42D	Bern
+INoEUtE+q42D	Vejalpur
+NO095hBOq42D	Stavanger
+IDf7Fx4+k32D	Payakumbuh
+ZAWqQk-9g22D	Alberton
+JPshX4pJr12D	Fujinomiya
+ESuuIgYi+02D	Gràcia
+INkvJteIs02D	Chikmagalūr
+KZyY-tZA+z2D	Ekibastuz
+PHlMO1hF2y2D	San Juan
+JPsyC43Yjy2D	Noda
+PTuxfegMyx2D	Braga
+CNwwi2+23w2D	Lianhe
+INnySu03+t2D	Raigarh
+UStjEKQ-lt2D	Vallejo
+USuoHS7Pus2D	North Stamford
+UZuhcsX33r2D	Olmaliq
+TZfd3mAk-o2D	Musoma
+BRVWcW6q8n2D	Cachoeirinha
+JPsZd4lwhn2D	Yaizu
+LYraNkQi8m2D	Tobruk
+RUzyemrcol2D	Zyuzino
+UStdyKQ0sk2D	Berkeley
+CNvoe0oMlk2D	Xilin Hot
+INlZOtwNkk2D	Guntakal Junction
+MXoPgNtjwj2D	Fresnillo
+MXms-OvOsg2D	Orizaba
+THi-5xxZkg2D	Nakhon Si Thammarat
+DExeMho6981D	Heilbronn
+DExVriB+y61D	Ingolstadt
+JPsYR4bT521D	Toyokawa
+CNuYi2Dpi21D	Fengcheng
+ZMbiblBU011D	Mufulira
+DExNVhxrj01D	Ulm
+MYhLkyDt-z1D	Rawang
+TRtOEl56vy1D	Karaman
+CAvarRuO0x1D	Cambridge
+PLyuCjY8zw1D	Włocławek
+USshgOrX8u1D	Norman
+USucESlFvs1D	Allentown
+PYW-aVxinr1D	Fernando de la Mora
+ITvVCiM9pq1D	Perugia
+INpaZto3zp1D	Gangāpur
+CNtSQ1Z-gm1D	Zhaoyuan
+IDdTE0Dngm1D	Bangil
+INqIltutgm1D	Deoli
+LBr3jmTugm1D	Nabatîyé et Tahta
+PKsJAtA+gm1D	Abbottabad
+RUzyDmpUgm1D	Solntsevo
+RUz16m7Sgm1D	Orekhovo-Zuyevo
+SDkAkkeCgm1D	Gereida
+UStgIQb0nk1D	Evansville
+DEyUchO1lj1D	Bottrop
+BRdeHZyB1i1D	Santa Rita
+MZXhDmSK8h1D	Maxixe
+DEyrCiXIxh1D	Charlottenburg
+TNsr3hy3y-0D	Kairouan
+PKrJAtDVp-0D	Jaranwala
+ESuvPgZHl90D	Santa Coloma de Gramenet
+NLyi4gzHh90D	Leiden
+CAwemTGkt80D	Trois-Rivières
+DEzBEh0Yx70D	Bergedorf
+ITwNMhpfi60D	Monza
+NGioAgwep30D	Modakeke
+PHlDe1gYz10D	Silang
+ECfolR34s00D	Quevedo
+TRtezlCPqy0D	Nazilli
+UGgzMl2U7w0D	Lira
+BRXNoWchxw0D	Toledo
+DExYYhi+xw0D	Pforzheim
+NLya9g1L8u0D	Dordrecht
+BRYEoXXhmt0D	Jaú
+DEx0Ehjv4s0D	Offenbach
+INpUqu-xts0D	Siwān
+USt2XPlckq0D	Columbia
+MAru9epVqp0D	Settat
+VEjnyUAd5n0D	Cagua
+USrUqNzS4l0D	Odessa
+MZa5ZmVnqk0D	Mandimba
+IS2zbcG4mk0D	Reykjavík
+PHkZF1he3g0D	San Jose
+INoeVuH34-zD	Damoh
+JPsu-41Tr+zD	Shimotoda
+CNqiswMgh+zD	Lhasa
+DZsmtghD-8zD	Aïn Oussera
+JPssa4y668zD	Kokubunji
+BGvb9kYFz8zD	Pleven
+ITvqjiO9x8zD	Rimini
+MXn81OmH26zD	Miramar
+THlADx5H34zD	Khlong Luang
+INm-pt9j+3zD	Ādilābād
+USwqtOyw73zD	Fargo
+MXmhdOTck2zD	Iguala de la Independencia
+IDd0wy8ln1zD	Sepatan
+PLyd0iwbh1zD	Zielona Góra
+BRXgQXvyq0zD	Cubatão
+LSVk4k4szyzD	Maseru
+INmgZu6k7wzD	Srikakulam
+UAwoMmirswzD	Berdyansk
+KEe2xnIc5vzD	Malindi
+INmMEt90zvzD	Uppal Kalan
+GByDRgDPruzD	Eastbourne
+CDe0hjFwjuzD	Bandundu
+LKicyuNGjtzD	Pita Kotte
+ESuYlfYhyszD	Torrejón de Ardoz
+USqsnPRVxrzD	Beaumont
+NGkGLibwprzD	Bama
+NGiyagzCpqzD	Ilobu
+MXqBeNP-3pzD	Ciudad Delicias
+INnvCsji0pzD	Jetpur
+CNoSc0pvnozD	Puning
+INoHNsl+mozD	Morbi
+COhYxSb50nzD	Guadalajara de Buga
+RUzyemqfwnzD	Troparëvo
+THk6exyRnlzD	Nakhon Pathom
+UAxSSj9u2jzD	Uzhgorod
+INoeus0qnjzD	Pātan
+DEyrBiZFlizD	Friedrichshain
+TGjMagM5zhzD	Sokodé
+PLxyFjuynhzD	Tarnów
+ECelIR61khzD	Loja
+GByCPfX3jgzD	Exeter
+NGjKYiBP9-yD	Jalingo
+SE1Mmi8Vy-yD	Västerås
+CDhKGjg9n8yD	Gemena
+RU0AbwFri8yD	Achinsk
+CNuQ-0vM37yD	Shunyi
+GBy-0fwky7yD	Rotherham
+JPsVP4H9h7yD	Ikoma
+MXm2bNjsg7yD	Ciudad de Villa de Álvarez
+VEjWkUii86yD	Anaco
+IDhLvxoP64yD	Tebingtinggi
+HTmjaTC9g4yD	Tigwav
+COh99S9Pn3yD	Tunja
+DEzCPhhxm2yD	Bremerhaven
+CLNGbTZM21yD	Punta Arenas
+LTz0PkVDz0yD	Panevėžys
+MMn1axJd3xyD	Pyin Oo Lwin
+USt5iPNwnwyD	Independence
+IDdhYzfihwyD	Kedungwuni
+JPtqM5HrxvyD	Ishinomaki
+CNvNS3AihuyD	Longjing
+INq6ttjOxsyD	Khanna
+VEjLEUAzssyD	Calabozo
+DEyMnhR1+ryD	Remscheid
+PTtspea32ryD	Setúbal
+RSvmxjniwqyD	Čačak
+USvCCRHNuqyD	Ann Arbor
+CMhwvhxGnqyD	Nkongsamba
+GNjk2dtnmqyD	Kindia
+CNtDD1EBgqyD	Qingzhou
+INn4esvZ9pyD	Botād
+INoFGvtL2oyD	Rishra
+BRW8-XQTooyD	Pinhais
+DZsmWhRRooyD	Khenchela
+JPsG03Y79lyD	Hōfu
+TRukemvG0hyD	Ordu
+KPuof2c44gyD	Manp’o
+CHwifhLdvgyD	Lausanne
+USsHPLBH8-xD	El Monte
+USsEzRLWq-xD	Athens
+BEyNSgkrl-xD	Brugge
+BRbdFZLD29xD	Simões Filho
+INpRMuyck9xD	Azamgarh
+ITvGKihm07xD	Pescara
+PKqXJsqwj7xD	Ahmadpur East
+BRYVlX7G76xD	Varginha
+USuJtQED16xD	Springfield
+KZwAWt7tu6xD	Taldykorgan
+EStbdfU4t6xD	Jaén
+PEaXgTjVo6xD	Puno
+ESuYIfViz5xD	Moncloa-Aravaca
+GBydAfoV-2xD	Cheltenham
+INkqHty3-2xD	Yelahanka
+USugmS2q5zxD	Harlem
+CNoN40KtzyxD	Dasha
+HUxDPj3FqyxD	Nyíregyháza
+CNxhd1dq8xxD	Yakeshi
+RUvuUnehgwxD	Cherkessk
+ESs2OfB-xvxD	Algeciras
+INl1-uZihuxD	Gudivāda
+PHiZl2SR6sxD	Digos
+JPsZy4V-3sxD	Handa
+BRbyBWIgtpxD	Sinop
+RUz0PmsjgpxD	Taganskiy
+UAxO7m5pgpxD	Alchevs’k
+USq2OOoo9oxD	Round Rock
+RUz3Rm1ZroxD	Noginsk
+DEyp5iX5ooxD	Schöneberg
+USsK0SJK9mxD	Wilmington
+PHlJl1fj8mxD	Cavite City
+UAxQamYI8mxD	Pavlohrad
+USugTS2sxmxD	East Harlem
+CNtSS0+w1lxD	Binzhou
+NLyglgzHlkxD	Zoetermeer
+LKicouNKyjxD	Sri Jayewardenepura Kotte
+SE1EzitB1hxD	Örebro
+CAve6Ru3whxD	Guelph
+RUytem2Do-wD	Yelets
+ESuTlfVI78wD	Parla
+IDdsczrnx6wD	Batang
+RUzyPmozw6wD	Novo-Peredelkino
+INoGevs8w5wD	Baidyabāti
+NGiEphTor5wD	Okigwe
+CNp2Dzz0n2wD	Lengshuijiang
+CNtP81srq1wD	Tianfu
+USuJuNUVo1wD	Arvada
+CAviMR5bl1wD	East York
+MGXsqnw03zwD	Toliara
+TNtQMhwVkywD	Bizerte
+USuTiMJlgywD	Provo
+BRYGJX1WhwwD	Pouso Alegre
+INphkutHrtwD	Bastī
+PHmQ21o7htwD	Tuguegarao
+USueAQEr+rwD	Peoria
+USvMZQ98wrwD	Lansing
+CNm+XzsE4pwD	Wenchang
+AFtEar5IjmwD	Balkh
+GBy7Mf54-lwD	Lincoln
+CNtDg044qlwD	Mingshui
+ROw+kkva-iwD	Botoşani
+TMtXdq-f4-vD	Mary
+VNjacy1u14vD	Sóc Trăng
+NZPsH+T8r1vD	Dunedin
+INnpEvdGx0vD	Balasore
+IDdxAzKoyzvD	Pamanukan
+BRaLUY9qjzvD	Eunápolis
+VNk+MzMyxxvD	Pleiku
+USsEUK-6rxvD	Downey
+CAvueSZ0zwvD	Kingston
+CNqrz1iZhwvD	Yuyao
+ITwP1ht-yvvD	Bergamo
+IDduTy+21svD	Sawangan
+INlIAt0SisvD	Dharmavaram
+TRtfGndMyrvD	Siirt
+TRuISnBTrrvD	Erzincan
+GNjsUeWH5qvD	Kankan
+MXqGdNAI3qvD	Cuauhtémoc
+ARTq3VmtwqvD	Villa Lugano
+CNtMZuNfwqvD	Hotan
+RUzzHmqDwqvD	Ochakovo-Matveyevskoye
+DZsBIggmwmvD	Laghouat
+BRX3OXYzmmvD	Botucatu
+INq2vtfVwlvD	Māler Kotla
+MXpn-MixslvD	Navojoa
+NGi5bg1tmlvD	Offa
+RU0sUsIlokvD	Tobol’sk
+INnX7t+Q-ivD	Wardha
+CNoLO0ZL-+uD	Pingshan
+AObmNjAq4+uD	Cuito
+CNwC72MQr+uD	Songyuan
+CNoxs0Mfp+uD	Maba
+BRXonXqWl+uD	Jandira
+PHjTy165l8uD	Dumaguete
+HUw5jjZG77uD	Budapest XIII. kerület
+DEyHvhPHv6uD	Nippes
+JPsfG4sjn6uD	Mishima
+USryhLI0t5uD	Carlsbad
+PLx4ujX424uD	Chorzów
+ZMbVElDU12uD	Luanshya
+CVlTxb0e02uD	Praia
+USue+S3b02uD	Elmhurst
+USr9hLCW0xuD	Costa Mesa
+INqAAtZ2pxuD	Jhunjhunūn
+USpOURu-jxuD	Miami Gardens
+JPvkw5lJxvuD	Kitami
+USuKgNU6qvuD	Westminster
+MXp7UMSP6tuD	Heroica Guaymas
+GBy7ufv4htuD	Chesterfield
+USueiQEusruD	North Peoria
+USp8YRR7rruD	Clearwater
+RUz4mmwCoruD	Shchelkovo
+UStmYKTdqquD	Fairfield
+TRs-klsFpquD	Alanya
+CUoOORXmkquD	Guanabacoa
+PKqrrs3PomuD	Vihari
+CNwHl10-zluD	Guangming
+INmSctJ45kuD	Satara
+FRxlGgMgzkuD	Rouen
+CNoz4yPEkguD	Haikou
+INqHbuAX7-tD	Chanduasi
+RU1uWs6E4-tD	Nefteyugansk
+DExPchouz-tD	Reutlingen
+USueBS2+s-tD	Bushwick
+CNpuJ04sp+tD	Shaowu
+IDdWGz-Pt9tD	Mojokerto
+ROw-skEHq7tD	Satu Mare
+VNnCjyzY56tD	Thanh Hóa
+CNvH32DTu6tD	Kaiyuan
+PKq7Ns6jq5tD	Kamalia
+VEjNwTmf+0tD	Guanare
+USub0S2clztD	Gravesend
+USvpuPj5hztD	Rochester
+BDoZKv+L7xtD	Farīdpur
+SVk6MQJV+wtD	Apopa
+INpeZvGKwwtD	Mothīhāri
+INoZ1vUYtwtD	Chās
+BYygalMvpwtD	Mazyr
+INjsOuAz2vtD	Pudukkottai
+USu8kQTjvvtD	Elgin
+VEjysUwUyutD	Carúpano
+INqBrtnvvutD	Rewāri
+INkJdwfPyttD	Port Blair
+MXmZmPMKuttD	Minatitlán
+NGhtShd5httD	Esuk Oron
+DExl2h9B5stD	Fürth
+CNqmvy7AzstD	Beibei
+USr6KLLHrstD	Temecula
+USucFMGYqqtD	West Jordan
+VNjQ0ysZ2otD	Cà Mau
+BRXkdXv6wotD	Ribeirão Pires
+SYr78meL4ntD	Douma
+TZdPRmWLsmtD	Iringa
+NLyq8hFV9ltD	Zwolle
+RUy4Oo4R4ltD	Novokuybyshevsk
+IRtMXqZtoktD	Qūchān
+INmGCuJ5xjtD	Suriāpet
+LKil5uVb1itD	Kandy
+INoMavystitD	Bangaon
+USsE0K9ayhtD	Inglewood
+UAxY2m1Yw-sD	Lysychans’k
+BRYp3YN0s-sD	Conselheiro Lafaiete
+INo3AuJiq-sD	Chhatarpur
+LVz3pkt4s+sD	Daugavpils
+BRYAtYGT68sD	Resende
+GByZRgFV38sD	Chelmsford
+IRrWuow928sD	Masjed Soleymān
+IDdiGzJ+07sD	Cileunyi
+INoISvwfz7sD	Ashoknagar Kalyangarh
+IDdWAzmBl7sD	Magelang
+FRw+nhTYm6sD	Mulhouse
+ARS+xUkmg6sD	Santa Rosa
+MUYzlqN173sD	Beau Bassin-Rose Hill
+CMiABh0q42sD	Mbouda
+BRW5nXN0m2sD	Araucária
+INnjttx4u1sD	Achalpur
+INoUovtbzwsD	Navadwīp
+NGicDhUJptsD	Nsukka
+NGklBh29mtsD	Nguru
+CNrrk1Y2sssD	Dongtai
+INme7tdNnssD	Bārsi
+BRXx9XuX4rsD	Atibaia
+BRXv0XrM4qsD	Várzea Paulista
+JPsiI4ONtqsD	Hikone
+CNn43z9xpqsD	Encheng
+TRuXCmahkpsD	Turhal
+IRtUuoytqnsD	Bandar-e Anzalī
+USrtwOzb-msD	Richardson
+NGkbYhyPhlsD	Hadejia
+CNqkQ1YFhksD	Zhuji
+FRvLmgg8yjsD	Perpignan
+USvKJTUlrjsD	Lowell
+USt5oPOczisD	East Independence
+FRxfPf76ghsD	Caen
+MMnRsw3a5+rD	Yenangyaung
+USwLVKPA5+rD	Gresham
+UStg0KWIu+rD	Antioch
+SZWlAllCp+rD	Manzini
+ESuzvf1r49rD	Delicias
+USvEQTW+i6rD	Cambridge
+INpVgulzg5rD	Sultānpur
+NZSmb-UYi4rD	Tauranga
+USsyMRxu81rD	High Point
+USwR0Mtg31rD	Billings
+USvSYTTA10rD	Manchester
+JPs8T4xTr0rD	Kiryū
+IDd0ey6XmzrD	Kresek
+MDwprlPY-yrD	Bender
+ZAW8UlgXvyrD	Nelspruit
+IDdsazAEryrD	Citeureup
+BRc14ZgslwrD	Garanhuns
+TNsC-hy57vrD	Gabès
+CNtGU0ki+urD	Qingnian
+GByN7fiHwtrD	Mendip
+IQrZVn5owtrD	Kufa
+MUYyGqN+wtrD	Vacoas
+MZW9ClsCwtrD	Ressano Garcia
+RU2d-taTwtrD	Noyabrsk
+LYrizilw0srD	Zliten
+CNszE1OewsrD	Mizhou
+RUwwrnESqsrD	Bataysk
+CNs830TZjsrD	Linshui
+CNw352kc5prD	Hailun
+INkjFt-nxprD	Ambur
+HUwrXjgC3orD	Kecskemét
+RU0H+vF00orD	Seversk
+MZbRDmQ9vorD	Lichinga
+USr7iLKXmorD	Murrieta
+USuEpNWvtlrD	Centennial
+CNoN+0PUllrD	Shilong
+UStfPKP9skrD	Richmond
+BJj9XghblkrD	Kandi
+USufNS3oikrD	Corona
+BRX3hYeOlirD	Araruama
+CNwtD2w3kirD	Tieli
+BRYe-XSzshrD	Catanduva
+TWoF41iWwgrD	Taitung City
+CNwIN3QD5-qD	Dongxing
+RUzsinyzn9qD	Arzamas
+ZAXfKliU88qD	Phalaborwa
+CNx3V2qjz7qD	Heihe
+UStmfNZyk7qD	Pueblo
+CNptmycD46qD	Zhaotong
+INoFot0Xu5qD	Hoshangābād
+MAsg1e59u3qD	Larache
+NGiepgtgt2qD	Ijebu-Igbo
+RU0BImx3k2qD	Sergiyev Posad
+PEeu1Rspn1qD	Tumbes
+ZMZp-kmKz0qD	Livingstone
+ARTsQT2jrzqD	San Rafael
+GAfvohj6rzqD	Port-Gentil
+CNwWX2gawxqD	Hulan
+NIkmIQudhxqD	Matagalpa
+JPs8W4Qg1vqD	Komatsu
+RUzbvvUd-uqD	Leninsk-Kuznetsky
+CNrFM0A8zqqD	Zhongxiang
+BRXtTXsW6pqD	Franco da Rocha
+JPsyZ41bhpqD	Iwatsuki
+USqguPD31oqD	Pearland
+CNv1Y2WLyoqD	Dehui
+USuxrTA1ioqD	Waterbury
+FRxXRgZgunqD	Boulogne-Billancourt
+PLyZ2jN13mqD	Kalisz
+MAscce81xmqD	Ksar El Kebir
+MZbYxnNAhmqD	Pemba
+CAwY5UewsiqD	Moncton
+INpQKtknkiqD	Sawāi Mādhopur
+NGiYdhIDgiqD	Uromi
+NPpiLvhC4hqD	Dharān
+INk0Vt9LxhqD	Madanapalle
+TZct5l+eugqD	Katumba
+USsHPLCHk+pD	West Covina
+USszxLgzh+pD	Enterprise
+INoKUvtz69pD	Bānsbāria
+COig1S-fy9pD	Girón
+MLlJmfQao9pD	Mopti
+AFs2KsNvh9pD	Baghlān
+MXm-nOXjh9pD	Cuautitlán
+LKjDMucMk8pD	Trincomalee
+PHl7v1m8+7pD	Santiago
+GByVCgB5w6pD	Dagenham
+USrrnRyEw4pD	North Charleston
+OMoqCqFOy3pD	Sohar
+CNxPQ2MU92pD	Nehe
+RUyYtwyqw2pD	Kyzyl
+BRX3MYh1v2pD	Cabo Frio
+RUzXwpgYo1pD	Oktyabr’skiy
+INl+oufmn0pD	Tādepallegūdem
+IDdEq0VIm0pD	Banyuwangi
+NGkbZgvwk0pD	Birnin Kebbi
+CNsoty928zpD	Pingliang
+PHlE+1lcxzpD	Santa Cruz
+AUUhh0kv2vpD	Rockingham
+USxDyKRnqvpD	Everett
+SDkg-lDgovpD	An Nuhūd
+SDmS0mCs6spD	Atbara
+CNrWJ1YUuspD	Jiangyin
+VNjTfyy8nspD	Bạc Liêu
+USq49O37xrpD	College Station
+USp97RrFwrpD	Palm Bay
+INpbZvxl4ppD	Jalpāiguri
+CNxlQ07K0ppD	Jalai Nur
+JPsjp4YRqppD	Tajimi
+DEyS2hLdoppD	Moers
+USpVDRwXynpD	Pompano Beach
+ESvDZemh+mpD	Ourense
+BRcITU-IxlpD	Ji Paraná
+GByOgfzo6jpD	Basingstoke
+TRuWOk+TvjpD	Bandırma
+BOZ0GUQosjpD	Sacaba
+GByOmgF4rjpD	Maidstone
+IQqrfohNkjpD	Umm Qaşr
+MYh62x16nipD	Butterworth
+CNoGJ0FNlipD	Shaping
+ROwCRkVPmhpD	Râmnicu Vâlcea
+ESuarfWk6-oD	Alcobendas
+BRYDQXk4n+oD	Araras
+PLzRNi4A69oD	Koszalin
+BRXomXwso9oD	Poá
+BDo5UwAM78oD	Sherpur
+RUzlwmgig8oD	Obninsk
+BRdHRZud37oD	Vitória de Santo Antão
+TZesol8Qi7oD	Shinyanga
+USuOjNSQ16oD	Boulder
+BRXjLWhS35oD	Umuarama
+DEx50hWO35oD	Koblenz
+DEyFrhbTq3oD	Siegen
+NPp1zvAs10oD	Bharatpur
+OMoetqNhn0oD	As Suwayq
+USsDdLAfk0oD	Norwalk
+ITwMbiDY5zoD	Vicenza
+ESuohgMluzoD	Reus
+JPsoR4gFnzoD	Iida
+CDedcjqO1yoD	Ilebo
+BRXoFW2ftyoD	Apucarana
+VNmoxyyPqyoD	Yên Vinh
+XKvP1jtalxoD	Mitrovicë
+GBysLfrV2woD	Sutton Coldfield
+MAsBre6+vvoD	Khemisset
+RUwdwn3h7uoD	Elista
+MMmvDxJMhuoD	Taungoo
+GByiWf6s8toD	Bedford
+VEjCeTVcjtoD	Ejido
+EGqoYljj5qoD	Al Ḩawāmidīyah
+VEjxVUFUmqoD	Catia La Mar
+CNo3IyOCrpoD	Lianran
+USpf6RxL7ooD	West Palm Beach
+THkgjyAFxnoD	Rayong
+INo2YtRD2moD	Chittaurgarh
+JPs3v4wujjoD	Fukayachō
+RUzyrmrX7ioD	Cherëmushki
+PTuS5egN2ioD	Coimbra
+USs0ZO+HjioD	Broken Arrow
+UStaAKOqiioD	Daly City
+SE0xKixvmgoD	Linköping
+IDdxhzDJv-nD	Cikarang
+CNw1C15fw8nD	Longjiang
+KRtYz2oe27nD	Hwado
+CNqxNz86r7nD	Buhe
+NGjjMh8ny6nD	Pindiga
+BEx8Zg3Ys5nD	Namur
+INlfJtmuq4nD	Gangāwati
+UAwEkl7o62nD	Yevpatoriya
+RUyNJqXoq2nD	Novotroitsk
+DEyIMhRKo2nD	Bergisch Gladbach
+AURRC6KDp1nD	Launceston
+BRVbwWrgh0nD	Santa Cruz do Sul
+PLyNTi34xxnD	Legnica
+ILrQpmJWrwnD	Ashkelon
+CAwZ0VTQwvnD	Sydney
+RUu9RolbtvnD	Derbent
+CNrti1Tc+tnD	Xinghua
+INqC7t101tnD	Khurja
+PHieR2cD0tnD	Mati
+BRX4zX9z4snD	Guaratinguetá
+IDdoyzRd1rnD	Arjawinangun
+ROw76kqqkqnD	Suceava
+DZsukhUHlpnD	Aïn Beïda
+NGkJqhz83mnD	Azare
+TWogN1c4ymnD	Nantou
+CNs9E1MIhmnD	Anqiu
+MYhyT1CU2knD	Lahad Datu
+INj1Atf2ohnD	Ponnāni
+PHlN81gAmhnD	Tanza
+VEjqRT9hugnD	Mariara
+BDojUwLGx-mD	Bhairab Bāzār
+CNseV01Xw-mD	Chengtangcun
+DZtCXgjO69mD	Baraki
+FRxT1hGX27mD	Nancy
+USsD9Q-9y7mD	Sandy Springs
+USsJzK96n7mD	Burbank
+ZAUqJkxx96mD	Queenstown
+VNnZtyugs5mD	Hòa Bình
+USv1DQWi33mD	Green Bay
+SAmAUnkIu3mD	Jizan
+MXm8AOa7t2mD	Texcoco de Mora
+USsbXKltl0mD	Santa Maria
+BRZGvY4EzzmD	Linhares
+BRdcXXbg7xmD	Araguaína
+INqzLtbk4xmD	Barnāla
+USsI2K9aoxmD	Universal City
+ESuXffWe7umD	Moratalaz
+CNuIT0rioumD	Daxing
+MXpkzNNwksmD	Parral
+IRszIoKE-qmD	Bāneh
+GBzCVfn5uqmD	Oldham
+TWobh1bgzomD	Douliu
+DEyG6iD3oomD	Jena
+USsDuOfXmomD	Wichita Falls
+DEyFziJdzmmD	Gera
+INmz4tBm8lmD	Badlapur
+ATxJMi5dzlmD	Ottakring
+IQqqEong5jmD	Al Fāw
+IDdPXzodvimD	Depok
+BAvaTjKnmimD	Mostar
+USp+DRbmx+lD	Lakeland
+KZw-VsDBl9lD	Zhezqazghan
+JPrjp3N718lD	Honmachi
+ARSuuVfMl8lD	Tandil
+CLUG9TbT87lD	Lo Prado
+CNuAd1rt16lD	Pulandian
+SEz7XiQb65lD	Helsingborg
+PKq1Vsnc54lD	Kot Addu
+ETjHKm7f34lD	Bishoftu
+TGjZVgNfv4lD	Kara
+UStF+KuD03lD	Clovis
+CNnoRzsQo3lD	Wuchuan
+UAxJkmywl1lD	Yenakiyeve
+USrv+OwbnzlD	Lewisville
+CIiZIfYO0ylD	Abengourou
+JPsJZ3gXkylD	Iwakuni
+INsHbtR+gylD	Soyībug
+RUz1dmuGgylD	Izmaylovo
+RUzMkvaBgylD	Kiselëvsk
+ZAWKzk134xlD	Kroonstad
+CNvwc2is0xlD	Jishu
+GByXWf-CixlD	Enfield Town
+SDmQemChlwlD	Ed Damer
+GByPyf5p8vlD	Woking
+CGegdiQH2ulD	Dolisie
+INqnnt2O2ulD	Roorkee
+INpopu8wvtlD	Bagaha
+CNoqNyOs1slD	Yuxi
+DEyrsiaZ4qlD	Marzahn
+NGiL9hNt1plD	Nkpor
+INkh0t1jsplD	Hosūr
+USrgKPDs0olD	Tyler
+MVhfAtEXtolD	Male
+USrqQLNO-nlD	El Cajon
+AFr8hsToxllD	Gardez
+KZvaPpZcullD	Zhanaozen
+EGrGTlkysllD	Bilqās
+UStWwKQNwjlD	San Mateo
+INqEEtU9tjlD	Chūru
+INoVztaFtilD	Nagda
+USp7vRXx7hlD	Brandon
+IDex2yh6uhlD	Prabumulih
+THl+2x0tjglD	Phitsanulok
+JPslh4xCp-kD	Isehara
+PTtx7eWtn-kD	Queluz
+JPsZa4XUp9kD	Nishio
+VNjpUy1uy8kD	Vĩnh Long
+RU1VplZ0o8kD	Akademicheskoe
+TRtr+k7K87kD	Turgutlu
+BRY+SYHzm5kD	Esmeraldas
+GTlFbP3E93kD	Escuintla
+RU0CClbit3kD	Velikiye Luki
+INqYxuCWi3kD	Kashipur
+USsIGLIl82kD	Rialto
+INpGKu3A31kD	Ghazīpur
+INpCavUA00kD	Begusarai
+NGiqmg7gu0kD	Ikere-Ekiti
+DEyithxOs0kD	Hildesheim
+IDgvyxv4hzkD	Rantauprapat
+RUz2EmtH4ykD	Bogorodskoye
+UAxTfl4y4ykD	Oleksandriya
+SArI+mo43vkD	Qurayyat
+JMmYdSVQtukD	Portmore
+CUnL6SfXqtkD	Palma Soriano
+RUz6smu1gtkD	Pushkino
+PKre7s3NpskD	Khushāb
+NGjJdg9o7rkD	Lafiagi
+IDhV6xiyzpkD	Belawan
+PHkHo10ogpkD	Roxas City
+ROwrnkrngpkD	Piatra Neamţ
+DExodh9PzokD	Erlangen
+MXm+UOaUrokD	Tepexpan
+USuw4P5b2lkD	Davenport
+GBzARfg57kkD	St Helens
+USuaBSxW0kkD	Edison
+AOasjiZgtkkD	Lubango
+TDjQDjRQgkkD	Sarh
+INpfat2G+hkD	Dhaulpur
+PKriQtLUshkD	Wazirabad
+CLTj8TVdmhkD	Curicó
+DOm1aTdi6gkD	Concepción de La Vega
+BDomJv7b0gkD	Shāhzādpur
+MXnJAOg2mgkD	Tulancingo
+PLylEjt55-jD	Bemowo
+ESutogYur+jD	Ciutat Vella
+USwL5KIpr+jD	Hillsboro
+ROv3gkBvq+jD	Drobeta-Turnu Severin
+INleLtH2p+jD	Mormugao
+CNqEazgh89jD	Qianzhou
+RUvaq3gA88jD	Artëm
+BRYbkXDPl8jD	Birigui
+RU2mfpiyr5jD	Ukhta
+INq-utQ7y3jD	Ferozepore
+JPsiI4USy3jD	Inazawa
+PHmeG1cG52jD	Laoag
+LYrqOiOF20jD	Şabrātah
+EGrEblcs10jD	Disūq
+RUz1wmqGwzjD	Shchukino
+RUzyDmtrwzjD	Brateyevo
+ZAWl7lPQ-wjD	Bethal
+PHlEy1hk6wjD	Pulong Santa Cruz
+IDgUszX-uujD	Singkawang
+MXmbmO6TytjD	Tuxtepec
+INnzuslkptjD	Gondal
+EStgOf4PgtjD	Torrevieja
+IDgR-2pWjrjD	Ternate
+CAvePRzHzqjD	Milton
+IDgDA04t7pjD	Bontang
+CAxeSKJmkpjD	Delta
+IRuGNohM9ojD	Pārsābād
+GByjlfmv7ojD	Worcester
+USrfSNBGrojD	Las Cruces
+OMoQgqDBoojD	‘Ibrī
+PKrUVsmswnjD	Dera Ismail Khan
+BYyxNk5XunjD	Salihorsk
+HUwx1jRdgnjD	Székesfehérvár
+BRX8UXCb9mjD	Assis
+COj3HStP+kjD	Malambo
+USu0hQqqskjD	South Bend
+RUz+5xBD+jjD	Kansk
+FRxZ1gZkjjjD	Argenteuil
+ATxIbi6+shjD	Simmering
+TRuPFlDOkhjD	Mustafakemalpaşa
+INn2juJGjgjD	Seoni
+CAv4hUso-+iD	Dartmouth
+BYzUAkxi09iD	Maladzyechna
+INqudtvi09iD	Jagādhri
+CZxokjES08iD	Olomouc
+DEySnhTp-7iD	Witten
+INl-7uJPy7iD	Miriālgūda
+BRYsNXXak7iD	Barretos
+GHiA7f+J36iD	Medina Estates
+PKrtZs86w6iD	Chakwal
+NZRWG-GJq6iD	Lower Hutt
+BRZDXYxtm6iD	Colatina
+GByRYgGPj6iD	Gillingham
+BRZppYnwy5iD	Teófilo Otoni
+JPsG03bxt4iD	Tokuyama
+KRtWV288o4iD	Tonghae
+AMughn6Pq3iD	Vanadzor
+EE0wekwEk3iD	Tartu
+ZAXZclKEi3iD	Mokopane
+DEyi2h2g32iD	Salzgitter
+INmiittbo2iD	Udgīr
+PHlri1b0t1iD	Urdaneta
+RUzF1vp7i1iD	Mezhdurechensk
+BRVSvW4Cg1iD	Guaíba
+PHiJu1guq0iD	Jolo
+RUz0Pmtso0iD	Ryazanskiy
+RUzzemrno0iD	Novyye Cherëmushki
+CNn0AzT6k0iD	Qinzhou
+BRYpmYzL9xiD	Guarapari
+BRZD2Ya+0xiD	Coronel Fabriciano
+ALunijkfnxiD	Elbasan
+USrzeLKC6wiD	Vista
+BYzvplFY1wiD	Navapolatsk
+USuX2NYpzwiD	Greeley
+USpRERvIywiD	Davie
+PTrnUc-bvviD	Funchal
+DZswXhQ71uiD	Oum el Bouaghi
+RU1M8qF5suiD	Solikamsk
+HNlebQZCquiD	El Progreso
+INo--vYDstiD	Jamālpur
+BRX3-YN7wsiD	Itaguaí
+INnmNtMs-qiD	Nandurbar
+EGq7KloWsqiD	Abū Kabīr
+RU0q-pXIkqiD	Glazov
+CIh9CfR5tpiD	Anyama
+GRtfkkNphpiD	Kallithéa
+JPsuR48fhpiD	Narita
+PAjN7R4C8oiD	Juan Díaz
+AUS7j5plpoiD	Bendigo
+IDdTCzs3loiD	Grogol
+JPsPK4DmzniD	Izumisano
+INoCnt0w+miD	Itārsi
+UStcFKPR+miD	Chinatown
+IDgfZxpexmiD	Padangsidempuan
+EGquvljDvkiD	Qalyūb
+INleVtH2lkiD	Vasco da Gama
+USrL+OJQijiD	San Angelo
+JPt1k43O+iiD	Sakata
+JPsj-4VRlhiD	Kōnan
+JPr6O3M+hgiD	Chikushino-shi
+CNnslzmw1-hD	Lianjiang
+CNuHq1Dr8+hD	Linxi
+COjSTStd5+hD	Magangué
+SNlM-dHTh+hD	Tiébo
+RU0n1yQDv9hD	Ust’-Ilimsk
+USw4fKRcy8hD	Renton
+TRuvPlpul8hD	Zonguldak
+IRr7Eodsw7hD	Kūhdasht
+LKiomujFr6hD	Kalmunai
+INrGhteIy5hD	Phagwāra
+DExsNhLih5hD	Trier
+DOmm1T1t31hD	Punta Cana
+ESp8+dQkv1hD	Telde
+BRX-YYiwg1hD	Rio das Ostras
+CNt19x26g1hD	Zhangye
+CNqqtyICg1hD	Kangding
+CUoO+RX2g1hD	Alamar
+DZssggzrg1hD	M’Sila
+GByVHgBdg1hD	Becontree
+IDdkIzL2g1hD	Sumedang Utara
+ILrZUmLZg1hD	Jaffa
+INmzys+ig1hD	Airoli
+KPt9E2YIg1hD	P’yŏngsŏng
+LYrsPiX5g1hD	Tagiura
+MXm7iOYLg1hD	Colonia Lindavista
+RSwZBjfwg1hD	Subotica
+RUzzfmtbg1hD	Tekstil’shchiki
+UAxT1kueg1hD	Kamianets-Podilskyi
