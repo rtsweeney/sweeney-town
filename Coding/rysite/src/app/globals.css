@@ -2494,3 +2494,433 @@ a {
   border-top: 1px solid var(--border-subtle);
   padding-top: 0.55rem;
 }
+
+/* ============================================
+   Dig Through the Earth (antipode finder)
+   ============================================ */
+
+.antipode-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.antipode-origin-card,
+.antipode-colophon {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.antipode-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+}
+
+.antipode-origin-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.85rem;
+}
+
+.antipode-origin-readout strong {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.antipode-origin-readout span {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.antipode-secondary-btn {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: rgba(108, 92, 231, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.antipode-secondary-btn:hover:not(:disabled) {
+  background: rgba(108, 92, 231, 0.16);
+  border-color: var(--accent-primary);
+}
+
+.antipode-secondary-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.antipode-search {
+  position: relative;
+  margin-top: 1.25rem;
+}
+
+.antipode-suggestions {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  list-style: none;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px rgba(26, 26, 46, 0.14);
+  overflow: hidden;
+}
+
+.antipode-suggestions button {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+}
+
+.antipode-suggestions li:last-child button {
+  border-bottom: none;
+}
+
+.antipode-suggestions button:hover {
+  background: var(--surface-hover);
+}
+
+.antipode-suggestion-meta {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.antipode-shortcuts {
+  margin-top: 1.35rem;
+}
+
+.antipode-shortcut-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.antipode-shortcut-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.antipode-chip {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.antipode-chip:hover:not(:disabled) {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: rgba(108, 92, 231, 0.08);
+}
+
+.antipode-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.antipode-note {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+.antipode-privacy {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.85rem;
+  margin-top: 1.35rem;
+}
+
+/* ── Globe ───────────────────────────────────────────────────────────────── */
+
+.antipode-globe-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(108, 92, 231, 0.25);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(108, 92, 231, 0.22), transparent),
+    linear-gradient(170deg, #0f1430 0%, #080b1c 100%);
+  box-shadow: 0 24px 60px rgba(8, 11, 28, 0.28);
+}
+
+.antipode-canvas-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.antipode-canvas {
+  display: block;
+  border-radius: 50%;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.antipode-depth {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.55rem 1.1rem;
+  text-align: center;
+  background: rgba(8, 11, 28, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.antipode-depth-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffd79a;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.antipode-depth-layer {
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.antipode-dig-btn {
+  width: 100%;
+  max-width: 460px;
+  padding: 1.05rem 1.5rem;
+  font-family: inherit;
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  background: linear-gradient(120deg, var(--gradient-start), var(--accent-warm) 60%, var(--accent-orange));
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(232, 67, 147, 0.35);
+  transition: transform var(--transition-bounce), box-shadow var(--transition-smooth), background-position 0.6s ease;
+}
+
+.antipode-dig-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.015);
+  background-position: 100% 0;
+  box-shadow: 0 16px 40px rgba(232, 67, 147, 0.45);
+}
+
+.antipode-dig-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.99);
+}
+
+.antipode-dig-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.antipode-globe-hint {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin: -0.35rem 0 0;
+}
+
+/* ── Result ──────────────────────────────────────────────────────────────── */
+
+.antipode-result {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-top: 3px solid var(--accent-warm);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.antipode-result-headline {
+  text-align: center;
+  padding-bottom: 1.4rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.antipode-result-kicker {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.antipode-result-headline h2 {
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.antipode-flag {
+  margin-right: 0.5rem;
+}
+
+.antipode-result-coords {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.2rem;
+}
+
+.antipode-result-sub {
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  margin-top: 0.7rem;
+  max-width: 62ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.antipode-fact-grid {
+  display: grid;
+  /* 300px keeps six facts on a tidy 3 x 2 at full width rather than 4 + 2. */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.antipode-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.antipode-fact-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.antipode-fact-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.antipode-fact-value-small {
+  font-size: 1.02rem;
+}
+
+.antipode-fact-icon {
+  margin-left: 0.4rem;
+  font-size: 1rem;
+}
+
+.antipode-fact-detail {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.antipode-colophon p {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin-bottom: 0.85rem;
+}
+
+.antipode-colophon p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 901px) {
+  /* The globe card is the taller of the two; let the controls ride alongside
+     it instead of stranding a column of whitespace. */
+  .antipode-origin-card {
+    position: sticky;
+    top: calc(var(--nav-height) + 1rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .antipode-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .antipode-globe-card {
+    order: -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .antipode-origin-card,
+  .antipode-globe-card,
+  .antipode-result,
+  .antipode-colophon {
+    padding: 1.1rem;
+  }
+
+  .antipode-dig-btn {
+    font-size: 0.94rem;
+    padding: 0.95rem 1rem;
+  }
+}

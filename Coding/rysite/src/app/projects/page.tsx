@@ -90,6 +90,30 @@ export default async function ProjectsPage() {
             </div>
           </Link>
 
+          {/* Dig Through the Earth — antipode finder with a 3D globe */}
+          <Link href="/projects/antipode" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="card card-accent-teal" style={{ height: '100%', cursor: 'pointer' }}>
+              <div className="project-card-header">
+                <div className="project-card-icon">&#127759;</div>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+                Dig Through the Earth
+              </h3>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.7 }}>
+                <p>Press the big button and a vector globe spins half a turn to your antipode — the town, country and time zone 12,742 km straight down. The whole atlas runs in the browser, so your location never leaves the tab.</p>
+              </div>
+              <div className="project-tech-tags">
+                <span className="project-tech-tag">Canvas Globe</span>
+                <span className="project-tech-tag">Natural Earth</span>
+                <span className="project-tech-tag">GeoNames</span>
+                <span className="project-tech-tag">Offline Lookups</span>
+              </div>
+              <div className="project-links">
+                <span className="project-link">Open &rarr;</span>
+              </div>
+            </div>
+          </Link>
+
           {/* Planetarium — built-in interactive project */}
           <Link href="/planetarium" style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="card card-accent-purple" style={{ height: '100%', cursor: 'pointer' }}>
