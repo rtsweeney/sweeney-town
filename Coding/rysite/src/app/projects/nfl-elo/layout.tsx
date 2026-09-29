@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'NFL Elo Ratings — Weekly Win Probabilities & QB Ratings | Sweeney Town',
+  title: 'NFL Elo Ratings & Predictions — Win Probabilities & Playoff Odds | Sweeney Town',
   description:
-    "A continuation of FiveThirtyEight's retired NFL Elo model, rebuilt from their published source and re-fit on modern seasons. Team ratings, per-game win probabilities, quarterback adjustments, and live scores for every week.",
+    "NFL game predictions from a continuation of FiveThirtyEight's retired Elo model: pre-game win probabilities and point spreads for every game, playoff and division odds from 20,000 simulated seasons, team and quarterback ratings, and live scores.",
   keywords: [
     'NFL Elo ratings',
+    'NFL predictions',
     'NFL win probability',
+    'NFL playoff odds',
     'FiveThirtyEight Elo model',
     'NFL power rankings',
     'quarterback Elo adjustment',
@@ -15,9 +17,9 @@ export const metadata: Metadata = {
     'QB VALUE rating',
   ],
   openGraph: {
-    title: 'NFL Elo Ratings — Weekly Win Probabilities & QB Ratings',
+    title: 'NFL Elo Ratings & Predictions',
     description:
-      "FiveThirtyEight's NFL Elo model, continued and re-fit: team ratings, per-game win probabilities, quarterback adjustments, and live scores.",
+      "Who wins this week, and how likely? Pre-game win probabilities, point spreads and playoff odds from FiveThirtyEight's NFL Elo model, continued and re-fit.",
     type: 'website',
   },
 };

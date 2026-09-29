@@ -246,6 +246,8 @@ export interface QbRating {
   starts: number;
   lastValue: number | null;
   rank: number;
+  /** Rating at the end of each week of the season; index 0 is preseason. */
+  history: number[];
 }
 
 export interface EloSeason {

@@ -30,12 +30,12 @@ const featured = [
     tags: ['Computer Vision', 'Canvas', 'No Server'],
   },
   {
-    name: 'NFL Elo Ratings',
+    name: 'NFL Elo Ratings & Predictions',
     href: '/projects/nfl-elo',
     icon: '&#127944;',
     accent: 'card-accent-purple',
     description:
-      "FiveThirtyEight's NFL Elo model, continued. Rebuilt from their published source and re-fit on modern seasons, with per-game win probabilities, rolling quarterback ratings, and scores that update live.",
+      "Who wins this week, and how likely? FiveThirtyEight's NFL Elo model, continued and re-fit: win probabilities and spreads for every game, playoff odds from simulated seasons, quarterback ratings, and live scores.",
     tags: ['Elo Model', 'nflverse', 'Live Scores'],
   },
   {

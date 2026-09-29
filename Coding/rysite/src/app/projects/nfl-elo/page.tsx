@@ -18,10 +18,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { TEAMS, resolveTeam, fullName, shortName } from './teams';
-import type { EloSeason, GameProjection, QbRating, TeamRating } from './engine';
 import {
-  BumpChart, CHART_CSS, DivisionRaces, EloLineChart, Highlights, PlayoffMeter, PlayoffPicture,
-  SPOTLIGHTS, SpotlightPicker, WeeklyTable, emphasisOf,
+  LEAGUE_AVG_QB_VALUE, LEAGUE_MEAN,
+  type EloSeason, type GameProjection, type QbRating, type TeamRating,
+} from './engine';
+import {
+  BumpChart, CHART_CSS, DivisionRaces, Highlights, PlayoffMeter, PlayoffPicture, RatingLineChart,
+  SPOTLIGHTS, SpotlightPicker, WeeklyTable, emphasisOf, qbSeries, teamSeries,
 } from './charts';
 
 const DATA_URL = '/data/nfl-elo/season.json';
@@ -104,7 +107,9 @@ export default function NflEloPage() {
   const [data, setData] = useState<EloSeason | null>(null);
   const [live, setLive] = useState<Map<string, LiveScore>>(new Map());
   const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<string | null>(null);
+  // Null is every game; a team abbreviation filters to it; the two view keys
+  // swap the game list for the ratings or quarterbacks. Ratings open the page.
+  const [selected, setSelected] = useState<string | null>(ELO_VIEW);
   const [activeWeek, setActiveWeek] = useState<number | null>(null);
 
   // Only a slice of the season is mounted at a time; the rest arrives as the
@@ -309,15 +314,17 @@ export default function NflEloPage() {
         <div className="page-header">
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
             <Link href="/projects" style={{ color: 'var(--accent-secondary)' }}>Projects</Link>
-            {' / '}NFL Elo Ratings
+            {' / '}NFL Elo Ratings &amp; Predictions
           </p>
-          <h1 className="section-title"><span className="gradient-text">NFL Elo Ratings</span></h1>
+          <h1 className="section-title"><span className="gradient-text">NFL Elo Ratings &amp; Predictions</span></h1>
           <p className="section-subtitle" style={{ marginBottom: 0 }}>
-            A continuation of FiveThirtyEight&apos;s retired NFL Elo model, rebuilt from their
-            published source and re-fit on modern seasons. Every team carries one rating; each
-            matchup adds home field, rest and an adjustment for the starting quarterback. Scores
-            update live &mdash; win probabilities are the model&apos;s pre-game view and stay fixed
-            once a game kicks off.
+            Who wins this week, and how likely is it? Every game gets a pre-game win probability
+            and a model point spread; every team gets its odds of making the playoffs and winning
+            its division, from thousands of simulated seasons. Underneath is FiveThirtyEight&apos;s
+            retired NFL Elo model, rebuilt from their published source and re-fit on modern
+            seasons: one rating per team, plus home field, rest and the starting quarterback.
+            Scores update live &mdash; predictions are the model&apos;s pre-game view and stay
+            fixed once a game kicks off.
           </p>
         </div>
 
@@ -336,10 +343,26 @@ export default function NflEloPage() {
             <div className="nfl-filter">
               <button
                 type="button"
+                className={`nfl-chip nfl-chip-ratings ${showingElo ? 'active' : ''}`}
+                onClick={() => setSelected(showingElo ? null : ELO_VIEW)}
+              >
+                Elo &amp; Odds
+              </button>
+
+              <button
+                type="button"
                 className={`nfl-chip nfl-chip-all ${selected === null ? 'active' : ''}`}
                 onClick={() => setSelected(null)}
               >
                 All Games
+              </button>
+
+              <button
+                type="button"
+                className={`nfl-chip nfl-chip-qb ${showingQbs ? 'active' : ''}`}
+                onClick={() => setSelected(showingQbs ? null : QB_VIEW)}
+              >
+                QBs
               </button>
 
               {TEAMS.map((t) => {
@@ -358,26 +381,10 @@ export default function NflEloPage() {
                   </button>
                 );
               })}
-
-              <button
-                type="button"
-                className={`nfl-chip nfl-chip-qb ${showingQbs ? 'active' : ''}`}
-                onClick={() => setSelected(showingQbs ? null : QB_VIEW)}
-              >
-                QBs
-              </button>
-
-              <button
-                type="button"
-                className={`nfl-chip nfl-chip-ratings ${showingElo ? 'active' : ''}`}
-                onClick={() => setSelected(showingElo ? null : ELO_VIEW)}
-              >
-                Elo
-              </button>
             </div>
 
             {showingQbs ? (
-              <QbTable quarterbacks={data.quarterbacks} />
+              <QbView quarterbacks={data.quarterbacks} />
             ) : showingElo ? (
               <EloView data={data} />
             ) : (
@@ -565,6 +572,8 @@ function EloView({ data }: { data: EloSeason }) {
   }, [data]);
 
   const chart = { teams: data.teams, spotlight, hover, onHover: setHover };
+  const series = useMemo(() => teamSeries(data.teams), [data.teams]);
+  const lines = { series, spotlight, hover, onHover: setHover, unit: 'Elo', subject: 'team' };
 
   return (
     <div className="nfl-qb-wrap">
@@ -588,7 +597,7 @@ function EloView({ data }: { data: EloSeason }) {
             another; the right-hand number is this week&apos;s rank, with the move since last week.
           </p>
         </div>
-        <div className="nfl-card"><BumpChart {...chart} /></div>
+        <div className="nfl-card"><BumpChart {...lines} /></div>
       </section>
 
       <section className="nfl-section">
@@ -599,8 +608,10 @@ function EloView({ data }: { data: EloSeason }) {
             above average makes a team about a 64% favourite over an average one on a neutral field.
           </p>
         </div>
-        <div className="nfl-card"><EloLineChart {...chart} /></div>
-        <WeeklyTable teams={data.teams} />
+        <div className="nfl-card">
+          <RatingLineChart {...lines} baseline={{ value: LEAGUE_MEAN, label: `League average ${LEAGUE_MEAN}` }} tickStep={50} />
+        </div>
+        <WeeklyTable series={series} heading="Team" />
       </section>
 
       <section className="nfl-section">
@@ -700,7 +711,14 @@ function EloTable({
 
 // ── quarterback table ────────────────────────────────────────────────────────
 
-function QbTable({ quarterbacks }: { quarterbacks: QbRating[] }) {
+function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
+  const [spotKey, setSpotKey] = useState('ALL');
+  const [hover, setHover] = useState<string | null>(null);
+  const spotlight = SPOTLIGHTS.find((s) => s.key === spotKey)?.teams ?? null;
+  const series = useMemo(() => qbSeries(quarterbacks), [quarterbacks]);
+  const lines = { series, spotlight, hover, onHover: setHover, digits: 1, unit: 'rating', subject: 'quarterback' };
+  const hasHistory = quarterbacks.length > 0 && quarterbacks[0].history.length > 0;
+
   return (
     <div className="nfl-qb-wrap">
       <p className="nfl-qb-intro">
@@ -711,6 +729,49 @@ function QbTable({ quarterbacks }: { quarterbacks: QbRating[] }) {
         actually moves a line: the gap between him and his own team&apos;s recent quarterback
         level, which is why the adjustment fires on an injury and stays quiet otherwise.
       </p>
+
+      {hasHistory && (
+        <>
+          <SpotlightPicker value={spotKey} onChange={setSpotKey} />
+
+          <section className="nfl-section">
+            <div className="nfl-section-head">
+              <h3>Quarterback rank, week by week</h3>
+              <p>
+                Every current starter ranked by rating after each week. A passer only moves when he
+                plays, and passes or falls behind whoever else did; the right-hand number is this
+                week&apos;s rank, with the move since last week.
+              </p>
+            </div>
+            <div className="nfl-card"><BumpChart {...lines} /></div>
+          </section>
+
+          <section className="nfl-section">
+            <div className="nfl-section-head">
+              <h3>Quarterback rating, week by week</h3>
+              <p>
+                The ratings themselves, against a league-average starter at{' '}
+                {LEAGUE_AVG_QB_VALUE.toFixed(1)}. Every point of rating is worth 3.5 Elo, so a
+                passer ten points above average is worth 35 Elo, about a point and a half on his
+                team&apos;s line.
+              </p>
+            </div>
+            <div className="nfl-card">
+              <RatingLineChart
+                {...lines}
+                baseline={{ value: LEAGUE_AVG_QB_VALUE, label: `League-average starter ${LEAGUE_AVG_QB_VALUE.toFixed(1)}` }}
+                tickStep={10}
+              />
+            </div>
+            <WeeklyTable series={series} digits={1} heading="Quarterback" />
+          </section>
+
+          <div className="nfl-section-head">
+            <h3>Quarterback ratings table</h3>
+          </div>
+        </>
+      )}
+
       <p className="nfl-qb-intro">
         A <strong>vs Team of 0</strong> is a result, not a gap in the data. A passer who has
         taken every snap for one team has his rating and that team&apos;s baseline updated by
@@ -736,7 +797,10 @@ function QbTable({ quarterbacks }: { quarterbacks: QbRating[] }) {
             {quarterbacks.map((q) => {
               const team = resolveTeam(q.team);
               return (
-                <tr key={q.playerId}>
+                <tr
+                  key={q.playerId}
+                  className={emphasisOf(q.playerId, spotlight, null, q.team) === 'dim' ? 'faded' : ''}
+                >
                   <td className="nfl-qb-rank">{q.rank}</td>
                   <td className="nfl-qb-name">{q.name}</td>
                   <td>

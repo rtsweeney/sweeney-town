@@ -14,7 +14,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Crown } from 'lucide-react';
 import { TEAMS, resolveTeam, fullName } from './teams';
-import { LEAGUE_MEAN, type TeamRating } from './engine';
+import type { QbRating, TeamRating } from './engine';
 
 // ── shared ───────────────────────────────────────────────────────────────────
 
@@ -48,12 +48,19 @@ export const SPOTLIGHTS: Spotlight[] = [
   ...DIVISIONS.map((d) => ({ key: d.key, label: d.key, teams: new Set(d.teams) })),
 ];
 
-/** How loudly a team is drawn given the spotlight and the pointer. */
+/** How loudly a line is drawn given the spotlight and the pointer. */
 type Emphasis = 'focus' | 'lit' | 'soft' | 'dim';
 
-export function emphasisOf(team: string, spotlight: Set<string> | null, hover: string | null): Emphasis {
+/** Quiet lines are drawn first so the loud ones sit on top. */
+const EMPHASIS_ORDER: Record<Emphasis, number> = { dim: 0, soft: 1, lit: 2, focus: 3 };
+
+/**
+ * `key` is what the pointer hovers (a team, or a quarterback); `team` is what
+ * the spotlight selects on, and defaults to the key for team charts.
+ */
+export function emphasisOf(key: string, spotlight: Set<string> | null, hover: string | null, team = key): Emphasis {
   if (hover) {
-    if (team === hover) return 'focus';
+    if (key === hover) return 'focus';
     return spotlight?.has(team) ? 'soft' : 'dim';
   }
   if (spotlight) return spotlight.has(team) ? 'lit' : 'dim';
@@ -108,6 +115,8 @@ function Marker({ shape, x, y, r, fill }: { shape: number; x: number; y: number;
 
 /** Spread end-of-line labels so none overlap, keeping each as near its line as it can. */
 function dodge(items: { key: string; y: number }[], gap: number, min: number, max: number) {
+  // Squeeze the spacing rather than spill past the plot when there are many labels.
+  if (items.length > 1) gap = Math.min(gap, (max - min) / (items.length - 1));
   const sorted = [...items].sort((a, b) => a.y - b.y);
   const pos = sorted.map((i) => Math.max(min, i.y));
   for (let i = 1; i < pos.length; i++) pos[i] = Math.max(pos[i], pos[i - 1] + gap);
@@ -146,6 +155,59 @@ interface ChartProps {
   onHover: (team: string | null) => void;
 }
 
+/** One line on a rating chart: a team, or a quarterback. */
+export interface Series {
+  key: string;
+  /** Colour, marker shape and spotlight membership all follow the team. */
+  team: string;
+  /** Short enough to sit at the end of a line. */
+  label: string;
+  name: string;
+  history: number[];
+  /** Current rank, which settles a tie in any week. */
+  rank: number;
+}
+
+interface SeriesChartProps {
+  series: Series[];
+  spotlight: Set<string> | null;
+  hover: string | null;
+  onHover: (key: string | null) => void;
+  /** Elo reads in whole points, quarterback ratings in tenths. */
+  digits?: number;
+  /** What the value is called in tooltips: "Elo", "rating". */
+  unit: string;
+  /** What each line is, for screen readers: "team", "quarterback". */
+  subject: string;
+}
+
+export function teamSeries(teams: TeamRating[]): Series[] {
+  return teams.map((t) => ({
+    key: t.team, team: t.team, label: t.team, name: fullName(t.team), history: t.history, rank: t.rank,
+  }));
+}
+
+/** Quarterbacks are labelled by surname, with an initial only where two share one. */
+export function qbSeries(qbs: QbRating[]): Series[] {
+  const surname = (name: string) => name.split(' ').slice(1).join(' ') || name;
+  const count = new Map<string, number>();
+  for (const q of qbs) count.set(surname(q.name), (count.get(surname(q.name)) ?? 0) + 1);
+  return qbs.map((q) => ({
+    key: q.playerId,
+    team: q.team,
+    label: count.get(surname(q.name))! > 1 ? `${q.name[0]}. ${surname(q.name)}` : surname(q.name),
+    name: `${q.name} · ${q.team}`,
+    history: q.history,
+    rank: q.rank,
+  }));
+}
+
+/** Room for the longest end label, from a per-character estimate at 11px bold. */
+function labelWidth(series: Series[], compact: boolean) {
+  const longest = Math.max(3, ...series.map((s) => s.label.length));
+  return Math.ceil(longest * (compact ? 6.4 : 7));
+}
+
 function Tooltip({ x, y, width, children }: { x: number; y: number; width: number; children: React.ReactNode }) {
   // Flip to the left of the pointer when there is no room on the right.
   const flip = x > width - 220;
@@ -160,18 +222,24 @@ function Tooltip({ x, y, width, children }: { x: number; y: number; width: numbe
   );
 }
 
-function TipRow({ team, value, note, strong }: { team: string; value: string; note?: string; strong?: boolean }) {
+function TipRow({ color, name, value, note, strong }: {
+  color: string; name: string; value: string; note?: string; strong?: boolean;
+}) {
   return (
     <div className={`nfl-tip-row ${strong ? 'strong' : ''}`}>
-      <span className="nfl-tip-key" style={{ background: colorOf(team) }} />
+      <span className="nfl-tip-key" style={{ background: color }} />
       <strong>{value}</strong>
-      <span className="nfl-tip-name">{fullName(team)}</span>
+      <span className="nfl-tip-name">{name}</span>
       {note && <span className="nfl-tip-note">{note}</span>}
     </div>
   );
 }
 
-const signed = (n: number) => (n > 0 ? `+${n}` : n < 0 ? `−${Math.abs(n)}` : '±0');
+/** "+12", "−3.4", "±0" — rounded to the chart's precision first, so −0.04 reads ±0. */
+const signed = (n: number, digits = 0) => {
+  const r = Number(n.toFixed(digits));
+  return r > 0 ? `+${r.toFixed(digits)}` : r < 0 ? `−${Math.abs(r).toFixed(digits)}` : '±0';
+};
 
 // ── spotlight picker ─────────────────────────────────────────────────────────
 
@@ -233,22 +301,24 @@ export function Highlights({ teams, throughWeek }: { teams: TeamRating[]; throug
   );
 }
 
-// ── bump chart: league rank by week ──────────────────────────────────────────
+// ── bump chart: rank by week ─────────────────────────────────────────────────
 
-export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
+export function BumpChart({ series, spotlight, hover, onHover, digits = 0, unit, subject }: SeriesChartProps) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const [probe, setProbe] = useState<number | null>(null);
   const clipId = useClipId();
-  const weeks = teams[0]?.history.length ?? 0;
-  const n = teams.length;
+  const weeks = series[0]?.history.length ?? 0;
+  const n = series.length;
+  const byKey = useMemo(() => new Map(series.map((s) => [s.key, s])), [series]);
 
-  // order[w][i] is the team ranked i+1 after week w.
+  // order[w][i] is the series ranked i+1 after week w.
   const order = useMemo(() => Array.from({ length: weeks }, (_, w) =>
-    [...teams].sort((a, b) => b.history[w] - a.history[w] || a.rank - b.rank).map((t) => t.team)), [teams, weeks]);
-  const rankOf = useMemo(() => order.map((o) => new Map(o.map((t, i) => [t, i + 1]))), [order]);
+    [...series].sort((a, b) => b.history[w] - a.history[w] || a.rank - b.rank).map((s) => s.key)), [series, weeks]);
+  const rankOf = useMemo(() => order.map((o) => new Map(o.map((k, i) => [k, i + 1]))), [order]);
 
   const compact = width < 640;
-  const M = { top: 34, right: compact ? 58 : 104, bottom: 10, left: compact ? 40 : 58 };
+  const labelW = labelWidth(series, compact);
+  const M = { top: 34, right: 30 + labelW + (compact ? 0 : 34), bottom: 10, left: labelW + 16 };
   const rowH = compact ? 15 : 17;
   const height = M.top + (n - 1) * rowH + M.bottom;
   const plotW = Math.max(1, width - M.left - M.right);
@@ -257,14 +327,14 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
   const y = (rank: number) => M.top + (rank - 1) * rowH;
   const last = weeks - 1;
 
-  const path = (team: string) => {
+  const path = (key: string) => {
     let d = '';
     for (let w = 0; w < weeks; w++) {
-      const px = x(w), py = y(rankOf[w].get(team)!);
+      const px = x(w), py = y(rankOf[w].get(key)!);
       if (w === 0) d = `M${px},${py}`;
       else {
         // Horizontal tangents at every week give the classic bump-chart S-curve.
-        const prevX = x(w - 1), prevY = y(rankOf[w - 1].get(team)!);
+        const prevX = x(w - 1), prevY = y(rankOf[w - 1].get(key)!);
         const mid = (prevX + px) / 2;
         d += ` C${mid},${prevY} ${mid},${py} ${px},${py}`;
       }
@@ -272,10 +342,8 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
     return d;
   };
 
-  const drawOrder = [...teams].sort((a, b) => {
-    const rank = (t: string) => ({ dim: 0, soft: 1, lit: 2, focus: 3 })[emphasisOf(t, spotlight, hover)];
-    return rank(a.team) - rank(b.team);
-  });
+  const emphasis = (s: Series) => emphasisOf(s.key, spotlight, hover, s.team);
+  const drawOrder = [...series].sort((a, b) => EMPHASIS_ORDER[emphasis(a)] - EMPHASIS_ORDER[emphasis(b)]);
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (weeks === 0) return;
@@ -289,7 +357,8 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
   const onLeave = () => { setProbe(null); onHover(null); };
 
   const labelEvery = step < 28 ? Math.ceil(28 / Math.max(step, 1)) : 1;
-  const hoverRank = hover && probe !== null ? rankOf[probe].get(hover) : undefined;
+  const hovered = hover ? byKey.get(hover) : undefined;
+  const hoverRank = hovered && probe !== null ? rankOf[probe].get(hovered.key) : undefined;
 
   return (
     <div className="nfl-chart" ref={ref}>
@@ -298,7 +367,7 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
           width={width}
           height={height}
           role="img"
-          aria-label={`League rank by Elo after each week. Currently: ${order[last].slice(0, 5).join(', ')} lead.`}
+          aria-label={`${subject} rank by ${unit} after each week. Currently: ${order[last].slice(0, 5).map((k) => byKey.get(k)!.name).join(', ')} lead.`}
           onPointerMove={onMove}
           onPointerDown={onMove}
           onPointerLeave={onLeave}
@@ -320,14 +389,14 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
           )}
 
           <g clipPath={`url(#${clipId})`}>
-          {drawOrder.map((t) => {
-            const e = emphasisOf(t.team, spotlight, hover);
-            const color = e === 'dim' ? 'var(--nfl-dim)' : colorOf(t.team);
+          {drawOrder.map((s) => {
+            const e = emphasis(s);
+            const color = e === 'dim' ? 'var(--nfl-dim)' : colorOf(s.team);
             return (
-              <g key={t.team} className={`nfl-series nfl-${e}`}>
-                <path d={path(t.team)} className="nfl-line" stroke={color} />
+              <g key={s.key} className={`nfl-series nfl-${e}`}>
+                <path d={path(s.key)} className="nfl-line" stroke={color} />
                 {e !== 'dim' && Array.from({ length: weeks }, (_, w) => (
-                  <circle key={w} cx={x(w)} cy={y(rankOf[w].get(t.team)!)} r={e === 'focus' ? 5 : 4} fill={color} className="nfl-dot" />
+                  <circle key={w} cx={x(w)} cy={y(rankOf[w].get(s.key)!)} r={e === 'focus' ? 5 : 4} fill={color} className="nfl-dot" />
                 ))}
               </g>
             );
@@ -335,21 +404,17 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
           </g>
 
           {/* direct labels, both ends: ranks are unique, so they never collide */}
-          {teams.map((t) => {
-            const e = emphasisOf(t.team, spotlight, hover);
-            const startRank = rankOf[0].get(t.team)!;
-            const endRank = rankOf[last].get(t.team)!;
-            const move = weeks > 1 ? rankOf[last - 1].get(t.team)! - endRank : 0;
+          {series.map((s) => {
+            const e = emphasis(s);
+            const startRank = rankOf[0].get(s.key)!;
+            const endRank = rankOf[last].get(s.key)!;
+            const move = weeks > 1 ? rankOf[last - 1].get(s.key)! - endRank : 0;
             return (
-              <g
-                key={t.team}
-                className={`nfl-label nfl-${e}`}
-                onPointerEnter={() => onHover(t.team)}
-              >
-                <text x={M.left - 12} y={y(startRank)} dy="0.34em" textAnchor="end">{t.team}</text>
+              <g key={s.key} className={`nfl-label nfl-${e}`} onPointerEnter={() => onHover(s.key)}>
+                <text x={M.left - 12} y={y(startRank)} dy="0.34em" textAnchor="end">{s.label}</text>
                 <text x={x(last) + 12} y={y(endRank)} dy="0.34em">
                   <tspan className="nfl-label-rank">{endRank}</tspan>
-                  <tspan dx="5">{t.team}</tspan>
+                  <tspan dx="5">{s.label}</tspan>
                   {!compact && move !== 0 && (
                     <tspan dx="5" className={move > 0 ? 'nfl-up' : 'nfl-down'}>{move > 0 ? `▲${move}` : `▼${-move}`}</tspan>
                   )}
@@ -359,20 +424,21 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
           })}
         </svg>
       )}
-      {probe !== null && hover && hoverRank !== undefined && (
+      {probe !== null && hovered && hoverRank !== undefined && (
         <Tooltip x={x(probe)} y={y(hoverRank) - 18} width={width}>
           <div className="nfl-tip-head">{weekLabel(probe)}</div>
           <TipRow
-            team={hover}
+            color={colorOf(hovered.team)}
+            name={hovered.name}
             value={`#${hoverRank}`}
-            note={`${Math.round(teams.find((t) => t.team === hover)!.history[probe])} Elo`}
+            note={`${hovered.history[probe].toFixed(digits)} ${unit}`}
             strong
           />
           {probe > 0 && (
             <div className="nfl-tip-sub">
               {(() => {
-                const moved = rankOf[probe - 1].get(hover)! - hoverRank;
-                return moved === 0 ? 'Held its spot' : moved > 0 ? `Up ${moved} from week before` : `Down ${-moved} from week before`;
+                const moved = rankOf[probe - 1].get(hovered.key)! - hoverRank;
+                return moved === 0 ? 'Held the spot' : moved > 0 ? `Up ${moved} from the week before` : `Down ${-moved} from the week before`;
               })()}
             </div>
           )}
@@ -382,42 +448,44 @@ export function BumpChart({ teams, spotlight, hover, onHover }: ChartProps) {
   );
 }
 
-// ── line chart: Elo by week ──────────────────────────────────────────────────
+// ── line chart: value by week ────────────────────────────────────────────────
 
-export function EloLineChart({ teams, spotlight, hover, onHover }: ChartProps) {
+export function RatingLineChart({
+  series, spotlight, hover, onHover, digits = 0, unit, subject, baseline, tickStep,
+}: SeriesChartProps & { baseline: { value: number; label: string }; tickStep: number }) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const [probe, setProbe] = useState<number | null>(null);
   const clipId = useClipId();
-  const weeks = teams[0]?.history.length ?? 0;
+  const weeks = series[0]?.history.length ?? 0;
   const last = weeks - 1;
 
-  const all = teams.flatMap((t) => t.history);
-  const lo = Math.floor((Math.min(...all, LEAGUE_MEAN) - 15) / 50) * 50;
-  const hi = Math.ceil((Math.max(...all, LEAGUE_MEAN) + 15) / 50) * 50;
+  const all = series.flatMap((s) => s.history);
+  const pad = tickStep * 0.3;
+  const lo = Math.floor((Math.min(...all, baseline.value) - pad) / tickStep) * tickStep;
+  const hi = Math.ceil((Math.max(...all, baseline.value) + pad) / tickStep) * tickStep;
 
   const compact = width < 640;
-  const M = { top: 14, right: compact ? 56 : 96, bottom: 30, left: 44 };
-  const height = compact ? 400 : 460;
+  const labelW = labelWidth(series, compact);
+  const M = { top: 14, right: 24 + labelW + (compact ? 0 : 40), bottom: 30, left: 44 };
+  // Tall enough that every end label gets its own line of text.
+  const height = Math.max(compact ? 400 : 460, series.length * (compact ? 11 : 13) + M.top + M.bottom + 8);
   const plotW = Math.max(1, width - M.left - M.right);
   const plotH = height - M.top - M.bottom;
   const step = weeks > 1 ? plotW / (weeks - 1) : 0;
   const x = (w: number) => (weeks > 1 ? M.left + w * step : M.left + plotW / 2);
-  const y = (elo: number) => M.top + ((hi - elo) / (hi - lo)) * plotH;
+  const y = (v: number) => M.top + ((hi - v) / (hi - lo)) * plotH;
   const ticks: number[] = [];
-  for (let v = lo; v <= hi; v += 50) ticks.push(v);
+  for (let v = lo; v <= hi + 1e-9; v += tickStep) ticks.push(v);
 
-  const labelled = teams.filter((t) => !spotlight || spotlight.has(t.team));
+  const emphasis = (s: Series) => emphasisOf(s.key, spotlight, hover, s.team);
+  const labelled = series.filter((s) => !spotlight || spotlight.has(s.team));
   const labelY = dodge(
-    labelled.map((t) => ({ key: t.team, y: y(t.history[last]) })),
+    labelled.map((s) => ({ key: s.key, y: y(s.history[last]) })),
     compact ? 11 : 13,
     M.top + 4,
     height - M.bottom - 2,
   );
-
-  const drawOrder = [...teams].sort((a, b) => {
-    const rank = (t: string) => ({ dim: 0, soft: 1, lit: 2, focus: 3 })[emphasisOf(t, spotlight, hover)];
-    return rank(a.team) - rank(b.team);
-  });
+  const drawOrder = [...series].sort((a, b) => EMPHASIS_ORDER[emphasis(a)] - EMPHASIS_ORDER[emphasis(b)]);
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (weeks === 0) return;
@@ -425,22 +493,23 @@ export function EloLineChart({ teams, spotlight, hover, onHover }: ChartProps) {
     const w = weeks > 1 ? Math.round((e.clientX - box.left - M.left) / step) : 0;
     const week = Math.min(Math.max(w, 0), last);
     const py = e.clientY - box.top;
-    // Snap to whichever team's point is nearest the pointer in this week.
-    const pool = spotlight ? teams.filter((t) => spotlight.has(t.team)) : teams;
+    // Snap to whichever line's point is nearest the pointer in this week.
+    const pool = spotlight ? series.filter((s) => spotlight.has(s.team)) : series;
     let best = pool[0], bestD = Infinity;
-    for (const t of pool) {
-      const d = Math.abs(y(t.history[week]) - py);
-      if (d < bestD) { best = t; bestD = d; }
+    for (const s of pool) {
+      const d = Math.abs(y(s.history[week]) - py);
+      if (d < bestD) { best = s; bestD = d; }
     }
     setProbe(week);
-    onHover(best.team);
+    if (best) onHover(best.key);
   };
   const onLeave = () => { setProbe(null); onHover(null); };
 
   const labelEvery = step < 28 ? Math.ceil(28 / Math.max(step, 1)) : 1;
-  const hovered = hover ? teams.find((t) => t.team === hover) : undefined;
-  const tipTeams = probe === null ? [] : (spotlight && spotlight.size <= 4
-    ? teams.filter((t) => spotlight.has(t.team))
+  const hovered = hover ? series.find((s) => s.key === hover) : undefined;
+  const spotSeries = spotlight ? series.filter((s) => spotlight.has(s.team)) : [];
+  const tipSeries = probe === null ? [] : (spotlight && spotSeries.length <= 5
+    ? spotSeries
     : hovered ? [hovered] : []
   ).sort((a, b) => b.history[probe] - a.history[probe]);
 
@@ -451,7 +520,7 @@ export function EloLineChart({ teams, spotlight, hover, onHover }: ChartProps) {
           width={width}
           height={height}
           role="img"
-          aria-label="Every team's Elo rating after each week of the season."
+          aria-label={`Every ${subject}'s ${unit} after each week of the season.`}
           onPointerMove={onMove}
           onPointerDown={onMove}
           onPointerLeave={onLeave}
@@ -463,8 +532,8 @@ export function EloLineChart({ teams, spotlight, hover, onHover }: ChartProps) {
               <text x={M.left - 8} y={y(v)} dy="0.34em" textAnchor="end" className="nfl-axis">{v}</text>
             </g>
           ))}
-          <line x1={M.left} x2={M.left + plotW} y1={y(LEAGUE_MEAN)} y2={y(LEAGUE_MEAN)} className="nfl-mean" />
-          <text x={M.left + 6} y={y(LEAGUE_MEAN) - 6} className="nfl-axis nfl-mean-label">League average {LEAGUE_MEAN}</text>
+          <line x1={M.left} x2={M.left + plotW} y1={y(baseline.value)} y2={y(baseline.value)} className="nfl-mean" />
+          <text x={M.left + 6} y={y(baseline.value) - 6} className="nfl-axis nfl-mean-label">{baseline.label}</text>
 
           {Array.from({ length: weeks }, (_, w) => (w % labelEvery === 0 || w === last) && (
             <text key={w} x={x(w)} y={height - 8} textAnchor="middle" className="nfl-axis">
@@ -476,15 +545,15 @@ export function EloLineChart({ teams, spotlight, hover, onHover }: ChartProps) {
           )}
 
           <g clipPath={`url(#${clipId})`}>
-          {drawOrder.map((t) => {
-            const e = emphasisOf(t.team, spotlight, hover);
-            const color = e === 'dim' ? 'var(--nfl-dim)' : colorOf(t.team);
-            const points = t.history.map((v, w) => `${x(w)},${y(v)}`).join(' ');
+          {drawOrder.map((s) => {
+            const e = emphasis(s);
+            const color = e === 'dim' ? 'var(--nfl-dim)' : colorOf(s.team);
+            const points = s.history.map((v, w) => `${x(w)},${y(v)}`).join(' ');
             return (
-              <g key={t.team} className={`nfl-series nfl-${e}`}>
+              <g key={s.key} className={`nfl-series nfl-${e}`}>
                 <polyline points={points} className="nfl-line" stroke={color} />
-                {e !== 'dim' && t.history.map((v, w) => (
-                  <Marker key={w} shape={shapeOf(t.team)} x={x(w)} y={y(v)} r={e === 'focus' ? 5 : 4} fill={color} />
+                {e !== 'dim' && s.history.map((v, w) => (
+                  <Marker key={w} shape={shapeOf(s.team)} x={x(w)} y={y(v)} r={e === 'focus' ? 5 : 4} fill={color} />
                 ))}
               </g>
             );
@@ -492,33 +561,34 @@ export function EloLineChart({ teams, spotlight, hover, onHover }: ChartProps) {
           </g>
 
           {/* end labels, spread apart with leader lines back to each line */}
-          {labelled.map((t) => {
-            const e = emphasisOf(t.team, spotlight, hover);
+          {labelled.map((s) => {
+            const e = emphasis(s);
             const endX = x(last);
-            const endY = y(t.history[last]);
-            const ly = labelY.get(t.team)!;
+            const endY = y(s.history[last]);
+            const ly = labelY.get(s.key)!;
             return (
-              <g key={t.team} className={`nfl-label nfl-${e}`} onPointerEnter={() => onHover(t.team)}>
+              <g key={s.key} className={`nfl-label nfl-${e}`} onPointerEnter={() => onHover(s.key)}>
                 <path d={`M${endX + 7},${endY} L${endX + 14},${ly} L${endX + 18},${ly}`} className="nfl-leader" />
                 <text x={endX + 21} y={ly} dy="0.34em">
-                  {t.team}
-                  {!compact && <tspan dx="5" className="nfl-label-rank">{Math.round(t.history[last])}</tspan>}
+                  {s.label}
+                  {!compact && <tspan dx="5" className="nfl-label-rank">{s.history[last].toFixed(digits)}</tspan>}
                 </text>
               </g>
             );
           })}
         </svg>
       )}
-      {probe !== null && tipTeams.length > 0 && (
-        <Tooltip x={x(probe)} y={y(tipTeams[0].history[probe]) - 18} width={width}>
+      {probe !== null && tipSeries.length > 0 && (
+        <Tooltip x={x(probe)} y={y(tipSeries[0].history[probe]) - 18} width={width}>
           <div className="nfl-tip-head">{weekLabel(probe)}</div>
-          {tipTeams.map((t) => (
+          {tipSeries.map((s) => (
             <TipRow
-              key={t.team}
-              team={t.team}
-              value={`${Math.round(t.history[probe])}`}
-              note={probe > 0 ? signed(Math.round(t.history[probe] - t.history[probe - 1])) : undefined}
-              strong={t.team === hover}
+              key={s.key}
+              color={colorOf(s.team)}
+              name={s.name}
+              value={s.history[probe].toFixed(digits)}
+              note={probe > 0 ? signed(s.history[probe] - s.history[probe - 1], digits) : undefined}
+              strong={s.key === hover}
             />
           ))}
         </Tooltip>
@@ -527,11 +597,11 @@ export function EloLineChart({ teams, spotlight, hover, onHover }: ChartProps) {
   );
 }
 
-/** Chart-free twin of the two league charts, for anyone not using a pointer. */
-export function WeeklyTable({ teams }: { teams: TeamRating[] }) {
-  const weeks = teams[0]?.history.length ?? 0;
+/** Chart-free twin of a bump and line chart pair, for anyone not using a pointer. */
+export function WeeklyTable({ series, digits = 0, heading }: { series: Series[]; digits?: number; heading: string }) {
+  const weeks = series[0]?.history.length ?? 0;
   const ranks = Array.from({ length: weeks }, (_, w) => new Map(
-    [...teams].sort((a, b) => b.history[w] - a.history[w] || a.rank - b.rank).map((t, i) => [t.team, i + 1])));
+    [...series].sort((a, b) => b.history[w] - a.history[w] || a.rank - b.rank).map((s, i) => [s.key, i + 1])));
   return (
     <details className="nfl-data">
       <summary>Week-by-week numbers</summary>
@@ -539,20 +609,20 @@ export function WeeklyTable({ teams }: { teams: TeamRating[] }) {
         <table className="nfl-qb-table nfl-weekly">
           <thead>
             <tr>
-              <th>Team</th>
+              <th>{heading}</th>
               {Array.from({ length: weeks }, (_, w) => <th key={w} className="num">{w === 0 ? 'Pre' : `Wk ${w}`}</th>)}
             </tr>
           </thead>
           <tbody>
-            {teams.map((t) => (
-              <tr key={t.team}>
+            {series.map((s) => (
+              <tr key={s.key}>
                 <td className="nfl-qb-name">
-                  <span className="nfl-elo-swatch" style={{ background: colorOf(t.team) }} />
-                  {fullName(t.team)}
+                  <span className="nfl-elo-swatch" style={{ background: colorOf(s.team) }} />
+                  {s.name}
                 </td>
-                {t.history.map((v, w) => (
+                {s.history.map((v, w) => (
                   <td key={w} className="num">
-                    {Math.round(v)} <span className="nfl-weekly-rank">#{ranks[w].get(t.team)}</span>
+                    {v.toFixed(digits)} <span className="nfl-weekly-rank">#{ranks[w].get(s.key)}</span>
                   </td>
                 ))}
               </tr>

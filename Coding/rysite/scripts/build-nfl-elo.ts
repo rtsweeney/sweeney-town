@@ -222,6 +222,10 @@ async function main() {
   const record = new Map<string, { w: number; l: number; t: number }>();
   /** Current season only: team -> week -> rating after that week's game. */
   const weekElo = new Map<string, Map<number, number>>();
+  /** Current season only: QB -> week -> rating after that week's start. */
+  const weekQb = new Map<string, Map<number, number>>();
+  /** QB ratings as the current season opened, after the off-season revert. */
+  const qbPreseason = new Map<string, number>();
   const qbs = new Map<string, QbState>();
   const teamQbBaseline = new Map<string, number>();
   const defenseAllowed = new Map<string, number>();
@@ -256,6 +260,9 @@ async function main() {
         for (const q of qbs.values()) q.rating = revertQb(q.rating);
         for (const [t, v] of teamQbBaseline) teamQbBaseline.set(t, revertQb(v));
         for (const [t, v] of defenseAllowed) defenseAllowed.set(t, revertQb(v));
+      }
+      if (season === currentSeason) {
+        for (const [id, q] of qbs) qbPreseason.set(id, q.rating);
       }
       loopSeason = season;
     }
@@ -397,6 +404,10 @@ async function main() {
       q.lastValue = raw;
       q.lastSeason = season;
       q.team = team;
+      if (season === currentSeason) {
+        if (!weekQb.has(pid)) weekQb.set(pid, new Map());
+        weekQb.get(pid)!.set(num(g.week), q.rating);
+      }
       teamQbBaseline.set(team, rollingUpdate(teamQbBaseline.get(team)!, adjusted));
       defenseAllowed.set(opp, rollingUpdate(defense, raw - (q.rating - LEAGUE_AVG_QB_VALUE)));
       lastStarter.set(team, pid);
@@ -454,6 +465,13 @@ async function main() {
       const team = projectedFor?.[0] ?? q?.team ?? '';
       const rating = q?.rating ?? LEAGUE_AVG_QB_VALUE;
       const baseline = teamQbBaseline.get(team) ?? LEAGUE_AVG_QB_VALUE;
+      // A week without a start carries the rating forward; a passer new to the
+      // league this year opens at the league average, as the ratings do.
+      const history = [round1(qbPreseason.get(id) ?? LEAGUE_AVG_QB_VALUE)];
+      for (let week = 1; week <= throughWeek; week++) {
+        const after = weekQb.get(id)?.get(week);
+        history.push(after === undefined ? history[week - 1] : round1(after));
+      }
       return {
         playerId: id,
         name,
@@ -465,6 +483,7 @@ async function main() {
         lastValue: q?.lastValue === null || q?.lastValue === undefined
           ? null : Math.round(q.lastValue * 10) / 10,
         rank: 0,
+        history,
       };
     })
     .filter((q) => q.team !== '')
