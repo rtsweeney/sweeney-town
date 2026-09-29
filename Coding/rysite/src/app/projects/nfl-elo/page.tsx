@@ -18,7 +18,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { TEAMS, resolveTeam, fullName, shortName } from './teams';
-import type { EloSeason, GameProjection, QbRating, TeamRating } from './engine';
+import {
+  LEAGUE_AVG_QB_VALUE, LEAGUE_MEAN,
+  type EloSeason, type GameProjection, type QbRating, type TeamRating,
+} from './engine';
+import {
+  BumpChart, CHART_CSS, DivisionRaces, Highlights, PlayoffMeter, PlayoffPicture, RatingLineChart,
+  SPOTLIGHTS, SpotlightPicker, WeeklyTable, emphasisOf, qbSeries, teamSeries,
+} from './charts';
 
 const DATA_URL = '/data/nfl-elo/season.json';
 const ESPN_SCOREBOARD = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
@@ -100,7 +107,9 @@ export default function NflEloPage() {
   const [data, setData] = useState<EloSeason | null>(null);
   const [live, setLive] = useState<Map<string, LiveScore>>(new Map());
   const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<string | null>(null);
+  // Null is every game; a team abbreviation filters to it; the two view keys
+  // swap the game list for the ratings or quarterbacks. Ratings open the page.
+  const [selected, setSelected] = useState<string | null>(ELO_VIEW);
   const [activeWeek, setActiveWeek] = useState<number | null>(null);
 
   // Only a slice of the season is mounted at a time; the rest arrives as the
@@ -305,15 +314,17 @@ export default function NflEloPage() {
         <div className="page-header">
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
             <Link href="/projects" style={{ color: 'var(--accent-secondary)' }}>Projects</Link>
-            {' / '}NFL Elo Ratings
+            {' / '}NFL Elo Ratings &amp; Predictions
           </p>
-          <h1 className="section-title"><span className="gradient-text">NFL Elo Ratings</span></h1>
+          <h1 className="section-title"><span className="gradient-text">NFL Elo Ratings &amp; Predictions</span></h1>
           <p className="section-subtitle" style={{ marginBottom: 0 }}>
-            A continuation of FiveThirtyEight&apos;s retired NFL Elo model, rebuilt from their
-            published source and re-fit on modern seasons. Every team carries one rating; each
-            matchup adds home field, rest and an adjustment for the starting quarterback. Scores
-            update live &mdash; win probabilities are the model&apos;s pre-game view and stay fixed
-            once a game kicks off.
+            Who wins this week, and how likely is it? Every game gets a pre-game win probability
+            and a model point spread; every team gets its odds of making the playoffs and winning
+            its division, from thousands of simulated seasons. Underneath is FiveThirtyEight&apos;s
+            retired NFL Elo model, rebuilt from their published source and re-fit on modern
+            seasons: one rating per team, plus home field, rest and the starting quarterback.
+            Scores update live &mdash; predictions are the model&apos;s pre-game view and stay
+            fixed once a game kicks off.
           </p>
         </div>
 
@@ -332,10 +343,26 @@ export default function NflEloPage() {
             <div className="nfl-filter">
               <button
                 type="button"
+                className={`nfl-chip nfl-chip-ratings ${showingElo ? 'active' : ''}`}
+                onClick={() => setSelected(showingElo ? null : ELO_VIEW)}
+              >
+                Elo &amp; Odds
+              </button>
+
+              <button
+                type="button"
                 className={`nfl-chip nfl-chip-all ${selected === null ? 'active' : ''}`}
                 onClick={() => setSelected(null)}
               >
                 All Games
+              </button>
+
+              <button
+                type="button"
+                className={`nfl-chip nfl-chip-qb ${showingQbs ? 'active' : ''}`}
+                onClick={() => setSelected(showingQbs ? null : QB_VIEW)}
+              >
+                QBs
               </button>
 
               {TEAMS.map((t) => {
@@ -354,28 +381,12 @@ export default function NflEloPage() {
                   </button>
                 );
               })}
-
-              <button
-                type="button"
-                className={`nfl-chip nfl-chip-qb ${showingQbs ? 'active' : ''}`}
-                onClick={() => setSelected(showingQbs ? null : QB_VIEW)}
-              >
-                QBs
-              </button>
-
-              <button
-                type="button"
-                className={`nfl-chip nfl-chip-ratings ${showingElo ? 'active' : ''}`}
-                onClick={() => setSelected(showingElo ? null : ELO_VIEW)}
-              >
-                Elo
-              </button>
             </div>
 
             {showingQbs ? (
-              <QbTable quarterbacks={data.quarterbacks} />
+              <QbView quarterbacks={data.quarterbacks} />
             ) : showingElo ? (
-              <EloTable teams={data.teams} throughWeek={data.throughWeek} />
+              <EloView data={data} />
             ) : (
               <div className="nfl-layout">
                 {/* ── week rail ── */}
@@ -448,7 +459,7 @@ export default function NflEloPage() {
         )}
       </div>
 
-      <style>{NFL_CSS}</style>
+      <style>{NFL_CSS + CHART_CSS}</style>
       <Footer />
     </main>
   );
@@ -542,18 +553,112 @@ function GameCard({ game, live }: { game: GameProjection; live: LiveScore | unde
   );
 }
 
-// ── team rating table ────────────────────────────────────────────────────────
+// ── Elo view: charts, races, playoff picture, table ─────────────────────────
 
-function EloTable({ teams, throughWeek }: { teams: TeamRating[]; throughWeek: number }) {
-  const preseason = throughWeek === 0;
+function EloView({ data }: { data: EloSeason }) {
+  const [spotKey, setSpotKey] = useState('ALL');
+  const [hover, setHover] = useState<string | null>(null);
+  const spotlight = SPOTLIGHTS.find((s) => s.key === spotKey)?.teams ?? null;
+  const sims = data.simulations.toLocaleString();
+
+  // Seventeen games since 2021; counted rather than assumed.
+  const seasonGames = useMemo(() => {
+    const count = new Map<string, number>();
+    for (const g of data.games) {
+      if (g.gameType !== 'REG') continue;
+      for (const t of [g.home, g.away]) count.set(t, (count.get(t) ?? 0) + 1);
+    }
+    return Math.max(1, ...count.values());
+  }, [data]);
+
+  const chart = { teams: data.teams, spotlight, hover, onHover: setHover };
+  const series = useMemo(() => teamSeries(data.teams), [data.teams]);
+  const lines = { series, spotlight, hover, onHover: setHover, unit: 'Elo', subject: 'team' };
+
   return (
     <div className="nfl-qb-wrap">
       <p className="nfl-qb-intro">
-        Every team&apos;s current rating, strongest first. The league mean is 1505, and a
-        400-point gap is about 10-to-1 odds — so roughly every 25 points is a point of
-        point spread. <strong>Preseason</strong> is where the team started the year after
-        reverting a third of the way to the mean; <strong>Change</strong> is what the season
-        has done to it since.
+        Every team carries one rating around a league mean of 1505. A 400-point gap is about
+        10-to-1 odds, and roughly every 25 points is a point of spread. The charts follow those
+        ratings through the season; the playoff odds come from playing the rest of the schedule
+        out {sims} times. Pick a conference or division to spotlight it, or hover any team to
+        follow it across every chart.
+      </p>
+
+      <Highlights teams={data.teams} throughWeek={data.throughWeek} />
+
+      <SpotlightPicker value={spotKey} onChange={setSpotKey} />
+
+      <section className="nfl-section">
+        <div className="nfl-section-head">
+          <h3>League rank, week by week</h3>
+          <p>
+            Where every team ranks by Elo after each week. Lines cross when one team passes
+            another; the right-hand number is this week&apos;s rank, with the move since last week.
+          </p>
+        </div>
+        <div className="nfl-card"><BumpChart {...lines} /></div>
+      </section>
+
+      <section className="nfl-section">
+        <div className="nfl-section-head">
+          <h3>Elo rating, week by week</h3>
+          <p>
+            The ratings themselves. Height above the league-average line is strength: 100 points
+            above average makes a team about a 64% favourite over an average one on a neutral field.
+          </p>
+        </div>
+        <div className="nfl-card">
+          <RatingLineChart {...lines} baseline={{ value: LEAGUE_MEAN, label: `League average ${LEAGUE_MEAN}` }} tickStep={50} />
+        </div>
+        <WeeklyTable series={series} heading="Team" />
+      </section>
+
+      <section className="nfl-section">
+        <div className="nfl-section-head">
+          <h3>Division races</h3>
+          <p>
+            Wins banked so far, plus the wins each team averages over the rest of its schedule
+            across {sims} simulated seasons. The crown marks the team likeliest to take the
+            division; the right-hand column is how often it does.
+          </p>
+        </div>
+        <DivisionRaces {...chart} seasonGames={seasonGames} />
+      </section>
+
+      <section className="nfl-section">
+        <div className="nfl-section-head">
+          <h3>Projected playoff picture</h3>
+          <p>
+            The field as the simulations most often see it: each division&apos;s likeliest winner,
+            seeded by projected wins, then the three likeliest wild cards. Odds are the share of
+            simulated seasons in which a team makes the playoffs; only the top seed gets a bye.
+          </p>
+        </div>
+        <PlayoffPicture {...chart} />
+      </section>
+
+      <section className="nfl-section">
+        <div className="nfl-section-head">
+          <h3>Ratings table</h3>
+        </div>
+        <EloTable teams={data.teams} throughWeek={data.throughWeek} spotlight={spotlight} />
+      </section>
+    </div>
+  );
+}
+
+function EloTable({
+  teams, throughWeek, spotlight,
+}: { teams: TeamRating[]; throughWeek: number; spotlight: Set<string> | null }) {
+  const preseason = throughWeek === 0;
+  return (
+    <>
+      <p className="nfl-qb-intro">
+        Every team&apos;s current rating, strongest first. <strong>Preseason</strong> is where the
+        team started the year after reverting a third of the way to the mean;{' '}
+        <strong>Change</strong> is what the season has done to it since. <strong>Playoffs</strong>{' '}
+        is the share of simulated seasons in which the team makes the field.
         {preseason && ' The season has not started, so every team still sits at its preseason mark.'}
       </p>
       <div className="nfl-table-scroll">
@@ -567,6 +672,7 @@ function EloTable({ teams, throughWeek }: { teams: TeamRating[]; throughWeek: nu
               <th className="num">Preseason</th>
               <th className="num">Change</th>
               <th className="num">Record</th>
+              <th className="num">Playoffs</th>
             </tr>
           </thead>
           <tbody>
@@ -577,7 +683,7 @@ function EloTable({ teams, throughWeek }: { teams: TeamRating[]; throughWeek: nu
                 ? `${t.wins}-${t.losses}-${t.ties}`
                 : `${t.wins}-${t.losses}`;
               return (
-                <tr key={t.team}>
+                <tr key={t.team} className={emphasisOf(t.team, spotlight, null) === 'dim' ? 'faded' : ''}>
                   <td className="nfl-qb-rank">{t.rank}</td>
                   <td className="nfl-qb-name">
                     <span className="nfl-elo-swatch" style={{ background: team?.color ?? 'var(--border)' }} />
@@ -592,19 +698,27 @@ function EloTable({ teams, throughWeek }: { teams: TeamRating[]; throughWeek: nu
                     {change > 0 ? '+' : ''}{change}
                   </td>
                   <td className="num">{record}</td>
+                  <td className="num"><PlayoffMeter p={t.playoffOdds} /></td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
 
 // ── quarterback table ────────────────────────────────────────────────────────
 
-function QbTable({ quarterbacks }: { quarterbacks: QbRating[] }) {
+function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
+  const [spotKey, setSpotKey] = useState('ALL');
+  const [hover, setHover] = useState<string | null>(null);
+  const spotlight = SPOTLIGHTS.find((s) => s.key === spotKey)?.teams ?? null;
+  const series = useMemo(() => qbSeries(quarterbacks), [quarterbacks]);
+  const lines = { series, spotlight, hover, onHover: setHover, digits: 1, unit: 'rating', subject: 'quarterback' };
+  const hasHistory = quarterbacks.length > 0 && quarterbacks[0].history.length > 0;
+
   return (
     <div className="nfl-qb-wrap">
       <p className="nfl-qb-intro">
@@ -615,6 +729,49 @@ function QbTable({ quarterbacks }: { quarterbacks: QbRating[] }) {
         actually moves a line: the gap between him and his own team&apos;s recent quarterback
         level, which is why the adjustment fires on an injury and stays quiet otherwise.
       </p>
+
+      {hasHistory && (
+        <>
+          <SpotlightPicker value={spotKey} onChange={setSpotKey} />
+
+          <section className="nfl-section">
+            <div className="nfl-section-head">
+              <h3>Quarterback rank, week by week</h3>
+              <p>
+                Every current starter ranked by rating after each week. A passer only moves when he
+                plays, and passes or falls behind whoever else did; the right-hand number is this
+                week&apos;s rank, with the move since last week.
+              </p>
+            </div>
+            <div className="nfl-card"><BumpChart {...lines} /></div>
+          </section>
+
+          <section className="nfl-section">
+            <div className="nfl-section-head">
+              <h3>Quarterback rating, week by week</h3>
+              <p>
+                The ratings themselves, against a league-average starter at{' '}
+                {LEAGUE_AVG_QB_VALUE.toFixed(1)}. Every point of rating is worth 3.5 Elo, so a
+                passer ten points above average is worth 35 Elo, about a point and a half on his
+                team&apos;s line.
+              </p>
+            </div>
+            <div className="nfl-card">
+              <RatingLineChart
+                {...lines}
+                baseline={{ value: LEAGUE_AVG_QB_VALUE, label: `League-average starter ${LEAGUE_AVG_QB_VALUE.toFixed(1)}` }}
+                tickStep={10}
+              />
+            </div>
+            <WeeklyTable series={series} digits={1} heading="Quarterback" />
+          </section>
+
+          <div className="nfl-section-head">
+            <h3>Quarterback ratings table</h3>
+          </div>
+        </>
+      )}
+
       <p className="nfl-qb-intro">
         A <strong>vs Team of 0</strong> is a result, not a gap in the data. A passer who has
         taken every snap for one team has his rating and that team&apos;s baseline updated by
@@ -640,7 +797,10 @@ function QbTable({ quarterbacks }: { quarterbacks: QbRating[] }) {
             {quarterbacks.map((q) => {
               const team = resolveTeam(q.team);
               return (
-                <tr key={q.playerId}>
+                <tr
+                  key={q.playerId}
+                  className={emphasisOf(q.playerId, spotlight, null, q.team) === 'dim' ? 'faded' : ''}
+                >
                   <td className="nfl-qb-rank">{q.rank}</td>
                   <td className="nfl-qb-name">{q.name}</td>
                   <td>
@@ -698,6 +858,15 @@ function ModelNotes({ data }: { data: EloSeason }) {
         <strong>{data.calibration.brierScore}</strong> Brier against{' '}
         {data.calibration.baselineLogLoss} and {data.calibration.baselineBrierScore} for 538&apos;s
         published defaults.
+      </p>
+      <p>
+        Playoff odds and projected wins come from simulating the rest of the regular season{' '}
+        {data.simulations.toLocaleString()} times. Each remaining game is decided by the
+        model&apos;s pre-game probability, and the simulations run hot: a simulated result moves
+        both ratings before the next simulated week, the way a real one would. Each simulated
+        season is then seeded the NFL&apos;s way &mdash; four division winners, then three wild
+        cards &mdash; with ties broken by head-to-head, division and conference record, strength
+        of victory and strength of schedule.
       </p>
 
       <h2>Data and attribution</h2>
@@ -797,13 +966,14 @@ const NFL_CSS = `
 
 /* quarterback table */
 .nfl-qb-wrap{margin-bottom:2rem}
-.nfl-qb-intro{font-size:0.85rem;line-height:1.7;color:var(--text-secondary);margin-bottom:1.1rem;max-width:70ch}
+.nfl-qb-intro{font-size:0.85rem;line-height:1.7;color:var(--text-secondary);margin-bottom:1.1rem;text-align:justify;hyphens:auto}
 .nfl-table-scroll{overflow-x:auto;border:1px solid var(--border-subtle);border-radius:var(--radius-md)}
 .nfl-qb-table{width:100%;border-collapse:collapse;font-size:0.84rem;min-width:640px}
 .nfl-qb-table th{position:sticky;top:0;background:var(--surface);padding:0.6rem 0.7rem;text-align:left;font-size:0.68rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border-subtle)}
 .nfl-qb-table td{padding:0.5rem 0.7rem;border-bottom:1px solid var(--border-subtle)}
 .nfl-qb-table tr:last-child td{border-bottom:none}
 .nfl-qb-table tbody tr:hover{background:var(--surface-hover)}
+.nfl-qb-table tbody tr.faded{opacity:0.35}
 .nfl-qb-table .num{text-align:right;font-variant-numeric:tabular-nums}
 .nfl-more{display:block;width:100%;padding:0.7rem 1rem;margin-bottom:1rem;background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius-md);font-family:inherit;font-size:0.78rem;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all var(--transition-fast)}
 .nfl-more:hover{border-color:var(--accent-primary);color:var(--accent-primary);background:var(--surface-hover)}
@@ -821,7 +991,7 @@ const NFL_CSS = `
 .nfl-notes{margin-top:2.5rem;padding-top:1.75rem;border-top:1px solid var(--border-subtle)}
 .nfl-notes h2{font-size:0.95rem;font-weight:800;letter-spacing:0.02em;margin:1.5rem 0 0.6rem;color:var(--text-primary)}
 .nfl-notes h2:first-child{margin-top:0}
-.nfl-notes p{font-size:0.82rem;line-height:1.75;color:var(--text-secondary);max-width:75ch;margin-bottom:0.8rem}
+.nfl-notes p{font-size:0.82rem;line-height:1.75;color:var(--text-secondary);margin-bottom:0.8rem;text-align:justify;hyphens:auto}
 .nfl-notes code{font-size:0.78rem;background:var(--surface);padding:0.1rem 0.3rem;border-radius:4px}
 .nfl-notes a{color:var(--accent-secondary)}
 .nfl-disclaimer{font-size:0.74rem !important;color:var(--text-muted) !important}
@@ -847,5 +1017,7 @@ const NFL_CSS = `
   .nfl-week-heading{position:sticky;top:var(--nav-height);z-index:5;margin:0 -1rem 0.6rem;padding:0.55rem 1rem;background:var(--background);border-bottom:1px solid var(--border-subtle)}
   .nfl-side{grid-template-columns:3px 3.4rem minmax(0,1fr) 1.8rem 2.6rem;gap:0.45rem}
   .nfl-side-full,.nfl-venue{display:none}
+  /* Justified text opens rivers in a phone-width column; ragged-right reads better there. */
+  .nfl-qb-intro,.nfl-notes p{text-align:left}
 }
 `;
