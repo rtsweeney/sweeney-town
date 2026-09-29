@@ -195,6 +195,14 @@ export interface TeamRating {
   losses: number;
   ties: number;
   rank: number;
+  /** Rating at the end of each week of the season; index 0 is preseason. */
+  history: number[];
+  /** Mean regular-season wins across the simulations; a tie counts half. */
+  expectedWins: number;
+  playoffOdds: number;
+  divisionOdds: number;
+  /** Chance of finishing as each seed, index 0 being the 1 seed. */
+  seedOdds: number[];
 }
 
 export interface GameProjection {
@@ -248,6 +256,8 @@ export interface EloSeason {
   teams: TeamRating[];
   games: GameProjection[];
   quarterbacks: QbRating[];
+  /** Seasons simulated for the playoff odds and expected wins. */
+  simulations: number;
   calibration: {
     logLoss: number;
     brierScore: number;

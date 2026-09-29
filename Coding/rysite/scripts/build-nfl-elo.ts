@@ -37,6 +37,7 @@ import {
   type TeamRating,
 } from '../src/app/projects/nfl-elo/engine.ts';
 import { TEAMS, resolveTeam } from '../src/app/projects/nfl-elo/teams.ts';
+import { SIMULATIONS, simulateSeason } from '../src/app/projects/nfl-elo/playoffs.ts';
 
 const GAMES_URL = 'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv';
 const STATS_URL = (season: number) =>
@@ -219,6 +220,8 @@ async function main() {
   const seasonOf = new Map<string, number>();
   const preseasonElo = new Map<string, number>();
   const record = new Map<string, { w: number; l: number; t: number }>();
+  /** Current season only: team -> week -> rating after that week's game. */
+  const weekElo = new Map<string, Map<number, number>>();
   const qbs = new Map<string, QbState>();
   const teamQbBaseline = new Map<string, number>();
   const defenseAllowed = new Map<string, number>();
@@ -374,6 +377,12 @@ async function main() {
     const shift = ratingShift(diff, homeWinProb, homeResult, homeScore - awayScore);
     elo.set(home, homeElo + shift);
     elo.set(away, awayElo - shift);
+    if (season === currentSeason) {
+      for (const t of [home, away]) {
+        if (!weekElo.has(t)) weekElo.set(t, new Map());
+        weekElo.get(t)!.set(num(g.week), elo.get(t)!);
+      }
+    }
 
     // Rolling quarterback and defense updates, each adjusted for the other.
     for (const [pid, team, opp] of [[homeQbId, home, away], [awayQbId, away, home]] as const) {
@@ -395,14 +404,36 @@ async function main() {
   }
 
   // ── assemble output ────────────────────────────────────────────────────────
+  const playedThisSeason = projections.filter((p) => p.homeScore !== null);
+  const throughWeek = playedThisSeason.length
+    ? Math.max(...playedThisSeason.map((p) => p.week))
+    : 0;
+
+  console.log(`\nSimulating the rest of the season ${SIMULATIONS.toLocaleString()} times…`);
+  const outlook = simulateSeason(projections, SIMULATIONS, currentSeason);
+
+  const round1 = (x: number) => Math.round(x * 10) / 10;
   const teams: TeamRating[] = TEAMS.map((t) => {
     const r = record.get(t.abbr) ?? { w: 0, l: 0, t: 0 };
+    const preseason = preseasonElo.get(t.abbr) ?? LEAGUE_MEAN;
+    // A bye week, or a game not yet final, carries the previous week forward.
+    const history = [round1(preseason)];
+    for (let week = 1; week <= throughWeek; week++) {
+      const after = weekElo.get(t.abbr)?.get(week);
+      history.push(after === undefined ? history[week - 1] : round1(after));
+    }
+    const o = outlook.get(t.abbr);
     return {
       team: t.abbr,
-      elo: Math.round((elo.get(t.abbr) ?? LEAGUE_MEAN) * 10) / 10,
-      eloPreseason: Math.round((preseasonElo.get(t.abbr) ?? LEAGUE_MEAN) * 10) / 10,
+      elo: round1(elo.get(t.abbr) ?? LEAGUE_MEAN),
+      eloPreseason: round1(preseason),
       wins: r.w, losses: r.l, ties: r.t,
       rank: 0,
+      history,
+      expectedWins: o?.expectedWins ?? 0,
+      playoffOdds: o?.playoffOdds ?? 0,
+      divisionOdds: o?.divisionOdds ?? 0,
+      seedOdds: o?.seedOdds ?? [],
     };
   });
   teams.sort((a, b) => b.elo - a.elo);
@@ -440,11 +471,6 @@ async function main() {
     .sort((a, b) => b.rating - a.rating);
   quarterbacks.forEach((q, i) => { q.rank = i + 1; });
 
-  const playedThisSeason = projections.filter((p) => p.homeScore !== null);
-  const throughWeek = playedThisSeason.length
-    ? Math.max(...playedThisSeason.map((p) => p.week))
-    : 0;
-
   const out: EloSeason = {
     generatedAt: new Date().toISOString(),
     season: currentSeason,
@@ -453,6 +479,7 @@ async function main() {
     teams,
     games: projections,
     quarterbacks,
+    simulations: SIMULATIONS,
     calibration: {
       logLoss: Math.round((logLoss / evaluated) * 100000) / 100000,
       brierScore: Math.round((brier / evaluated) * 100000) / 100000,
@@ -473,7 +500,9 @@ async function main() {
   console.log(`  log loss  ${out.calibration.logLoss} (538 defaults: ${out.calibration.baselineLogLoss})`);
   console.log(`  Brier     ${out.calibration.brierScore} (538 defaults: ${out.calibration.baselineBrierScore})`);
   console.log('\n  Top 5:');
-  for (const t of teams.slice(0, 5)) console.log(`    ${t.rank}. ${t.team}  ${t.elo}`);
+  for (const t of teams.slice(0, 5)) {
+    console.log(`    ${t.rank}. ${t.team}  ${t.elo}  ${t.expectedWins} wins, ${(t.playoffOdds * 100).toFixed(0)}% playoffs`);
+  }
 }
 
 main().catch((err) => { console.error(err); process.exit(1); });
