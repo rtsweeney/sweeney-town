@@ -23,8 +23,8 @@ import {
   type EloSeason, type GameProjection, type QbRating, type TeamRating,
 } from './engine';
 import {
-  BumpChart, CHART_CSS, DivisionRaces, Highlights, PlayoffMeter, PlayoffPicture, RatingLineChart,
-  SPOTLIGHTS, SpotlightPicker, WeeklyTable, emphasisOf, qbSeries, teamSeries,
+  BumpChart, CHART_CSS, DIVISIONS, DivisionRaces, Highlights, PlayoffMeter, PlayoffPicture, QbRooms,
+  RatingLineChart, SPOTLIGHTS, SpotlightPicker, WeeklyTable, emphasisOf, qbSeries, teamSeries,
 } from './charts';
 
 const DATA_URL = '/data/nfl-elo/season.json';
@@ -715,7 +715,9 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
   const [spotKey, setSpotKey] = useState('ALL');
   const [hover, setHover] = useState<string | null>(null);
   const spotlight = SPOTLIGHTS.find((s) => s.key === spotKey)?.teams ?? null;
-  const series = useMemo(() => qbSeries(quarterbacks), [quarterbacks]);
+  const division = DIVISIONS.find((d) => d.key === spotKey) ?? null;
+  // Charts follow the ranked passers; a three-snap cameo would only add a flat line.
+  const series = useMemo(() => qbSeries(quarterbacks.filter((q) => q.rank > 0)), [quarterbacks]);
   const lines = { series, spotlight, hover, onHover: setHover, digits: 1, unit: 'rating', subject: 'quarterback' };
   const hasHistory = quarterbacks.length > 0 && quarterbacks[0].history.length > 0;
 
@@ -738,9 +740,10 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
             <div className="nfl-section-head">
               <h3>Quarterback rank, week by week</h3>
               <p>
-                Every current starter ranked by rating after each week. A passer only moves when he
-                plays, and passes or falls behind whoever else did; the right-hand number is this
-                week&apos;s rank, with the move since last week.
+                Every ranked quarterback &mdash; anyone who has started this season, tops a depth
+                chart, or has thrown ten passes &mdash; by rating after each week. A rating only
+                moves on a start; the right-hand number is this week&apos;s rank, with the move since
+                last week. Pick a division to see each team&apos;s quarterback room below.
               </p>
             </div>
             <div className="nfl-card"><BumpChart {...lines} /></div>
@@ -750,7 +753,7 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
             <div className="nfl-section-head">
               <h3>Quarterback rating, week by week</h3>
               <p>
-                The ratings themselves, against a league-average starter at{' '}
+                The ratings themselves, against the long-run average starter at{' '}
                 {LEAGUE_AVG_QB_VALUE.toFixed(1)}. Every point of rating is worth 3.5 Elo, so a
                 passer ten points above average is worth 35 Elo, about a point and a half on his
                 team&apos;s line.
@@ -759,12 +762,26 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
             <div className="nfl-card">
               <RatingLineChart
                 {...lines}
-                baseline={{ value: LEAGUE_AVG_QB_VALUE, label: `League-average starter ${LEAGUE_AVG_QB_VALUE.toFixed(1)}` }}
+                baseline={{ value: LEAGUE_AVG_QB_VALUE, label: `Long-run average starter ${LEAGUE_AVG_QB_VALUE.toFixed(1)}` }}
                 tickStep={10}
               />
             </div>
             <WeeklyTable series={series} digits={1} heading="Quarterback" />
           </section>
+
+          {division && (
+            <section className="nfl-section">
+              <div className="nfl-section-head">
+                <h3>{division.key} quarterback rooms</h3>
+                <p>
+                  Every quarterback who has taken a snap for each team this season, measured
+                  against this year&apos;s starters across the league and in the division. The
+                  number under each rating is the gap to the league&apos;s starters.
+                </p>
+              </div>
+              <QbRooms quarterbacks={quarterbacks} division={division} hover={hover} onHover={setHover} />
+            </section>
+          )}
 
           <div className="nfl-section-head">
             <h3>Quarterback ratings table</h3>
@@ -779,6 +796,12 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
         is gone within 20 starts. Reading it plainly: this team&apos;s expected quarterback is
         exactly this man, so there is nothing to adjust for.
       </p>
+      <p className="nfl-qb-intro">
+        Everyone who has taken a snap this season is listed. A passer is ranked once he has started,
+        tops a depth chart, or has thrown ten passes; the rest show <strong>—</strong>. Ratings only
+        move on starts &mdash; VALUE is a whole-game total, so a few relief snaps would read as a
+        disastrous game &mdash; which means a quarterback with <strong>no starts</strong> this season
+        is still carrying the rating he brought into it.</p>
       <div className="nfl-table-scroll">
         <table className="nfl-qb-table">
           <thead>
@@ -789,7 +812,8 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
               <th className="num">Rating</th>
               <th className="num">vs League</th>
               <th className="num">vs Team</th>
-              <th className="num">Starts</th>
+              <th className="num">This season</th>
+              <th className="num">Career starts</th>
               <th className="num">Last</th>
             </tr>
           </thead>
@@ -801,7 +825,7 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
                   key={q.playerId}
                   className={emphasisOf(q.playerId, spotlight, null, q.team) === 'dim' ? 'faded' : ''}
                 >
-                  <td className="nfl-qb-rank">{q.rank}</td>
+                  <td className="nfl-qb-rank">{q.rank || '—'}</td>
                   <td className="nfl-qb-name">{q.name}</td>
                   <td>
                     <span className="nfl-qb-team" style={{ borderColor: team?.color ?? 'var(--border)' }}>
@@ -814,6 +838,11 @@ function QbView({ quarterbacks }: { quarterbacks: QbRating[] }) {
                   </td>
                   <td className={`num ${q.eloVsTeam > 0 ? 'up' : q.eloVsTeam < 0 ? 'down' : 'flat'}`}>
                     {q.eloVsTeam > 0 ? '+' : ''}{q.eloVsTeam}
+                  </td>
+                  <td className="num nfl-qb-season">
+                    {q.seasonStarts > 0
+                      ? `${q.seasonStarts} GS${q.seasonGames > q.seasonStarts ? ` · ${q.seasonGames} GP` : ''}`
+                      : q.seasonGames > 0 ? `${q.seasonGames} GP, no starts` : '—'}
                   </td>
                   <td className="num">{q.starts}</td>
                   <td className="num">{q.lastValue === null ? '—' : q.lastValue.toFixed(1)}</td>
@@ -983,6 +1012,7 @@ const NFL_CSS = `
 .nfl-elo-div{font-size:0.74rem;color:var(--text-muted);white-space:nowrap}
 .nfl-elo-value{font-weight:800}
 .nfl-qb-rank{color:var(--text-muted);font-weight:700;width:2.5rem}
+.nfl-qb-season{color:var(--text-secondary);font-size:0.78rem}
 .nfl-qb-name{font-weight:700;width:100%}
 .nfl-qb-table th.num,.nfl-qb-table td.num{white-space:nowrap;width:1%}
 .nfl-qb-team{display:inline-block;padding:0.1rem 0.4rem;border:1px solid;border-radius:var(--radius-sm);font-size:0.7rem;font-weight:800;letter-spacing:0.03em}

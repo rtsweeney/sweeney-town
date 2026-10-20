@@ -48,6 +48,13 @@ const DEPTH_URL = (season: number) =>
 /** QB box scores are only needed once the rolling ratings have warmed up. */
 const QB_HISTORY_FROM = 2006;
 
+/**
+ * A passer is ranked, and charted, once he has started this season, tops a
+ * depth chart, or has thrown this many passes. A three-snap cameo still gets
+ * listed, just unranked.
+ */
+const MIN_RANKED_ATTEMPTS = 10;
+
 /** Seasons the calibration metrics are measured over. */
 const EVAL_FROM = 2015;
 
@@ -170,12 +177,33 @@ async function main() {
   console.log('Fetching quarterback box scores…');
   // (game_id, player_id) -> VALUE for that start
   const qbBox = new Map<string, number>();
+  /**
+   * Every quarterback with a box score line this season, starter or not. The
+   * ratings only move on starts — VALUE is a game total, so a three-snap relief
+   * outing would read as a terrible game — but anyone who has taken a snap
+   * belongs in the list.
+   */
+  const seasonPlay = new Map<string, { games: Set<string>; attempts: number; team: string; week: number; name: string }>();
   for (let season = QB_HISTORY_FROM; season <= currentSeason; season++) {
     const text = await fetchOptional(STATS_URL(season));
     if (text === null) { console.log(`  ${season}: not published yet, skipping`); continue; }
     let kept = 0;
     for (const r of parseCsv(text)) {
       if (r.position !== 'QB') continue;
+      if (season === currentSeason && r.season_type === 'REG') {
+        const team = resolveTeam(r.team)?.abbr;
+        if (team) {
+          let p = seasonPlay.get(r.player_id);
+          if (!p) {
+            p = { games: new Set(), attempts: 0, team, week: 0, name: r.player_display_name || r.player_name };
+            seasonPlay.set(r.player_id, p);
+          }
+          p.games.add(r.game_id);
+          p.attempts += num(r.attempts);
+          // A mid-season trade: the most recent game says where he plays now.
+          if (num(r.week) >= p.week) { p.week = num(r.week); p.team = team; }
+        }
+      }
       qbBox.set(`${r.game_id}|${r.player_id}`, qbValue({
         completions: num(r.completions),
         attempts: num(r.attempts),
@@ -224,6 +252,8 @@ async function main() {
   const weekElo = new Map<string, Map<number, number>>();
   /** Current season only: QB -> week -> rating after that week's start. */
   const weekQb = new Map<string, Map<number, number>>();
+  /** Current season only: QB -> games he was listed as the starter. */
+  const seasonStarts = new Map<string, number>();
   /** QB ratings as the current season opened, after the off-season revert. */
   const qbPreseason = new Map<string, number>();
   const qbs = new Map<string, QbState>();
@@ -360,6 +390,12 @@ async function main() {
 
     if (!played) continue;
 
+    if (season === currentSeason && g.game_type === 'REG') {
+      for (const pid of [g.home_qb_id, g.away_qb_id]) {
+        if (pid) seasonStarts.set(pid, (seasonStarts.get(pid) ?? 0) + 1);
+      }
+    }
+
     const homeScore = num(g.home_score);
     const awayScore = num(g.away_score);
     const homeResult = homeScore > awayScore ? 1.0 : homeScore < awayScore ? 0.0 : 0.5;
@@ -451,18 +487,21 @@ async function main() {
   teams.forEach((t, i) => { t.rank = i + 1; });
 
   // Rank the quarterbacks currently sitting atop a depth chart, plus anyone
-  // else who has started in the current season.
+  // else who has started or taken a snap in the current season.
   const relevant = new Set<string>();
   for (const p of projectedStarter.values()) relevant.add(p.id);
   for (const [id, q] of qbs) {
     if (q.lastSeason === currentSeason) relevant.add(id);
   }
+  for (const id of seasonStarts.keys()) relevant.add(id);
+  for (const id of seasonPlay.keys()) relevant.add(id);
   const quarterbacks: QbRating[] = [...relevant]
     .map((id) => {
       const q = qbs.get(id);
       const projectedFor = [...projectedStarter.entries()].find(([, p]) => p.id === id);
-      const name = q?.name || projectedFor?.[1].name || 'Unknown';
-      const team = projectedFor?.[0] ?? q?.team ?? '';
+      const played = seasonPlay.get(id);
+      const name = q?.name || projectedFor?.[1].name || played?.name || 'Unknown';
+      const team = projectedFor?.[0] ?? played?.team ?? q?.team ?? '';
       const rating = q?.rating ?? LEAGUE_AVG_QB_VALUE;
       const baseline = teamQbBaseline.get(team) ?? LEAGUE_AVG_QB_VALUE;
       // A week without a start carries the rating forward; a passer new to the
@@ -484,11 +523,18 @@ async function main() {
           ? null : Math.round(q.lastValue * 10) / 10,
         rank: 0,
         history,
+        depthChartStarter: projectedFor !== undefined,
+        seasonGames: played?.games.size ?? 0,
+        seasonStarts: seasonStarts.get(id) ?? 0,
+        seasonAttempts: played?.attempts ?? 0,
       };
     })
-    .filter((q) => q.team !== '')
-    .sort((a, b) => b.rating - a.rating);
-  quarterbacks.forEach((q, i) => { q.rank = i + 1; });
+    .filter((q) => q.team !== '');
+  const ranked = (q: QbRating) =>
+    q.seasonStarts > 0 || q.depthChartStarter || q.seasonAttempts >= MIN_RANKED_ATTEMPTS;
+  quarterbacks.sort((a, b) => Number(ranked(b)) - Number(ranked(a)) || b.rating - a.rating);
+  let nextRank = 0;
+  quarterbacks.forEach((q) => { q.rank = ranked(q) ? ++nextRank : 0; });
 
   const out: EloSeason = {
     generatedAt: new Date().toISOString(),

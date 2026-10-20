@@ -245,9 +245,16 @@ export interface QbRating {
   eloVsTeam: number;
   starts: number;
   lastValue: number | null;
+  /** 0 for a passer listed but not ranked (see MIN_RANKED_ATTEMPTS). */
   rank: number;
   /** Rating at the end of each week of the season; index 0 is preseason. */
   history: number[];
+  /** Top of his team's latest depth chart. */
+  depthChartStarter: boolean;
+  /** This season: games with a box score line, games started, pass attempts. */
+  seasonGames: number;
+  seasonStarts: number;
+  seasonAttempts: number;
 }
 
 export interface EloSeason {
