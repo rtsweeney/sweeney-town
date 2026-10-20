@@ -11,7 +11,7 @@
 // division, or whichever team is under the pointer — lifts some teams into
 // full colour and greys out the rest.
 
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Crown } from 'lucide-react';
 import { TEAMS, resolveTeam, fullName } from './teams';
 import type { QbRating, TeamRating } from './engine';
@@ -208,9 +208,58 @@ function labelWidth(series: Series[], compact: boolean) {
   return Math.ceil(longest * (compact ? 6.4 : 7));
 }
 
-function Tooltip({ x, y, width, children }: { x: number; y: number; width: number; children: React.ReactNode }) {
-  // Flip to the left of the pointer when there is no room on the right.
-  const flip = x > width - 220;
+/** Widest a floating tooltip gets (matches .nfl-tip max-width). */
+const TIP_MAX_W = 260;
+
+/**
+ * Pointer handling shared by the charts. A mouse hovers: the readout follows
+ * it and clears when it leaves. A finger cannot hover — a touch fires its
+ * leave event the instant it lifts — so a tap pins the readout instead, a
+ * sideways drag scrubs through the weeks, and a tap anywhere outside the
+ * chart lets go.
+ */
+function usePointer(ref: React.RefObject<HTMLElement | null>, onHover: (key: string | null) => void) {
+  const [probe, setProbe] = useState<number | null>(null);
+  const [pinned, setPinned] = useState(false);
+  const clear = useCallback(() => { setProbe(null); setPinned(false); onHover(null); }, [onHover]);
+
+  useEffect(() => {
+    if (!pinned) return;
+    const away = (e: PointerEvent) => {
+      if (!ref.current?.contains(e.target as Node)) clear();
+    };
+    // Capture phase, so letting go here happens before another chart's own
+    // handler picks up the same tap — otherwise this would clear its choice.
+    document.addEventListener('pointerdown', away, true);
+    return () => document.removeEventListener('pointerdown', away, true);
+  }, [pinned, clear, ref]);
+
+  return {
+    probe,
+    setProbe,
+    onDown: (e: React.PointerEvent) => { if (e.pointerType !== 'mouse') setPinned(true); },
+    onLeave: (e: React.PointerEvent) => { if (e.pointerType === 'mouse') clear(); },
+  };
+}
+
+/**
+ * Where a chart's numbers appear. With room to spare it floats beside the
+ * pointer, flipping sides so it never leaves the chart. On a phone there is
+ * no side to flip to, so it docks under the chart instead — always on screen,
+ * never covering the line being tapped.
+ */
+function Readout({ compact, x, y, width, children }: {
+  compact: boolean; x: number; y: number; width: number; children: React.ReactNode;
+}) {
+  if (compact) {
+    return (
+      <div className="nfl-readout" role="status">
+        {children || <span className="nfl-readout-hint">Tap a line for its numbers; drag sideways to move through the weeks.</span>}
+      </div>
+    );
+  }
+  if (!children) return null;
+  const flip = x + 14 + TIP_MAX_W > width;
   return (
     <div
       className="nfl-tip"
@@ -305,7 +354,7 @@ export function Highlights({ teams, throughWeek }: { teams: TeamRating[]; throug
 
 export function BumpChart({ series, spotlight, hover, onHover, digits = 0, unit, subject }: SeriesChartProps) {
   const [ref, width] = useWidth<HTMLDivElement>();
-  const [probe, setProbe] = useState<number | null>(null);
+  const { probe, setProbe, onDown, onLeave } = usePointer(ref, onHover);
   const clipId = useClipId();
   const weeks = series[0]?.history.length ?? 0;
   const n = series.length;
@@ -354,7 +403,6 @@ export function BumpChart({ series, spotlight, hover, onHover, digits = 0, unit,
     setProbe(week);
     onHover(order[week][rank - 1]);
   };
-  const onLeave = () => { setProbe(null); onHover(null); };
 
   const labelEvery = step < 28 ? Math.ceil(28 / Math.max(step, 1)) : 1;
   const hovered = hover ? byKey.get(hover) : undefined;
@@ -369,7 +417,7 @@ export function BumpChart({ series, spotlight, hover, onHover, digits = 0, unit,
           role="img"
           aria-label={`${subject} rank by ${unit} after each week. Currently: ${order[last].slice(0, 5).map((k) => byKey.get(k)!.name).join(', ')} lead.`}
           onPointerMove={onMove}
-          onPointerDown={onMove}
+          onPointerDown={(e) => { onMove(e); onDown(e); }}
           onPointerLeave={onLeave}
         >
           <Reveal id={clipId} width={width} height={height} />
@@ -424,8 +472,9 @@ export function BumpChart({ series, spotlight, hover, onHover, digits = 0, unit,
           })}
         </svg>
       )}
+      <Readout compact={compact} x={probe === null ? 0 : x(probe)} y={hoverRank === undefined ? 0 : y(hoverRank) - 18} width={width}>
       {probe !== null && hovered && hoverRank !== undefined && (
-        <Tooltip x={x(probe)} y={y(hoverRank) - 18} width={width}>
+        <>
           <div className="nfl-tip-head">{weekLabel(probe)}</div>
           <TipRow
             color={colorOf(hovered.team)}
@@ -442,8 +491,9 @@ export function BumpChart({ series, spotlight, hover, onHover, digits = 0, unit,
               })()}
             </div>
           )}
-        </Tooltip>
+        </>
       )}
+      </Readout>
     </div>
   );
 }
@@ -454,7 +504,7 @@ export function RatingLineChart({
   series, spotlight, hover, onHover, digits = 0, unit, subject, baseline, tickStep,
 }: SeriesChartProps & { baseline: { value: number; label: string }; tickStep: number }) {
   const [ref, width] = useWidth<HTMLDivElement>();
-  const [probe, setProbe] = useState<number | null>(null);
+  const { probe, setProbe, onDown, onLeave } = usePointer(ref, onHover);
   const clipId = useClipId();
   const weeks = series[0]?.history.length ?? 0;
   const last = weeks - 1;
@@ -503,7 +553,6 @@ export function RatingLineChart({
     setProbe(week);
     if (best) onHover(best.key);
   };
-  const onLeave = () => { setProbe(null); onHover(null); };
 
   const labelEvery = step < 28 ? Math.ceil(28 / Math.max(step, 1)) : 1;
   const hovered = hover ? series.find((s) => s.key === hover) : undefined;
@@ -522,7 +571,7 @@ export function RatingLineChart({
           role="img"
           aria-label={`Every ${subject}'s ${unit} after each week of the season.`}
           onPointerMove={onMove}
-          onPointerDown={onMove}
+          onPointerDown={(e) => { onMove(e); onDown(e); }}
           onPointerLeave={onLeave}
         >
           <Reveal id={clipId} width={width} height={height} />
@@ -578,8 +627,9 @@ export function RatingLineChart({
           })}
         </svg>
       )}
+      <Readout compact={compact} x={probe === null ? 0 : x(probe)} y={probe === null || !tipSeries.length ? 0 : y(tipSeries[0].history[probe]) - 18} width={width}>
       {probe !== null && tipSeries.length > 0 && (
-        <Tooltip x={x(probe)} y={y(tipSeries[0].history[probe]) - 18} width={width}>
+        <>
           <div className="nfl-tip-head">{weekLabel(probe)}</div>
           {tipSeries.map((s) => (
             <TipRow
@@ -591,8 +641,9 @@ export function RatingLineChart({
               strong={s.key === hover}
             />
           ))}
-        </Tooltip>
+        </>
       )}
+      </Readout>
     </div>
   );
 }
@@ -631,6 +682,96 @@ export function WeeklyTable({ series, digits = 0, heading }: { series: Series[];
         </table>
       </div>
     </details>
+  );
+}
+
+// ── quarterback rooms: each team's passers in a spotlit division ────────────
+
+/**
+ * One panel per team, a bar per quarterback who has played for it this
+ * season, all on one scale so a bar means the same length in every panel and
+ * every division. Two dashed references: the average of the league's 32
+ * current starters, and of this division's four.
+ */
+export function QbRooms({ quarterbacks, division, hover, onHover }: {
+  quarterbacks: QbRating[];
+  division: Division;
+  hover: string | null;
+  onHover: (key: string | null) => void;
+}) {
+  const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.length);
+  const starters = quarterbacks.filter((q) => q.depthChartStarter);
+  const leagueAvg = mean(starters.map((q) => q.rating));
+  const divisionAvg = mean(starters.filter((q) => division.teams.includes(q.team)).map((q) => q.rating));
+  const top = Math.ceil(Math.max(leagueAvg, ...quarterbacks.map((q) => q.rating)) / 10) * 10;
+  const at = (v: number) => `${(Math.max(0, Math.min(v, top)) / top) * 100}%`;
+
+  const meta = (q: QbRating) => {
+    const role = q.depthChartStarter ? 'QB1 · ' : '';
+    if (q.seasonStarts > 0) return `${role}${q.seasonStarts} ${q.seasonStarts === 1 ? 'start' : 'starts'}`;
+    if (q.seasonGames > 0) return `${role}${q.seasonGames} ${q.seasonGames === 1 ? 'game' : 'games'}, no starts`;
+    return `${role}hasn't played yet`;
+  };
+
+  return (
+    <>
+      <div className="nfl-legend">
+        <span><i className="nfl-legend-ref" /> League starters&apos; average {leagueAvg.toFixed(1)}</span>
+        <span><i className="nfl-legend-ref div" /> {division.key} starters&apos; average {divisionAvg.toFixed(1)}</span>
+        <span><i className="nfl-legend-faded" /> No starts this season: rating carried over</span>
+      </div>
+      <div className="nfl-rooms">
+        {division.teams.map((abbr) => {
+          const team = resolveTeam(abbr);
+          const room = quarterbacks
+            .filter((q) => q.team === abbr)
+            .sort((a, b) => b.rating - a.rating);
+          return (
+            <section key={abbr} className="nfl-room">
+              <header>
+                <span className="nfl-room-swatch" style={{ background: colorOf(abbr) }} />
+                <h4>{team ? `${team.location} ${team.nickname}` : abbr}</h4>
+                <span>{room.length} {room.length === 1 ? 'quarterback' : 'quarterbacks'}</span>
+              </header>
+              <div className="nfl-room-rows">
+                {room.map((q) => {
+                  const vsLeague = q.rating - leagueAvg;
+                  return (
+                    <div
+                      key={q.playerId}
+                      className={`nfl-room-row ${hover === q.playerId ? 'hovered' : ''}`}
+                      onPointerEnter={() => onHover(q.playerId)}
+                      onPointerLeave={() => onHover(null)}
+                      title={`${q.name}: ${q.rating.toFixed(1)} rating, ${signed(vsLeague, 1)} vs the league's starters, ${signed(q.rating - divisionAvg, 1)} vs the ${division.key}'s`}
+                    >
+                      <span className="nfl-room-who">
+                        <span className="nfl-room-name">{q.name}</span>
+                        <span className="nfl-room-meta">{meta(q)}</span>
+                      </span>
+                      <span className="nfl-room-track" aria-hidden="true">
+                        <span
+                          className={`nfl-room-bar nfl-grow ${q.seasonStarts === 0 ? 'faded' : ''}`}
+                          style={{ width: at(q.rating), background: colorOf(abbr) }}
+                        />
+                        <span className="nfl-room-ref" style={{ left: at(leagueAvg) }} />
+                        <span className="nfl-room-ref div" style={{ left: at(divisionAvg) }} />
+                      </span>
+                      <span className="nfl-room-value">
+                        <strong>{q.rating.toFixed(1)}</strong>
+                        <span className={vsLeague >= 0 ? 'nfl-up' : 'nfl-down'}>{signed(vsLeague, 1)}</span>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="nfl-room-axis" aria-hidden="true">
+                <span>0</span><span>{top / 2}</span><span>{top}</span>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
@@ -856,6 +997,8 @@ export const CHART_CSS = `
 .nfl-tip-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nfl-tip-note{color:var(--text-muted);font-variant-numeric:tabular-nums}
 .nfl-tip-sub{margin-top:0.25rem;color:var(--text-muted);font-size:0.72rem}
+.nfl-readout{min-height:4.4rem;margin-top:0.6rem;padding:0.55rem 0.7rem;background:var(--surface);border-radius:var(--radius-sm);font-size:0.76rem}
+.nfl-readout-hint{display:block;padding-top:0.6rem;text-align:center;color:var(--text-muted);font-size:0.74rem}
 
 .nfl-data{margin-top:0.75rem}
 .nfl-data summary{cursor:pointer;font-size:0.78rem;font-weight:700;color:var(--accent-primary);padding:0.35rem 0}
@@ -872,6 +1015,33 @@ export const CHART_CSS = `
 .nfl-legend-proj{background:var(--text-secondary);opacity:0.3}
 .nfl-legend-500{width:1px !important;height:14px !important;background:var(--text-muted);border-radius:0 !important}
 .nfl-crown{color:#e0a800;flex:none}
+.nfl-legend-ref{width:0 !important;height:14px !important;border-left:2px dashed #9a9cb0;border-radius:0 !important}
+.nfl-legend-ref.div{border-left-color:var(--accent-primary)}
+.nfl-legend-faded{background:var(--text-secondary);opacity:0.3}
+
+/* quarterback rooms */
+.nfl-rooms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.75rem 1rem}
+.nfl-room{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:0.75rem 0.85rem 0.6rem}
+.nfl-room header{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.45rem}
+.nfl-room h4{flex:1;font-size:0.86rem;font-weight:800;margin:0;color:var(--text-primary)}
+.nfl-room header>span:last-child{font-size:0.68rem;color:var(--text-muted)}
+.nfl-room-swatch{width:3px;height:1rem;border-radius:2px}
+.nfl-room-row{display:grid;grid-template-columns:8.5rem minmax(0,1fr) 3.3rem;align-items:stretch;gap:0.6rem;padding:0 0.35rem;margin:0 -0.35rem;border-radius:var(--radius-sm);transition:background var(--transition-fast)}
+.nfl-room-row.hovered{background:var(--surface-hover)}
+.nfl-room-who{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:0.32rem 0;line-height:1.2}
+.nfl-room-name{font-size:0.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nfl-room-meta{font-size:0.64rem;color:var(--text-muted);white-space:nowrap}
+.nfl-room-track{position:relative;display:flex;align-items:center}
+.nfl-room-bar{display:block;height:14px;border-radius:0 4px 4px 0;transform-origin:left center}
+.nfl-room-bar.faded{opacity:0.3}
+.nfl-room-ref{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed #9a9cb0;z-index:1}
+.nfl-room-ref.div{border-left-color:var(--accent-primary)}
+.nfl-room-value{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;line-height:1.2;font-variant-numeric:tabular-nums}
+.nfl-room-value strong{font-size:0.84rem;font-weight:800}
+.nfl-room-value span{font-size:0.64rem;font-weight:700}
+.nfl-room-value .nfl-up{color:var(--accent-secondary)}
+.nfl-room-value .nfl-down{color:var(--accent-warm)}
+.nfl-room-axis{display:flex;justify-content:space-between;margin:0.2rem 3.9rem 0 9.1rem;font-size:0.6rem;color:var(--text-muted);font-variant-numeric:tabular-nums}
 .nfl-divs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:0.75rem 1rem}
 .nfl-div{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:0.7rem 0.75rem 0.55rem;transition:opacity var(--transition-smooth)}
 .nfl-div.faded{opacity:0.35}
@@ -926,11 +1096,14 @@ export const CHART_CSS = `
 
 @media (max-width:860px){
   .nfl-po{grid-template-columns:1fr}
+  .nfl-rooms{grid-template-columns:1fr}
   .nfl-card{padding:0.8rem 0.7rem 0.5rem}
 }
 @media (max-width:560px){
   .nfl-divs{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}
   .nfl-div-row{grid-template-columns:4.2rem minmax(0,1fr) 2.6rem 3.4rem}
+  .nfl-room-row{grid-template-columns:6.8rem minmax(0,1fr) 3rem;gap:0.45rem}
+  .nfl-room-axis{margin:0.2rem 3.45rem 0 7.25rem}
   .nfl-div header{grid-template-columns:minmax(0,1fr) 2.6rem 3.4rem}
   .nfl-po-full{display:none}
   .nfl-po-abbr{display:inline}
