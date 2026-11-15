@@ -944,26 +944,7 @@ export default function PleatCounterPage() {
       }
       byId('roOpen').innerHTML =
         (grateOnEl.checked && S.openPct != null) ? `${S.openPct.toFixed(1)}<small> %</small>` : '—';
-      byId<HTMLButtonElement>('simulate').disabled = !result || n === 0;
     }
-
-    // hand the measured values off to the pleated filter performance calculator
-    const onSimulate = () => {
-      const result = S.result;
-      const n = result ? currentLines().length : 0;
-      const qp = new URLSearchParams();
-      const fw = parseFloat(byId<HTMLInputElement>('faceW').value);
-      const fh = parseFloat(byId<HTMLInputElement>('faceH').value);
-      if (isFinite(fw) && fw > 0) qp.set('fw', String(fw));
-      if (isFinite(fh) && fh > 0) qp.set('fh', String(fh));
-      const dIn = depthInches();
-      if (isFinite(dIn) && dIn > 0) qp.set('pd', dIn.toFixed(3));
-      if (n > 0) qp.set('count', String(n));
-      if (grateOnEl.checked && S.openPct != null) {
-        qp.set('grating', Math.min(90, Math.max(0, 100 - S.openPct)).toFixed(1));
-      }
-      window.open('/calculators/pleated-filter-calculator?' + qp.toString(), '_blank', 'noopener');
-    };
 
     // ---------- wiring ----------
     const onDropzoneClick = () => fileInput.click();
@@ -1028,7 +1009,6 @@ export default function PleatCounterPage() {
     byId('pleatDepth').addEventListener('input', updateReadouts);
     byId('depthIn').addEventListener('click', () => setDepthUnit('in'));
     byId('depthMm').addEventListener('click', () => setDepthUnit('mm'));
-    byId('simulate').addEventListener('click', onSimulate);
     ovCanvas.addEventListener('pointerdown', onPointerDown);
     ovCanvas.addEventListener('pointermove', onPointerMove);
     ovCanvas.addEventListener('pointerup', onPointerUp);
@@ -1137,10 +1117,6 @@ export default function PleatCounterPage() {
                 <div className="pc-ro"><div className="pc-k">Pitch</div><div className="pc-v" id="roPitch">—</div></div>
                 <div className="pc-ro"><div className="pc-k" id="roPPFLabel">Pleats / ft</div><div className="pc-v" id="roPPF">—</div><div className="pc-sub" id="roPPFSub"></div></div>
                 <div className="pc-ro open"><div className="pc-k">Open area</div><div className="pc-v" id="roOpen">—</div></div>
-              </div>
-              <div className="pc-simrow">
-                <button className="primary" id="simulate" disabled>Simulate performance ↗</button>
-                <span className="pc-simnote">Opens the pleated filter performance calculator on a new page with the face size, pleat depth, pleat count, and grating blockage pre-filled.</span>
               </div>
             </div>
             </div>
@@ -1291,8 +1267,6 @@ const PC_CSS = `
 .pc-root .pc-unittoggle button{border:none;border-radius:0;padding:0.35rem 0.65rem;font-size:0.72rem;background:transparent;color:var(--text-secondary)}
 .pc-root .pc-unittoggle button:hover{background:var(--surface-hover)}
 .pc-root .pc-unittoggle button.active{background:var(--accent-secondary);color:#fff}
-.pc-simrow{display:flex;align-items:center;gap:0.9rem;flex-wrap:wrap;margin-top:1rem}
-.pc-simnote{font-size:0.72rem;color:var(--text-muted);line-height:1.45;flex:1;min-width:220px}
 .pc-root button:disabled{opacity:0.45;cursor:not-allowed;transform:none !important;box-shadow:none !important}
 .pc-status{font-size:0.72rem;color:var(--text-muted);margin-top:0.6rem;min-height:15px;line-height:1.45}
 

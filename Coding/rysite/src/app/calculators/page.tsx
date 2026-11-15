@@ -10,13 +10,6 @@ const calculators = [
     accent: 'card-accent-gold',
   },
   {
-    name: 'Pleated Filter',
-    description: 'Predict pressure drop, optimal pleat count, and fractional efficiency for a pleated air filter (Sothen & Tatarchuk 2009).',
-    href: '/calculators/pleated-filter-calculator',
-    icon: '&#128168;',
-    accent: 'card-accent-purple',
-  },
-  {
     name: 'Carton Packing Optimizer',
     description: 'Design the best small set of carton sizes for your products, tile them onto pallets, and write supplier-ready box specs.',
     href: '/calculators/carton-packing',

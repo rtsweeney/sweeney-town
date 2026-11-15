@@ -8,7 +8,6 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 
 const calculators = [
   { name: 'Beers Per Beer', href: '/calculators/beers-per-beer', subtitle: 'Standard beers in any drink' },
-  { name: 'Pleated Filter', href: '/calculators/pleated-filter-calculator', subtitle: 'Pressure drop & efficiency model' },
   { name: 'Carton Packing', href: '/calculators/carton-packing', subtitle: 'Box sizes & pallet loads' },
   { name: 'Pleat Counter', href: '/calculators/pleat-counter', subtitle: 'Count pleats from a photo' },
 ];
