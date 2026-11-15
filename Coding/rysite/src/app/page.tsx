@@ -3,15 +3,6 @@ import Footer from '@/components/Footer';
 
 const featured = [
   {
-    name: 'Pleated Filter Calculator',
-    href: '/calculators/pleated-filter-calculator',
-    icon: '&#128168;',
-    accent: 'card-accent-purple',
-    description:
-      'Model pressure drop, find the optimal pleat count, and project fractional efficiency and MERV rating for a pleated air filter — built on the Sothen & Tatarchuk method.',
-    tags: ['Pressure Drop', 'MERV', 'Filtration'],
-  },
-  {
     name: 'Carton Packing Optimizer',
     href: '/calculators/carton-packing',
     icon: '&#128230;',

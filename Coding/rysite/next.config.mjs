@@ -17,6 +17,7 @@ const nextConfig = {
             // Retired calculators — send visitors to the index rather than a 404.
             { source: '/calculators/unit-converter', destination: '/calculators', permanent: false },
             { source: '/calculators/air-density', destination: '/calculators', permanent: false },
+            { source: '/calculators/pleated-filter-calculator', destination: '/calculators', permanent: false },
         ];
     },
 };
