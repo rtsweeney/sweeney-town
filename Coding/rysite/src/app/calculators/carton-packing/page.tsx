@@ -50,8 +50,11 @@ interface FormState {
   mapMajor: PrismAxis;
   mapDepth: PrismAxis;
   mapMinor: PrismAxis;
+  /** Max outer length of each carton side: major flap (L), minor flap (W), depth (D). */
+  maxMajor: string;
+  maxMinor: string;
+  maxDepth: string;
   goalSkus: string;
-  maxSide: string;
   minUnits: string;
   configs: Record<string, boolean>;
   allowMajor: string;
@@ -89,8 +92,10 @@ const DEFAULT_FORM: FormState = {
   mapMajor: DEFAULT_MAPPING.major,
   mapDepth: DEFAULT_MAPPING.depth,
   mapMinor: DEFAULT_MAPPING.minor,
+  maxMajor: '650',
+  maxMinor: '610',
+  maxDepth: '650',
   goalSkus: '4',
-  maxSide: '700',
   minUnits: '4',
   configs: Object.fromEntries(COLUMN_CONFIGS.map((c) => [c.id, c.defaultOn])),
   allowMajor: '20',
@@ -197,7 +202,9 @@ function Toggle({ label, checked, onChange, hint }: { label: string; checked: bo
 // ── Unit conversion ───────────────────────────────────────────────────────────
 
 const LENGTH_FIELDS = [
-  'maxSide',
+  'maxMajor',
+  'maxMinor',
+  'maxDepth',
   'allowMajor',
   'allowMinor',
   'allowDepth',
@@ -215,6 +222,25 @@ function convertValue(v: string, to: Units): string {
   if (!isFinite(n)) return v;
   const converted = to === 'in' ? n / 25.4 : n * 25.4;
   return String(Math.round(converted * (to === 'in' ? 1000 : 10)) / (to === 'in' ? 1000 : 10));
+}
+
+/**
+ * Merge a saved or imported form over the defaults. A length field the save
+ * lacks takes its default converted into the saved units, so an inch scenario
+ * never picks up a millimeter value. Saves from before the per-side caps hold
+ * one `maxSide`; it can't map onto three different caps, so it is dropped and
+ * the per-side defaults apply.
+ */
+function restoreForm(saved: Partial<FormState> & { maxSide?: string }): FormState {
+  const fields = { ...saved };
+  delete fields.maxSide;
+  const form: FormState = { ...DEFAULT_FORM, ...fields, configs: { ...DEFAULT_FORM.configs, ...(fields.configs ?? {}) } };
+  if (form.units === 'in') {
+    for (const key of LENGTH_FIELDS) {
+      if (fields[key] === undefined) form[key] = convertValue(DEFAULT_FORM[key], 'in');
+    }
+  }
+  return form;
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
@@ -337,7 +363,7 @@ export default function CartonPackingPage() {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const data = JSON.parse(raw) as { form?: Partial<FormState>; prisms?: PrismRow[]; nextId?: number };
-        if (data.form) setForm({ ...DEFAULT_FORM, ...data.form, configs: { ...DEFAULT_FORM.configs, ...(data.form.configs ?? {}) } });
+        if (data.form) setForm(restoreForm(data.form));
         if (Array.isArray(data.prisms) && data.prisms.length > 0) setPrisms(normalizeRows(data.prisms));
         if (typeof data.nextId === 'number') setNextId(data.nextId);
       }
@@ -446,7 +472,7 @@ export default function CartonPackingPage() {
     file.text().then((text) => {
       try {
         const data = JSON.parse(text) as { form?: Partial<FormState>; prisms?: PrismRow[]; nextId?: number };
-        if (data.form) setForm({ ...DEFAULT_FORM, ...data.form, configs: { ...DEFAULT_FORM.configs, ...(data.form.configs ?? {}) } });
+        if (data.form) setForm(restoreForm(data.form));
         if (Array.isArray(data.prisms)) setPrisms(normalizeRows(data.prisms));
         if (typeof data.nextId === 'number') setNextId(data.nextId);
         setErrors([]);
@@ -507,7 +533,9 @@ export default function CartonPackingPage() {
       mapping,
       goalSkus: goal,
       kSpread: 5,
-      maxSide: num('Max carton side', form.maxSide, 1),
+      maxMajor: num('Max outer L (major flaps)', form.maxMajor, 1),
+      maxMinor: num('Max outer W (minor flaps)', form.maxMinor, 1),
+      maxDepth: num('Max outer D (depth)', form.maxDepth, 1),
       minUnitsPerCarton: Math.round(num('Minimum prisms per carton', form.minUnits, 1)),
       allowedConfigs: allowed,
       allowMajor: num('Major-flap allowance', form.allowMajor),
@@ -696,29 +724,40 @@ export default function CartonPackingPage() {
         </section>
 
         <div className="cpk-grid">
-          {/* ── Axis mapping + orientations ── */}
+          {/* ── Axis mapping + max side lengths + orientations ── */}
           <section className="cpk-card">
-            <div className="cpk-cardhead"><h2>2 · Axis mapping</h2></div>
+            <div className="cpk-cardhead"><h2>2 · Axis mapping &amp; max side lengths</h2></div>
             <p className="cpk-hint">
-              How each prism dimension lines up with the erected carton. Prisms accumulate ({'"'}stack{'"'}) along the
-              minor-flap dimension. Changing one assignment swaps with the axis that held it.
+              How each prism dimension lines up with the erected carton, and the longest each carton side may be.
+              Prisms accumulate ({'"'}stack{'"'}) along the minor-flap dimension. Changing one assignment swaps with the
+              axis that held it. Each max is measured on the outside of the carton and stays with its carton side
+              when the prism dimensions swap.
             </p>
             {(
               [
-                ['mapMajor', 'Carton major flaps (L)', form.mapMajor],
-                ['mapDepth', 'Carton depth (D, vertical)', form.mapDepth],
-                ['mapMinor', 'Carton minor flaps (W) — stacking axis', form.mapMinor],
-              ] as ['mapMajor' | 'mapDepth' | 'mapMinor', string, PrismAxis][]
-            ).map(([key, label, value]) => (
-              <label key={key} className="cpk-field">
-                <span className="cpk-label">{label}</span>
-                <select value={value} onChange={(e) => handleMapping(key, e.target.value as PrismAxis)}>
-                  {(Object.keys(AXIS_LABELS) as PrismAxis[]).map((ax) => (
-                    <option key={ax} value={ax}>{AXIS_LABELS[ax]}</option>
-                  ))}
-                </select>
-              </label>
+                ['mapMajor', 'maxMajor', 'Carton major flaps (L)', 'L'],
+                ['mapDepth', 'maxDepth', 'Carton depth (D, vertical)', 'D'],
+                ['mapMinor', 'maxMinor', 'Carton minor flaps (W) — stacking axis', 'W'],
+              ] as const
+            ).map(([mapKey, maxKey, label, side]) => (
+              <div key={mapKey} className="cpk-maprow">
+                <label className="cpk-field">
+                  <span className="cpk-label">{label}</span>
+                  <select value={form[mapKey]} onChange={(e) => handleMapping(mapKey, e.target.value as PrismAxis)}>
+                    {(Object.keys(AXIS_LABELS) as PrismAxis[]).map((ax) => (
+                      <option key={ax} value={ax}>{AXIS_LABELS[ax]}</option>
+                    ))}
+                  </select>
+                </label>
+                <NumField label={`Max outer ${side} (${u})`} value={form[maxKey]} onChange={(v) => set(maxKey, v)} />
+              </div>
             ))}
+            {parseFloat(form.maxMinor) > parseFloat(form.maxMajor) && (
+              <p className="cpk-hint">
+                The minor-flap side can never be longer than the major-flap side, or the carton won&apos;t close — so W
+                is effectively held to the L max of {form.maxMajor} {u}.
+              </p>
+            )}
 
             <div className="cpk-divider" />
             <div className="cpk-cardhead"><h2>Packing orientations</h2></div>
@@ -739,7 +778,6 @@ export default function CartonPackingPage() {
           <section className="cpk-card">
             <div className="cpk-cardhead"><h2>3 · Cartons</h2></div>
             <NumField label="Goal number of carton SKUs" value={form.goalSkus} onChange={(v) => set('goalSkus', v)} step="1" hint="The simulation also runs ±5 SKUs around this goal." />
-            <NumField label={`Max single side length (${u})`} value={form.maxSide} onChange={(v) => set('maxSide', v)} hint="Cap on every outer carton dimension." />
             <NumField
               label="Minimum prisms per carton"
               value={form.minUnits}
@@ -922,7 +960,7 @@ export default function CartonPackingPage() {
                 <b>{iss.prism.name}</b> — {iss.reason}.
               </p>
             ))}
-            <p className="cpk-hint">Raise the max carton side, enable more packing orientations, relax the pallet limits, or remove the SKU.</p>
+            <p className="cpk-hint">Raise the max side length named in the reason (beside the axis mapping), enable more packing orientations, relax the pallet limits, or remove the SKU.</p>
           </section>
         )}
 
@@ -1124,13 +1162,14 @@ export default function CartonPackingPage() {
                 <summary className="cpk-notes-summary">Modeling notes &amp; assumptions</summary>
                 <ul className="cpk-notes">
                   <li>Inner dims: L = columns × prism-L + major allowance; W = stack count × prism-W + minor allowance; D = tiers × prism-D + depth allowance. Each allowance is the total extra space in that dimension, and the stack count is maximized to the carton width for every SKU sharing the carton.</li>
-                  <li>Outer dims add 2 × wall on L and W and 4 × wall on depth (two flap plies top and bottom). The max side limit applies to outer dims.</li>
-                  <li>The minor-flap dimension (W) is never allowed to exceed the major-flap dimension (L): on an RSC the two minor flaps each span half the width and fold across L, so a carton with a longer minor-flap side could not be closed. The major-flap side does not have to hug the contents — when the stack is deeper than the packed row is wide, L is widened to match W, leaving dead space beside the prisms while keeping them aligned.</li>
+                  <li>Outer dims add 2 × wall on L and W and 4 × wall on depth (two flap plies top and bottom). Each carton side has its own max length — major flap (L), minor flap (W), and depth (D) — measured on the outer dims, so the inner limits are the L and W maxes less 2 × wall and the D max less 4 × wall.</li>
+                  <li>The minor-flap dimension (W) is never allowed to exceed the major-flap dimension (L): on an RSC the two minor flaps each span half the width and fold across L, so a carton with a longer minor-flap side could not be closed. The major-flap side does not have to hug the contents — when the stack is deeper than the packed row is wide, L is widened to match W, leaving dead space beside the prisms while keeping them aligned. Because L has to reach W, the stack is also held under the L max: a W max set above the L max has no effect past it.</li>
                   <li>The three highest annual-volume prism SKUs are shown in bold throughout the results.</li>
                   <li>Each carton is packed with one SKU at a time; each prism SKU is assigned to exactly one carton SKU.</li>
                   <li>Every SKU without a set per-carton count must reach the minimum prisms per carton; a set count overrides the minimum for that SKU and must split evenly across an enabled packing orientation (columns × tiers must divide it).</li>
                   <li>When orientations mix on a pallet, upright layers always stack at the bottom and on-side layers on top; layers are numbered from the deck up, and the number of on-side layers is capped by the max-layers-on-their-side setting (or uncapped when the whole stack may lie on its side).</li>
-                  <li>In the pallet views a carton&apos;s colour shows only its orientation — upright layers in purple, on-side layers in teal. A 90° turn within a layer is shown by the tick direction, so colour never means two things at once.</li>
+                  <li>The packed-carton view draws the closed top see-through, so the prisms stay visible, with the major-flap seam running the full length L down the middle of W.</li>
+                  <li>In the pallet views a carton&apos;s colour shows only its orientation — upright layers in purple, on-side layers in teal. An upright carton shows its major-flap seam: the major flaps close second, over the minor flaps, and meet down the middle of W, so the seam runs the full length L. A carton on its side has its flap faces standing vertical along its two L edges, drawn heavier in the top view, and its seam shows in the stack elevation on the flap faces turned toward you. A 90° turn within a layer reads from these marks, so colour never means two things at once.</li>
                   <li>Pallet patterns mix 90° rotations using a block-pattern search (up to three guillotine splits). Fully interlocked pinwheel patterns are not searched, so a rare layout may fit one more carton than reported.</li>
                   <li>The pallet is assumed 5 in (127 mm) tall; the max stack height applies to cartons and pads above the deck.</li>
                   <li>With flutes not required vertical, cartons may also rest on the depth × major-flap face (minor flaps vertical); layers of different orientations can mix within the height budget.</li>
@@ -1343,6 +1382,8 @@ const CPK_CSS = `
 .cpk-suffix{font-size:0.75rem;color:var(--text-muted);font-weight:600}
 .cpk-field .cpk-hint{display:block;margin:0.25rem 0 0;font-size:0.7rem}
 .cpk-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.6rem}
+.cpk-maprow{display:grid;grid-template-columns:minmax(0,1fr) 8.75rem;gap:0.6rem;align-items:end}
+@media(max-width:560px){.cpk-maprow{grid-template-columns:minmax(10rem,1fr) minmax(0,6rem)}}
 @media(max-width:560px){.cpk-three{grid-template-columns:1fr}}
 
 .cpk-toggle{display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;user-select:none;font-size:0.82rem;color:var(--text-primary);line-height:1.45;margin-bottom:0.55rem}
