@@ -173,6 +173,18 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
     [0, 0, OD],
   ]);
 
+  // Closed top, ghosted so the prisms stay visible. The major flaps close
+  // second, over the minor flaps, and meet down the middle of W, so their
+  // seam runs the full length L across the top.
+  const lid = facePath([
+    [0, 0, OD],
+    [OL, 0, OD],
+    [OL, OW, OD],
+    [0, OW, OD],
+  ]);
+  const seamA = proj([0, OW / 2, OD]);
+  const seamB = proj([OL, OW / 2, OD]);
+
   const labelL = proj([OL / 2, OW, 0]);
   const labelW = proj([OL, OW / 2, 0]);
   // The right silhouette edge (x = OL, y = 0) keeps the depth label off the contents.
@@ -182,7 +194,7 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
     <svg
       viewBox={`${minX - margin} ${minY - margin * 0.7} ${maxX - minX + margin * 2.6} ${maxY - minY + margin * 1.7}`}
       role="img"
-      aria-label={`Carton ${carton.label} packed with ${member.prism.name}: ${member.cols} across the major flaps × ${member.tiers} tiers × ${member.nPerStack} per stack`}
+      aria-label={`Carton ${carton.label} packed with ${member.prism.name}: ${member.cols} across the major flaps × ${member.tiers} tiers × ${member.nPerStack} per stack, with the closed top drawn see-through to show the major-flap seam`}
       style={{ width: '100%', height: 'auto', display: 'block' }}
     >
       {/* carton interior */}
@@ -201,6 +213,12 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
           </g>
         );
       })}
+      {/* closed top (ghosted) with the major-flap seam, in carton kraft so it
+          reads as part of the box, not as another prism edge. With one carton
+          in view it can't be mistaken for a neighbour's edge, so it matches
+          the box edges' weight. */}
+      <path d={lid} fill={KRAFT_BACK} fillOpacity={0.45} />
+      <line x1={seamA[0]} y1={seamA[1]} x2={seamB[0]} y2={seamB[1]} stroke={KRAFT_EDGE} strokeWidth={fs * 0.09} strokeLinecap="round" />
       {/* carton front edges (silhouette) */}
       {edge([0, OW, 0], [OL, OW, 0], 'e1')}
       {edge([OL, 0, 0], [OL, OW, 0], 'e2')}
