@@ -4,7 +4,8 @@
 // All rendering is client-side; colors lean on the site palette
 // (purple = prisms/data and upright cartons, kraft tans = corrugated,
 // teal = cartons lying on their side). Carton hue tracks orientation only —
-// a 90° turn within a layer is shown by tick direction, never by color.
+// a 90° turn within a layer shows in the direction of the major-flap seam
+// (or, for a carton on its side, of its flap faces), never in color.
 
 import { useMemo, useState } from 'react';
 import type { CartonSpec, MemberPack, PalletPlan, SolutionK } from './engine';
@@ -271,13 +272,44 @@ export function PalletTopView({ plan, layerIndex, palletLen, palletWid, units }:
 
   const margin = Math.max(usable.x, usable.y) * 0.05;
   const fs = Math.max(usable.x, usable.y) * 0.032;
-  const hasRotated = rects.some((r) => r.rotated);
-  const hasBase = rects.some((r) => !r.rotated);
   // One hue per layer orientation: upright keeps the base colour, on-side
   // layers switch so they read at a glance in a mixed stack.
   const onSide = layer.orientation === 'onSide';
   const fill = onSide ? CARTON_SIDE_FILL : CARTON_FILL;
   const stroke = onSide ? CARTON_SIDE_STROKE : CARTON_STROKE;
+  const outline = fs * 0.09;
+
+  // Flap marks for a carton drawn in the box (x, y, w, h), with its
+  // major-flap side L along x unless `lAlongY`.
+  //  · Upright, the top is the closed flap face. The major flaps close last
+  //    and meet down the middle of W, so their seam runs the full length L.
+  //  · On its side, the top is a plain side panel and the flap faces stand
+  //    vertical along the two L edges, so the seam faces sideways (the stack
+  //    elevation shows it). Those two edges are drawn heavier instead.
+  const flapMarks = (x: number, y: number, w: number, h: number, lAlongY: boolean) => {
+    if (!onSide) {
+      // Lighter than the outline, so a seam never reads as the edge between two cartons.
+      return lAlongY ? (
+        <line x1={x + w / 2} y1={y} x2={x + w / 2} y2={y + h} stroke={stroke} strokeWidth={outline * 0.65} opacity={0.9} />
+      ) : (
+        <line x1={x} y1={y + h / 2} x2={x + w} y2={y + h / 2} stroke={stroke} strokeWidth={outline * 0.65} opacity={0.9} />
+      );
+    }
+    const t = Math.min(fs * 0.26, Math.min(w, h) * 0.2); // heavy edge, outer side flush with the outline's
+    const o = t / 2 - outline / 2;
+    const c = Math.min(fs * 0.22, Math.min(w, h) / 2); // stop short of the rounded corners
+    return lAlongY ? (
+      <>
+        <line x1={x + o} y1={y + c} x2={x + o} y2={y + h - c} stroke={stroke} strokeWidth={t} />
+        <line x1={x + w - o} y1={y + c} x2={x + w - o} y2={y + h - c} stroke={stroke} strokeWidth={t} />
+      </>
+    ) : (
+      <>
+        <line x1={x + c} y1={y + o} x2={x + w - c} y2={y + o} stroke={stroke} strokeWidth={t} />
+        <line x1={x + c} y1={y + h - o} x2={x + w - c} y2={y + h - o} stroke={stroke} strokeWidth={t} />
+      </>
+    );
+  };
 
   return (
     <svg
@@ -297,27 +329,16 @@ export function PalletTopView({ plan, layerIndex, palletLen, palletWid, units }:
       )}
       {/* Cartons. Colour encodes orientation only — every carton in a layer
           shares it — so on-side layers stand out in a mixed stack. A 90° turn
-          within a layer is shown by the tick direction, not by hue. */}
+          within a layer shows in the direction of the flap marks, not by hue. */}
       {rects.map((r, i) => {
-        const x = r.x + shiftX - ohX;
-        const y = r.y + shiftY - ohY;
+        const x = r.x + shiftX - ohX + fs * 0.06;
+        const y = r.y + shiftY - ohY + fs * 0.06;
+        const w = r.w - fs * 0.12;
+        const h = r.h - fs * 0.12;
         return (
           <g key={i}>
-            <rect
-              x={x + fs * 0.06}
-              y={y + fs * 0.06}
-              width={r.w - fs * 0.12}
-              height={r.h - fs * 0.12}
-              rx={fs * 0.22}
-              fill={fill}
-              stroke={stroke}
-              strokeWidth={fs * 0.09}
-            />
-            {r.rotated ? (
-              <line x1={x + r.w / 2} y1={y + r.h * 0.14} x2={x + r.w / 2} y2={y + r.h * 0.86} stroke={stroke} strokeWidth={fs * 0.06} opacity={0.6} />
-            ) : (
-              <line x1={x + r.w * 0.14} y1={y + r.h / 2} x2={x + r.w * 0.86} y2={y + r.h / 2} stroke={stroke} strokeWidth={fs * 0.06} opacity={0.6} />
-            )}
+            <rect x={x} y={y} width={w} height={h} rx={fs * 0.22} fill={fill} stroke={stroke} strokeWidth={outline} />
+            {flapMarks(x, y, w, h, r.rotated)}
           </g>
         );
       })}
@@ -329,29 +350,13 @@ export function PalletTopView({ plan, layerIndex, palletLen, palletWid, units }:
             {onSide ? 'on side · flutes horizontal' : 'upright · flutes vertical'}
           </text>
         </g>
-        {hasRotated && hasBase && (
-          <g>
-            <line
-              x1={-ohX + usable.x * 0.62}
-              y1={usable.y - ohY + margin * 0.5 + fs * 0.4}
-              x2={-ohX + usable.x * 0.62 + fs}
-              y2={usable.y - ohY + margin * 0.5 + fs * 0.4}
-              stroke={stroke}
-              strokeWidth={fs * 0.12}
-            />
-            <line
-              x1={-ohX + usable.x * 0.62 + fs * 1.7}
-              y1={usable.y - ohY + margin * 0.5 - fs * 0.1}
-              x2={-ohX + usable.x * 0.62 + fs * 1.7}
-              y2={usable.y - ohY + margin * 0.5 + fs * 0.9}
-              stroke={stroke}
-              strokeWidth={fs * 0.12}
-            />
-            <text x={-ohX + usable.x * 0.62 + fs * 2.2} y={usable.y - ohY + margin * 0.5 + fs * 0.7}>
-              tick = major flaps
-            </text>
-          </g>
-        )}
+        <g>
+          <rect x={-ohX + usable.x * 0.52} y={usable.y - ohY + margin * 0.5} width={fs * 1.15} height={fs * 0.8} rx={fs * 0.15} fill={fill} stroke={stroke} strokeWidth={outline} />
+          {flapMarks(-ohX + usable.x * 0.52, usable.y - ohY + margin * 0.5, fs * 1.15, fs * 0.8, false)}
+          <text x={-ohX + usable.x * 0.52 + fs * 1.55} y={usable.y - ohY + margin * 0.5 + fs * 0.7}>
+            {onSide ? 'flap faces · seam on side' : 'major-flap seam'}
+          </text>
+        </g>
       </g>
       <title>{`Pallet ${fmtDim(palletLen, units)} × ${fmtDim(palletWid, units)} — ${layer.perLayer} cartons per layer`}</title>
     </svg>
@@ -419,23 +424,44 @@ export function PalletSideView({ plan, maxLoadHeight, padThickness, units, palle
           return <rect key={r.key} x={0} y={yTop} width={W} height={Math.max(r.h, totalH * 0.006)} fill="#c9c4de" />;
         }
         const layer = plan.layers[r.layer ?? 0];
-        const spans = new Map<string, { x: number; w: number }>();
-        layer.placements.forEach((p) => spans.set(`${Math.round(p.x)}|${Math.round(p.w)}`, { x: p.x, w: p.w }));
+        // One rect per distinct x-span. The carton nearest the viewer (the
+        // bottom edge of the top view) decides which face is seen.
+        const spans = new Map<string, { x: number; w: number; front: number; rotated: boolean }>();
+        layer.placements.forEach((p) => {
+          const key = `${Math.round(p.x)}|${Math.round(p.w)}`;
+          const cur = spans.get(key);
+          if (!cur || p.y + p.h > cur.front) spans.set(key, { x: p.x, w: p.w, front: p.y + p.h, rotated: p.rotated });
+        });
         const rot = layer.orientation === 'onSide';
         return (
           <g key={r.key}>
             {Array.from(spans.values()).map((s, si) => (
-              <rect
-                key={si}
-                x={s.x + fs * 0.08}
-                y={yTop + fs * 0.06}
-                width={s.w - fs * 0.16}
-                height={r.h - fs * 0.12}
-                rx={fs * 0.18}
-                fill={rot ? CARTON_SIDE_FILL : CARTON_FILL}
-                stroke={rot ? CARTON_SIDE_STROKE : CARTON_STROKE}
-                strokeWidth={fs * 0.07}
-              />
+              <g key={si}>
+                <rect
+                  x={s.x + fs * 0.08}
+                  y={yTop + fs * 0.06}
+                  width={s.w - fs * 0.16}
+                  height={r.h - fs * 0.12}
+                  rx={fs * 0.18}
+                  fill={rot ? CARTON_SIDE_FILL : CARTON_FILL}
+                  stroke={rot ? CARTON_SIDE_STROKE : CARTON_STROKE}
+                  strokeWidth={fs * 0.07}
+                />
+                {/* On its side with L across the view, a carton shows its
+                    closed flap face: the major-flap seam runs across it at
+                    mid-height. Upright cartons keep the seam on top, edge-on. */}
+                {rot && !s.rotated && (
+                  <line
+                    x1={s.x + fs * 0.08}
+                    y1={yTop + r.h / 2}
+                    x2={s.x + s.w - fs * 0.08}
+                    y2={yTop + r.h / 2}
+                    stroke={CARTON_SIDE_STROKE}
+                    strokeWidth={fs * 0.045}
+                    opacity={0.9}
+                  />
+                )}
+              </g>
             ))}
             {r.h > fs * 1.3 && (
               <text x={-fs * 0.35} y={yTop + r.h / 2 + fs * 0.32} fontSize={fs * 0.85} fill="var(--text-muted, #8888a4)" textAnchor="end" fontFamily="inherit">
