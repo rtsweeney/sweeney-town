@@ -7,19 +7,14 @@
 // a 90° turn within a layer shows in the direction of the major-flap seam
 // (or, for a carton on its side, of its flap faces), never in color.
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CartonSpec, MemberPack, PalletPlan, SolutionK } from './engine';
 
 // ── Shared helpers ────────────────────────────────────────────────────────────
 
-export function fmt(x: number, digits = 0): string {
-  return x.toLocaleString('en-US', { maximumFractionDigits: digits, minimumFractionDigits: 0 });
-}
+import { fmt, fmtDim, fmtLen } from './format';
 
-export function fmtDim(x: number, units: string): string {
-  const rounded = Math.round(x * 10) / 10;
-  return `${fmt(rounded, Math.abs(rounded % 1) > 1e-9 ? 1 : 0)}${units === 'in' ? '″' : ' mm'}`;
-}
+export { fmt, fmtDim };
 
 // ── Isometric packed-carton view ──────────────────────────────────────────────
 
@@ -194,7 +189,7 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
     <svg
       viewBox={`${minX - margin} ${minY - margin * 0.7} ${maxX - minX + margin * 2.6} ${maxY - minY + margin * 1.7}`}
       role="img"
-      aria-label={`Carton ${carton.label} packed with ${member.prism.name}: ${member.cols} across the major flaps × ${member.tiers} tiers × ${member.nPerStack} per stack, with the closed top drawn see-through to show the major-flap seam`}
+      aria-label={`Carton ${carton.label}, outside ${fmtLen(OL)} × ${fmtLen(OW)} × ${fmtLen(OD)} ${units === 'in' ? 'in' : 'mm'}, packed with ${member.prism.name}: ${member.cols} across the major flaps × ${member.tiers} tiers × ${member.nPerStack} per stack, with the closed top drawn see-through to show the major-flap seam`}
       style={{ width: '100%', height: 'auto', display: 'block' }}
     >
       {/* carton interior */}
@@ -231,10 +226,10 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
       {edge([0, 0, OD], [OL, 0, OD], 'e9')}
       {/* dimension labels */}
       <text x={labelL[0] - fs * 0.4} y={labelL[1] + fs * 1.5} fontSize={fs} fill="var(--text-muted, #8888a4)" textAnchor="middle" fontFamily="inherit">
-        L {fmtDim(OL, units)}
+        L {fmtLen(OL)}
       </text>
       <text x={labelW[0] + fs * 1.6} y={labelW[1] + fs * 1.35} fontSize={fs} fill="var(--text-muted, #8888a4)" textAnchor="middle" fontFamily="inherit">
-        W {fmtDim(OW, units)}
+        W {fmtLen(OW)}
       </text>
       <text
         x={labelD[0] + fs * 0.9}
@@ -245,7 +240,7 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
         fontFamily="inherit"
         transform={`rotate(-90 ${labelD[0] + fs * 0.9} ${labelD[1]})`}
       >
-        D {fmtDim(OD, units)}
+        D {fmtLen(OD)}
       </text>
     </svg>
   );
@@ -653,101 +648,156 @@ function niceTicks(lo: number, hi: number, count: number): number[] {
   return out;
 }
 
+export interface KChartPanel {
+  /** Names the panel's single series, so the panel needs no legend box. */
+  title: string;
+  value: (s: SolutionK) => number;
+  /** Axis tick text. */
+  tick: (v: number) => string;
+  /** The value with its unit, for the selected point's label and the tooltip. */
+  label: (v: number) => string;
+  /** What the value is, after the number in the tooltip ("board per year"). */
+  tipName: string;
+}
+
 export interface KChartProps {
   solutions: SolutionK[];
   goalK: number;
   selectedK: number;
   onSelect: (k: number) => void;
+  /** One small-multiple panel per measure, all sharing the carton-count axis. */
+  panels: KChartPanel[];
   /** Formats a pallets-per-year figure as an annual freight cost. */
   freightFor?: (pallets: number) => string;
 }
 
+const SERIES = '#6c5ce7';
+
 /**
- * Weighted units/pallet vs carton SKU count. Single series (site purple),
- * clickable markers select the K whose solution is shown below.
+ * The carton-count sweep as small multiples: one panel per measure, each on
+ * its own y-scale (two scales never share a plot), stacked on one x-axis
+ * with a shared crosshair, tooltip and selection. Each panel holds a single
+ * series in site purple, named by its title.
  */
-export function KChart({ solutions, goalK, selectedK, onSelect, freightFor }: KChartProps) {
+export function KChart({ solutions, goalK, selectedK, onSelect, panels, freightFor }: KChartProps) {
   const [hover, setHover] = useState<number | null>(null);
   const feasible = solutions.filter((s) => s.feasible);
+  // Draw at the width the chart is shown at (up to 640), so text keeps its
+  // real size on a phone instead of shrinking with a scaled-down drawing.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [boxW, setBoxW] = useState(640);
+  const hasData = feasible.length > 0;
+  useEffect(() => {
+    // Re-attaches when the chart first has data, since it renders nothing before.
+    const el = wrapRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(([entry]) => setBoxW(entry.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [hasData]);
 
-  const W = 640;
-  const H = 250;
-  const m = { l: 62, r: 20, t: 20, b: 42 };
-
-  const values = feasible.map((s) => s.weightedFpp);
-  const lo = Math.min(...values);
-  const hi = Math.max(...values);
-  const pad = Math.max((hi - lo) * 0.18, hi * 0.02, 1e-6);
-  const y0 = lo - pad;
-  const y1 = hi + pad;
-  const ticks = niceTicks(y0, y1, 5);
+  const W = Math.round(Math.min(640, Math.max(300, boxW)));
+  const m = W < 480 ? { l: 46, r: 12 } : { l: 62, r: 20 };
+  const titleH = 24;
+  const plotH = 116;
+  const gap = 18;
+  const axisH = 48;
+  const plotTop = (pi: number) => pi * (titleH + plotH + gap) + titleH;
+  const plotBottom = (pi: number) => plotTop(pi) + plotH;
+  const lastBottom = plotBottom(panels.length - 1);
+  const H = lastBottom + axisH;
 
   const xFor = (i: number) => m.l + ((W - m.l - m.r) * (feasible.length === 1 ? 0.5 : i / (feasible.length - 1)));
-  const yFor = (v: number) => H - m.b - ((H - m.b - m.t) * (v - y0)) / (y1 - y0);
-
-  const path = feasible.map((s, i) => `${i === 0 ? 'M' : 'L'}${xFor(i).toFixed(1)},${yFor(s.weightedFpp).toFixed(1)}`).join(' ');
+  const scales = panels.map((p) => {
+    const values = feasible.map(p.value);
+    const lo = Math.min(...values);
+    const hi = Math.max(...values);
+    const pad = Math.max((hi - lo) * 0.18, Math.abs(hi) * 0.02, 1e-6);
+    return { y0: lo - pad, y1: hi + pad, ticks: niceTicks(lo - pad, hi + pad, 4) };
+  });
+  const yFor = (pi: number, v: number) => plotBottom(pi) - (plotH * (v - scales[pi].y0)) / (scales[pi].y1 - scales[pi].y0);
+  const colW = (W - m.l - m.r) / Math.max(feasible.length, 1);
   const hovered = hover !== null ? feasible[hover] : null;
 
   if (feasible.length === 0) return null;
 
   return (
-    <div className="cpk-chartwrap" style={{ position: 'relative' }}>
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Usage-weighted units per pallet for each carton SKU count" style={{ width: '100%', height: 'auto', display: 'block' }}>
-        {/* gridlines + y ticks */}
-        {ticks.map((t) => (
-          <g key={t}>
-            <line x1={m.l} x2={W - m.r} y1={yFor(t)} y2={yFor(t)} stroke="var(--border-subtle, rgba(0,0,0,0.06))" strokeWidth={1} />
-            <text x={m.l - 8} y={yFor(t) + 3.5} textAnchor="end" fontSize={11} fill="var(--text-muted, #8888a4)" fontFamily="inherit" style={{ fontVariantNumeric: 'tabular-nums' }}>
-              {fmt(t, t < 10 ? 1 : 0)}
-            </text>
-          </g>
-        ))}
-        {/* x axis */}
-        <line x1={m.l} x2={W - m.r} y1={H - m.b} y2={H - m.b} stroke="var(--border, rgba(108,92,231,0.18))" strokeWidth={1} />
+    <div className="cpk-chartwrap" ref={wrapRef} style={{ position: 'relative' }}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        role="img"
+        aria-label={`${panels.map((p) => p.title).join(' and ')} for each carton SKU count`}
+        style={{ width: '100%', height: 'auto', display: 'block' }}
+      >
+        {panels.map((p, pi) => {
+          const path = feasible.map((s, i) => `${i === 0 ? 'M' : 'L'}${xFor(i).toFixed(1)},${yFor(pi, p.value(s)).toFixed(1)}`).join(' ');
+          return (
+            <g key={p.title}>
+              <text x={m.l} y={plotTop(pi) - 10} fontSize={11.5} fontWeight={600} fill="var(--text-secondary, #4a4a68)" fontFamily="inherit">
+                {p.title}
+              </text>
+              {/* gridlines + y ticks */}
+              {scales[pi].ticks.map((t) => (
+                <g key={t}>
+                  <line x1={m.l} x2={W - m.r} y1={yFor(pi, t)} y2={yFor(pi, t)} stroke="var(--border-subtle, rgba(0,0,0,0.06))" strokeWidth={1} />
+                  <text x={m.l - 8} y={yFor(pi, t) + 3.5} textAnchor="end" fontSize={11} fill="var(--text-muted, #8888a4)" fontFamily="inherit" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                    {p.tick(t)}
+                  </text>
+                </g>
+              ))}
+              <line x1={m.l} x2={W - m.r} y1={plotBottom(pi)} y2={plotBottom(pi)} stroke="var(--border, rgba(108,92,231,0.18))" strokeWidth={1} />
+              {/* series */}
+              <path d={path} fill="none" stroke={SERIES} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+              {feasible.map((s, i) => {
+                const sel = s.k === selectedK;
+                const y = yFor(pi, p.value(s));
+                return (
+                  <g key={s.k}>
+                    <circle cx={xFor(i)} cy={y} r={sel ? 6.5 : 4.5} fill={SERIES} stroke="var(--surface-raised, #ffffff)" strokeWidth={2} />
+                    {sel && (
+                      <text x={xFor(i)} y={y - 12} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--text-primary, #1a1a2e)" fontFamily="inherit" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                        {p.label(p.value(s))}
+                      </text>
+                    )}
+                  </g>
+                );
+              })}
+            </g>
+          );
+        })}
+        {/* shared x axis */}
         {feasible.map((s, i) => (
           <g key={s.k}>
-            <text x={xFor(i)} y={H - m.b + 16} textAnchor="middle" fontSize={11.5} fill={s.k === selectedK ? 'var(--text-primary, #1a1a2e)' : 'var(--text-muted, #8888a4)'} fontWeight={s.k === selectedK ? 700 : 400} fontFamily="inherit">
+            <text x={xFor(i)} y={lastBottom + 16} textAnchor="middle" fontSize={11.5} fill={s.k === selectedK ? 'var(--text-primary, #1a1a2e)' : 'var(--text-muted, #8888a4)'} fontWeight={s.k === selectedK ? 700 : 400} fontFamily="inherit">
               {s.k}
             </text>
             {s.k === goalK && (
-              <text x={xFor(i)} y={H - m.b + 29} textAnchor="middle" fontSize={9.5} fill="var(--accent-secondary, #00b894)" fontWeight={700} fontFamily="inherit" letterSpacing="0.06em">
+              <text x={xFor(i)} y={lastBottom + 29} textAnchor="middle" fontSize={9.5} fill="var(--accent-secondary, #00b894)" fontWeight={700} fontFamily="inherit" letterSpacing="0.06em">
                 GOAL
               </text>
             )}
           </g>
         ))}
-        <text x={(m.l + W - m.r) / 2} y={H - 3} textAnchor="middle" fontSize={11} fill="var(--text-muted, #8888a4)" fontFamily="inherit">
+        <text x={(m.l + W - m.r) / 2} y={H - 2} textAnchor="middle" fontSize={11} fill="var(--text-muted, #8888a4)" fontFamily="inherit">
           carton SKU count
         </text>
-        {/* series */}
-        <path d={path} fill="none" stroke="#6c5ce7" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
-        {feasible.map((s, i) => {
-          const sel = s.k === selectedK;
-          return (
-            <g key={s.k}>
-              <circle cx={xFor(i)} cy={yFor(s.weightedFpp)} r={sel ? 6.5 : 4.5} fill="#6c5ce7" stroke="var(--surface-raised, #ffffff)" strokeWidth={2} />
-              {sel && (
-                <text x={xFor(i)} y={yFor(s.weightedFpp) - 12} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--text-primary, #1a1a2e)" fontFamily="inherit" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                  {fmt(s.weightedFpp, 1)}
-                </text>
-              )}
-              {/* generous hit target */}
-              <rect
-                x={xFor(i) - (W - m.l - m.r) / Math.max(feasible.length, 1) / 2}
-                y={m.t}
-                width={(W - m.l - m.r) / Math.max(feasible.length, 1)}
-                height={H - m.t - m.b}
-                fill="transparent"
-                style={{ cursor: 'pointer' }}
-                onMouseEnter={() => setHover(i)}
-                onMouseLeave={() => setHover(null)}
-                onClick={() => onSelect(s.k)}
-              />
-            </g>
-          );
-        })}
-        {/* crosshair on hover */}
-        {hover !== null && <line x1={xFor(hover)} x2={xFor(hover)} y1={m.t} y2={H - m.b} stroke="var(--text-muted, #8888a4)" strokeWidth={1} opacity={0.4} pointerEvents="none" />}
+        {/* crosshair through every panel */}
+        {hover !== null && <line x1={xFor(hover)} x2={xFor(hover)} y1={plotTop(0)} y2={lastBottom} stroke="var(--text-muted, #8888a4)" strokeWidth={1} opacity={0.4} pointerEvents="none" />}
+        {/* generous hit targets: one column per carton count, spanning every panel */}
+        {feasible.map((s, i) => (
+          <rect
+            key={s.k}
+            x={xFor(i) - colW / 2}
+            y={plotTop(0) - titleH / 2}
+            width={colW}
+            height={lastBottom - plotTop(0) + titleH / 2}
+            fill="transparent"
+            style={{ cursor: 'pointer' }}
+            onMouseEnter={() => setHover(i)}
+            onMouseLeave={() => setHover(null)}
+            onClick={() => onSelect(s.k)}
+          />
+        ))}
       </svg>
       {hovered && hover !== null && (
         <div
@@ -758,7 +808,9 @@ export function KChart({ solutions, goalK, selectedK, onSelect, freightFor }: KC
           }}
         >
           <div className="cpk-tooltip-title">{hovered.k} carton SKU{hovered.k === 1 ? '' : 's'}</div>
-          <div>{fmt(hovered.weightedFpp, 1)} weighted units/pallet</div>
+          {panels.map((p) => (
+            <div key={p.title}>{p.label(p.value(hovered))} {p.tipName}</div>
+          ))}
           <div>{fmt(hovered.pallets, 1)} pallets per year</div>
           {freightFor && <div>{freightFor(hovered.pallets)} freight per year</div>}
           <div>{(hovered.weightedEff * 100).toFixed(1)}% of ideal</div>

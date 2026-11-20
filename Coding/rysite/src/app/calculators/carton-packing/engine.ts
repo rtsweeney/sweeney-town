@@ -25,6 +25,17 @@
 //    the packed row is wide, L is widened to W — dead space beside the column,
 //    contents still aligned — instead of rejecting the carton. Because L must
 //    reach W, the stack is held under L's cap as well as W's own.
+//  · Blank (RSC, FEFCO 0201) from the inside dims and the caliper t:
+//      panels  L + t, W + t, L + t, W + t, score to score
+//      flaps   (W + t) / 2 deep, every flap, so the major flaps meet mid-W
+//      depth   D + 2t between the flap scores
+//      blank   length = glue flap + 2(L + t) + 2(W + t)
+//              width  = (W + t) + D + 2t
+//    Its area is the full rectangular sheet — slots and trim are cut from it,
+//    so that is the board consumed. Board per year = blank area × cartons.
+//  · Board-saving tolerance: for each carton group the optimizer finds the
+//    best objective score, then takes the design with the least board among
+//    those within the tolerance of it. At 0 it only breaks ties.
 //  · Pallet: usable footprint = pallet + 2·overhang per dimension. Cartons may
 //    be placed upright (L×W footprint) and, when flutes are not required
 //    vertical, on their side with the L×D plane down (height = OW). 90°
@@ -112,6 +123,13 @@ export interface Settings {
   minUnitsPerCarton: number;
   /** Corrugated board caliper. */
   wall: number;
+  /** Width of the RSC manufacturer's joint (glue flap) on the blank. */
+  glueFlap: number;
+  /**
+   * Fraction (e.g. 0.02 = 2%) by which a carton group's objective score may
+   * fall short of its best to use less board. 0 only breaks ties.
+   */
+  boardTolerance: number;
   /** If true, cartons must sit upright on the pallet (flutes orthogonal to ground). */
   flutesVertical: boolean;
   /**
@@ -205,15 +223,37 @@ export interface PalletPlan {
   usable: { x: number; y: number };
 }
 
+/** Flat RSC blank, all lengths in the same unit as the carton dims. */
+export interface BlankSpec {
+  /** Score-to-score width of each L panel (L + t) and W panel (W + t). */
+  panelL: number;
+  panelW: number;
+  /** Depth of every flap, major and minor: (W + t) / 2. */
+  flap: number;
+  /** Score-to-score depth of the body between the flap scores: D + 2t. */
+  depth: number;
+  glueFlap: number;
+  /** Overall blank: length along the panels, width across the flaps. */
+  length: number;
+  width: number;
+  /** length × width, in unit². */
+  area: number;
+}
+
 export interface CartonSpec {
   /** Stable id within a solution ('A', 'B', …) assigned by usage share. */
   label: string;
   inner: Dims;
   outer: Dims;
+  blank: BlankSpec;
   cartonsPerPallet: number;
   members: MemberPack[];
   /** Sum of member usage weights. */
   usageShare: number;
+  /** Whole cartons a usage period consumes: Σ ceil(usage ÷ units per carton). */
+  cartonsPerYear: number;
+  /** cartonsPerYear × blank area, in unit². */
+  boardPerYear: number;
   pallet: PalletPlan;
 }
 
@@ -227,6 +267,9 @@ export interface SolutionK {
   pallets: number;
   /** Σ usage·(fpp/ideal) ÷ Σ usage. */
   weightedEff: number;
+  /** Σ carton cartonsPerYear and boardPerYear (unit²). */
+  cartonsPerYear: number;
+  boardPerYear: number;
 }
 
 export interface PrismIssue {
@@ -315,6 +358,17 @@ function paddings(s: Settings): Paddings {
 
 export function innerToOuter(inner: Dims, wall: number): Dims {
   return { l: inner.l + 2 * wall, w: inner.w + 2 * wall, d: inner.d + 4 * wall };
+}
+
+/** Flat RSC (FEFCO 0201) blank for the given inside dims; see the model notes. */
+export function blankFor(inner: Dims, wall: number, glueFlap: number): BlankSpec {
+  const panelL = inner.l + wall;
+  const panelW = inner.w + wall;
+  const flap = panelW / 2;
+  const depth = inner.d + 2 * wall;
+  const length = glueFlap + 2 * panelL + 2 * panelW;
+  const width = 2 * flap + depth;
+  return { panelL, panelW, flap, depth, glueFlap, length, width, area: length * width };
 }
 
 // ── Pallet tiling ─────────────────────────────────────────────────────────────
@@ -601,6 +655,8 @@ interface EvalContext {
   objective: ObjectiveId;
   /** Cap on the number of stack-width candidates explored per group. */
   candWCap: number;
+  /** Board-saving tolerance (fraction of the best score); see Settings. */
+  boardTol: number;
 }
 
 function groupScore(
@@ -724,7 +780,20 @@ export function bestCartonForGroup(idxs: number[], oriented: OrientedPrism[], ct
     }
   }
 
-  let best: GroupEval | null = null;
+  // Every feasible design is kept with its score and board, and the pick is
+  // made after the scan: the least board among designs scoring within the
+  // board-saving tolerance of the best.
+  interface Cand {
+    score: number;
+    board: number;
+    vec: Vec;
+    ns: number[];
+    cpp: number;
+    inner: Dims;
+    out: Dims;
+  }
+  const cands: Cand[] = [];
+  let topScore = -Infinity;
   for (const list of Array.from(vecs.values())) {
     for (const vec of list) {
       for (const W of Ws) {
@@ -769,24 +838,40 @@ export function bestCartonForGroup(idxs: number[], oriented: OrientedPrism[], ct
           scored.push({ weight: ms[i].op.weight, fpp: vec.mult[i] * ns[i] * cpp, idx: ms[i].idx });
         }
         const score = groupScore(ctx, scored);
-        if (!best || score > best.score + EPS) {
-          const members: GroupMember[] = ms.map((m, i) => ({
-            idx: m.idx,
-            op: m.op,
-            multiplier: vec.mult[i],
-            configId: vec.cfg[i].id,
-            cols: vec.cfg[i].cols,
-            tiers: vec.cfg[i].tiers,
-            n: ns[i],
-            units: vec.mult[i] * ns[i],
-            fpp: vec.mult[i] * ns[i] * cpp,
-          }));
-          best = { inner, outer: out, cpp, members, score };
-        }
+        // Board for one usage period. Cartons are fractional here so the
+        // search sees a smooth trade-off; reporting rounds up per SKU.
+        if (score > topScore) topScore = score;
+        // The best score only rises, so a design already below the tolerance
+        // floor can never be picked; skip it rather than keep it.
+        if (score < topScore - ctx.boardTol * Math.abs(topScore) - EPS) continue;
+        let cartons = 0;
+        for (let i = 0; i < ms.length; i++) cartons += ms[i].op.weight / (vec.mult[i] * ns[i]);
+        const board = blankFor(inner, settings.wall, settings.glueFlap).area * cartons;
+        cands.push({ score, board, vec, ns, cpp, inner, out });
       }
     }
   }
-  return best;
+  if (cands.length === 0) return null;
+
+  const floor = topScore - ctx.boardTol * Math.abs(topScore) - EPS;
+  let pick: Cand | null = null;
+  for (const c of cands) {
+    if (c.score < floor) continue;
+    if (!pick || c.board < pick.board - EPS || (c.board <= pick.board + EPS && c.score > pick.score + EPS)) pick = c;
+  }
+  const { vec, ns, cpp } = pick!;
+  const members: GroupMember[] = ms.map((m, i) => ({
+    idx: m.idx,
+    op: m.op,
+    multiplier: vec.mult[i],
+    configId: vec.cfg[i].id,
+    cols: vec.cfg[i].cols,
+    tiers: vec.cfg[i].tiers,
+    n: ns[i],
+    units: vec.mult[i] * ns[i],
+    fpp: vec.mult[i] * ns[i] * cpp,
+  }));
+  return { inner: pick!.inner, outer: pick!.out, cpp, members, score: pick!.score };
 }
 
 /**
@@ -1134,6 +1219,8 @@ export async function solve(
     ideals: new Array<number>(prisms.length).fill(1),
     objective: 'wfpp',
     candWCap: 160,
+    // The ideal baseline is the best possible, so it never trades for board.
+    boardTol: 0,
   };
 
   // Up-front feasibility screen.
@@ -1193,7 +1280,12 @@ export async function solve(
     return { solutions: [], issues, goalK: settings.goalSkus, elapsedMs: Date.now() - started, totalPrisms, packedPrisms: 0 };
   }
 
-  const ctx: EvalContext = { ...baseCtx, ideals: keptIdeals, objective: settings.objective };
+  const ctx: EvalContext = {
+    ...baseCtx,
+    ideals: keptIdeals,
+    objective: settings.objective,
+    boardTol: Math.max(0, settings.boardTolerance || 0),
+  };
   const state: SolverState = { ctx, oriented, memo: new Map(), misses: 0, token, onProgress, lastYield: Date.now() };
 
   const n = oriented.length;
@@ -1255,17 +1347,19 @@ export async function solve(
   return { solutions, issues, goalK: settings.goalSkus, elapsedMs: Date.now() - started, totalPrisms, packedPrisms: oriented.length };
 }
 
+function infeasible(k: number): SolutionK {
+  return { k, feasible: false, cartons: [], weightedFpp: 0, pallets: 0, weightedEff: 0, cartonsPerYear: 0, boardPerYear: 0 };
+}
+
 async function buildSolution(state: SolverState, k: number, groups: number[][] | null): Promise<SolutionK> {
-  if (!groups) {
-    return { k, feasible: false, cartons: [], weightedFpp: 0, pallets: 0, weightedEff: 0 };
-  }
+  if (!groups) return infeasible(k);
   const { settings } = state.ctx;
   const cartons: CartonSpec[] = [];
   for (const g of groups) {
     const ev = await evalGroup(state, g);
-    if (!ev) return { k, feasible: false, cartons: [], weightedFpp: 0, pallets: 0, weightedEff: 0 };
+    if (!ev) return infeasible(k);
     const plan = palletPlan(ev.outer, settings, state.ctx.tileCache);
-    if (!plan) return { k, feasible: false, cartons: [], weightedFpp: 0, pallets: 0, weightedEff: 0 };
+    if (!plan) return infeasible(k);
     const members: MemberPack[] = ev.members
       .map((m) => {
         const ideal = Math.max(state.ctx.ideals[m.idx], EPS);
@@ -1290,13 +1384,19 @@ async function buildSolution(state: SolverState, k: number, groups: number[][] |
         };
       })
       .sort((a, b) => b.prism.usage - a.prism.usage);
+    const blank = blankFor(ev.inner, settings.wall, settings.glueFlap);
+    // Each SKU ships whole cartons, so round up per SKU.
+    const cartonsPerYear = members.reduce((acc, m) => acc + Math.ceil(Math.max(m.prism.usage, 0) / Math.max(m.unitsPerCarton, 1)), 0);
     cartons.push({
       label: '',
       inner: ev.inner,
       outer: ev.outer,
+      blank,
       cartonsPerPallet: ev.cpp,
       members,
       usageShare: members.reduce((acc, m) => acc + m.prism.usage, 0),
+      cartonsPerYear,
+      boardPerYear: cartonsPerYear * blank.area,
       pallet: plan,
     });
   }
@@ -1325,5 +1425,7 @@ async function buildSolution(state: SolverState, k: number, groups: number[][] |
     weightedFpp: wSum > 0 ? wFpp / wSum : 0,
     pallets,
     weightedEff: wSum > 0 ? wEff / wSum : 0,
+    cartonsPerYear: cartons.reduce((acc, c) => acc + c.cartonsPerYear, 0),
+    boardPerYear: cartons.reduce((acc, c) => acc + c.boardPerYear, 0),
   };
 }
