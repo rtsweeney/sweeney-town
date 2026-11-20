@@ -123,11 +123,19 @@ export interface TitleInfo {
   date: string;
 }
 
+/** "C flute, 32 ECT", or "BC double-wall flute, 48 ECT". */
+function boardGrade(input: DrawingInput): string {
+  const f = input.board.flute.length > 1 ? `${input.board.flute} double-wall flute` : `${input.board.flute} flute`;
+  return `${f}, ${input.board.ect} ECT`;
+}
+
 export interface DrawingInput {
   solution: SolutionK;
   units: Units;
   wall: number;
   glueFlap: number;
+  /** Board grade printed on the sheets: ECT rating and flute profile. */
+  board: { ect: string; flute: string };
   /** Prism SKUs submitted (some may have been skipped as unpackable). */
   totalPrisms: number;
   objective: string;
@@ -366,7 +374,7 @@ function scheduleSheets(input: DrawingInput, pages: ScheduleRow[][], total: numb
     if (pi === 0) {
       // Notes, bottom left.
       const notes = [
-        `Style: regular slotted container (RSC, FEFCO 0201); board caliper t = ${d(input.wall)} ${units}.`,
+        `Style: regular slotted container (RSC, FEFCO 0201). Board: ${boardGrade(input)}; caliper t = ${d(input.wall)} ${units}.`,
         `Inside dimensions govern. Outside = inside + 2t on L and W, + 4t on D.`,
         `Blank = glue flap ${d(input.glueFlap)} + 2(L + t) + 2(W + t) long × (W + t) + D + 2t wide; every flap (W + t)/2 deep. Board per year = blank area × cartons per year.`,
         `One prism SKU per carton. Cartons per year round each SKU's annual usage up to whole cartons.`,
@@ -600,7 +608,8 @@ function cartonSheet(input: DrawingInput, carton: CartonSpec, sheetNo: number, t
     ['BLANK  L × W', `${d(bd.length)} × ${d(bd.width)} ${units}`],
     ['BLANK AREA', fmtArea(b.area, units, 2)],
     ['FLAPS', `${d(bd.flap)} ${units} deep, all four; major flaps meet at mid-W`],
-    ['BOARD CALIPER t / GLUE FLAP', `${d(input.wall)} ${units} / ${d(input.glueFlap)} ${units}`],
+    ['BOARD', `${boardGrade(input)}, caliper t = ${d(input.wall)} ${units}`],
+    ['GLUE FLAP', `${d(input.glueFlap)} ${units}`],
     ['CARTONS PER YEAR', fmt(carton.cartonsPerYear)],
     ['BOARD PER YEAR', fmtArea(carton.boardPerYear, units)],
     ['CARTONS PER PALLET', `${carton.cartonsPerPallet} — ${layerSummary(carton)}`],
