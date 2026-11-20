@@ -25,6 +25,7 @@ import {
   type SolutionK,
 } from './engine';
 import { AllowanceDiagram, ConfigGlyph, EffMeter, fmt, IsoCartonView, KChart, PalletSideView, PalletTopView } from './viz';
+import { STACK_SAFETY, stackCheck, weightText } from './strength';
 import { areaUnit, areaValue, blankDims, fmtArea, fmtFixed, fmtLen, specArea, specAreaValue, specDim, specDims3, type Paper, type Units } from './format';
 import { decodePayload, encodePayload, shareUrl, solutionFingerprint, tokenFromHash, type SharePayload } from './share';
 
@@ -97,6 +98,9 @@ interface FormState {
   drawingNo: string;
   revision: string;
   paper: Paper;
+  /** Board grade for the drawings: edge crush test rating and flute profile. */
+  ect: string;
+  flute: string;
 }
 
 const PALLET_PRESETS: { id: string; label: string; len: number; wid: number }[] = [
@@ -146,14 +150,29 @@ const DEFAULT_FORM: FormState = {
   drawingNo: '',
   revision: 'A',
   paper: 'letter',
+  ect: '32',
+  flute: 'C',
 };
+
+/** Common single- and double-wall ECT ratings (lbf/in). */
+const ECT_OPTIONS = ['23', '26', '29', '32', '40', '44', '48', '51', '55', '61', '71', '82'];
+/** Flute profiles with their usual board caliper, as a guide for the wall thickness. */
+const FLUTE_OPTIONS: { id: string; label: string }[] = [
+  { id: 'A', label: 'A (≈ 4.8 mm)' },
+  { id: 'B', label: 'B (≈ 3.2 mm)' },
+  { id: 'C', label: 'C (≈ 4 mm)' },
+  { id: 'E', label: 'E (≈ 1.6 mm)' },
+  { id: 'F', label: 'F (≈ 0.8 mm)' },
+  { id: 'BC', label: 'BC double wall (≈ 7 mm)' },
+  { id: 'EB', label: 'EB double wall (≈ 4.8 mm)' },
+];
 
 /**
  * Title-block fields: they label the drawings but never change the results,
  * so a scenario link leaves them out (the drawing number and revision travel
  * separately, to name the drawing on arrival).
  */
-const DRAWING_FIELDS = ['drawings', 'company', 'project', 'drawingNo', 'revision', 'paper'] as const;
+const DRAWING_FIELDS = ['drawings', 'company', 'project', 'drawingNo', 'revision', 'paper', 'ect', 'flute'] as const;
 
 /** Assumed pallet height: 5 in / 127 mm. Max stack height applies above the deck. */
 const PALLET_HEIGHT_MM = 127;
@@ -823,6 +842,7 @@ export default function CartonPackingPage() {
       ['PALLET PADS', st.pads.enabled ? `${d(st.pads.thickness)} ${du}, ${st.pads.mode === 'every' ? 'every layer' : 'top and bottom'}` : 'none'],
     ];
   }, [runCtx]);
+  const drawingBoard = useMemo(() => ({ ect: form.ect, flute: form.flute }), [form.ect, form.flute]);
   const drawingTitle = useMemo(
     () => ({ company: form.company.trim(), project: form.project.trim(), drawingNo: form.drawingNo.trim(), revision: form.revision.trim() }),
     [form.company, form.project, form.drawingNo, form.revision],
@@ -1006,12 +1026,6 @@ export default function CartonPackingPage() {
             </p>
             <div className="cpk-divider" />
             <NumField label={`Carton wall thickness (${u})`} value={form.wall} onChange={(v) => set('wall', v)} hint="Outside = inside + 2 walls on L and W, and + 4 walls on D (the flaps are two plies top and bottom)." />
-            <NumField
-              label={`Glue flap width (${u})`}
-              value={form.glueFlap}
-              onChange={(v) => set('glueFlap', v)}
-              hint="The RSC manufacturer's joint. With wall t, the blank is glue flap + 2(L + t) + 2(W + t) by (W + t) + D + 2t."
-            />
           </section>
 
           {/* ── Pallet ── */}
@@ -1146,6 +1160,92 @@ export default function CartonPackingPage() {
                     </select>
                   </label>
                 </div>
+                <div className="cpk-three">
+                  <NumField label={`Glue flap (${u})`} value={form.glueFlap} onChange={(v) => set('glueFlap', v)} />
+                  <label className="cpk-field">
+                    <span className="cpk-label">ECT rating</span>
+                    <select value={form.ect} onChange={(e) => set('ect', e.target.value)}>
+                      {ECT_OPTIONS.map((v) => (
+                        <option key={v} value={v}>{v} ECT</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="cpk-field">
+                    <span className="cpk-label">Flute</span>
+                    <select value={form.flute} onChange={(e) => set('flute', e.target.value)}>
+                      {FLUTE_OPTIONS.map((f) => (
+                        <option key={f.id} value={f.id}>{f.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <details className="cpk-objcompare cpk-ectguide">
+                  <summary>Which ECT rating?</summary>
+                  <p>
+                    ECT (edge crush test) is the board&apos;s crush strength in pounds per inch of edge, and it decides how much
+                    weight a carton holds when pallets are stacked. Pick the <b>lowest grade whose stacking limit covers your
+                    heaviest carton</b>: a higher grade only adds board weight and cost.
+                  </p>
+                  <ul>
+                    <li><b>23–29 ECT, single wall:</b> light, small cartons that are not stacked high.</li>
+                    <li><b>32 ECT, single wall (C flute):</b> the everyday shipping carton; rated for up to 40 lb (18 kg) per box in parcel shipping.</li>
+                    <li><b>40–44 ECT, single wall:</b> heavier contents without going to double wall; 44 ECT is rated to 65 lb (29 kg).</li>
+                    <li><b>48–61 ECT, double wall (BC, EB):</b> heavy cartons and tall or double-stacked pallets; 48 ECT is rated to 100 lb (45 kg).</li>
+                    <li><b>71–82 ECT, triple wall:</b> bulk boxes and very heavy loads.</li>
+                  </ul>
+                  {selectedSolution && runCtx ? (
+                    <>
+                      <p>
+                        Stacking limit at <b>{form.ect} ECT</b> and wall {runCtx.settings.wall} {runCtx.units}, for the selected{' '}
+                        <span className="cpk-nowrap">{selectedSolution.k}-SKU</span> solution. Change the rating above to compare.
+                      </p>
+                      <div className="cpk-tablewrap">
+                        <table className="cpk-table cpk-ecttable">
+                          <thead>
+                            <tr>
+                              <th>Carton</th>
+                              <th className="cpk-num">Crush<span className="cpk-hide-sm"> strength</span></th>
+                              <th className="cpk-num" title="Cartons resting on the bottom carton">
+                                <span className="cpk-hide-sm">Cartons on the bottom one</span><span className="cpk-show-sm-inline">Above</span>
+                              </th>
+                              <th className="cpk-num">Max<span className="cpk-hide-sm"> weight</span> per carton</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {selectedSolution.cartons.map((c) => {
+                              const sc = stackCheck(c, parseFloat(form.ect), runCtx.settings.wall, runCtx.units);
+                              return (
+                                <tr key={c.label}>
+                                  <td>{c.label}</td>
+                                  <td className="cpk-num">{weightText(sc.bctLbf, runCtx.units)}</td>
+                                  <td className="cpk-num">{sc.above}</td>
+                                  <td className="cpk-num"><b>{sc.maxGrossLbf === null ? 'not stacked' : weightText(sc.maxGrossLbf, runCtx.units)}</b></td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                      <p>
+                        If a carton, with its contents, weighs more than its limit, step up a grade. Moving to double wall?
+                        Raise the wall thickness in step 3 to the flute&apos;s caliper too, since thicker board is part of the
+                        strength. If pallets are stacked two high in storage, the bottom cartons also carry the upper pallet,
+                        so roughly halve these limits.
+                      </p>
+                      <p className="cpk-ectnote">
+                        Estimate only, from the McKee formula (strength ≈ 5.87 × ECT × √(wall × perimeter)) for upright cartons
+                        with flutes vertical, divided by a safety factor of {STACK_SAFETY} for humidity, months in storage,
+                        overhang and imperfect stacking. Confirm with your supplier&apos;s compression test.
+                      </p>
+                    </>
+                  ) : (
+                    <p>Run the optimization to see how much each carton can weigh at the chosen rating.</p>
+                  )}
+                </details>
+                <p className="cpk-hint" style={{ marginTop: '0.5rem' }}>
+                  The glue flap is the manufacturer&apos;s joint and counts toward blank size and board per year. ECT and flute
+                  are printed on the sheets; match the wall thickness in step 3 to the flute&apos;s caliper.
+                </p>
                 <p className="cpk-hint" style={{ marginBottom: 0 }}>
                   Carton A&apos;s sheet is <span className="cpk-nowrap">{form.drawingNo.trim() || 'the number'}-CTN-A</span>, carton B&apos;s{' '}
                   <span className="cpk-nowrap">-CTN-B</span>, and so on; the schedule takes the number itself.{' '}
@@ -1516,6 +1616,7 @@ export default function CartonPackingPage() {
                 units={runCtx.units}
                 wall={runCtx.settings.wall}
                 glueFlap={runCtx.settings.glueFlap}
+                board={drawingBoard}
                 totalPrisms={result.totalPrisms}
                 objective={OBJECTIVES.find((o) => o.id === runCtx.settings.objective)?.label ?? ''}
                 params={drawingParams}
@@ -1867,6 +1968,7 @@ const CPK_CSS = `
 .cpk-subsetting{margin:0.1rem 0 0.6rem 1.6rem;padding-left:0.8rem;border-left:2px solid var(--border)}
 .cpk-subsetting .cpk-field{margin-bottom:0.5rem}
 .cpk-subsetting input[type=number]{max-width:7rem}
+.cpk-subsetting .cpk-three input[type=number]{max-width:none}
 
 .cpk-linknote{background:rgba(108,92,231,0.06);border:1px solid rgba(108,92,231,0.3);border-radius:var(--radius-md);padding:0.65rem 0.9rem;font-size:0.82rem;color:var(--text-primary);line-height:1.5;margin-bottom:1.1rem}
 .cpk-linknote.warn{background:rgba(225,112,85,0.08);border-color:rgba(225,112,85,0.5)}
@@ -1876,6 +1978,11 @@ const CPK_CSS = `
 .cpk-objcompare summary{cursor:pointer;font-size:0.74rem;font-weight:700;color:var(--accent-secondary)}
 .cpk-objcompare ul{margin:0.5rem 0 0 1.1rem;display:flex;flex-direction:column;gap:0.5rem;font-size:0.76rem;color:var(--text-secondary);line-height:1.55}
 .cpk-objcompare b{color:var(--text-primary)}
+.cpk-ectguide{margin:-0.2rem 0 0.2rem}
+.cpk-ectguide p{font-size:0.76rem;color:var(--text-secondary);line-height:1.55;margin:0.5rem 0 0}
+.cpk-ectguide ul{gap:0.25rem}
+.cpk-ectguide .cpk-tablewrap{margin-top:0.4rem}
+.cpk-ectguide .cpk-ectnote{font-size:0.7rem;color:var(--text-muted)}
 
 .cpk-notes-summary{cursor:pointer;font-size:0.8rem;font-weight:700;color:var(--text-secondary)}
 .cpk-notes{margin:0.7rem 0 0 1.1rem;display:flex;flex-direction:column;gap:0.4rem;font-size:0.78rem;color:var(--text-secondary);line-height:1.55}

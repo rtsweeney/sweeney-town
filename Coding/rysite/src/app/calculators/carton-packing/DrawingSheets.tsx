@@ -98,6 +98,7 @@ export interface DrawingSheetsProps {
   units: Units;
   wall: number;
   glueFlap: number;
+  board: DrawingInput['board'];
   totalPrisms: number;
   objective: string;
   params: [string, string][];
@@ -166,13 +167,14 @@ export default function DrawingSheets(props: DrawingSheetsProps) {
       units: props.units,
       wall: props.wall,
       glueFlap: props.glueFlap,
+      board: props.board,
       totalPrisms: props.totalPrisms,
       objective: props.objective,
       params: props.params,
       title: { ...title, date },
       qr: links.qr,
     });
-  }, [links, solution, props.units, props.wall, props.glueFlap, props.totalPrisms, props.objective, props.params, title, date]);
+  }, [links, solution, props.units, props.wall, props.glueFlap, props.board, props.totalPrisms, props.objective, props.params, title, date]);
 
   const download = () => {
     if (!sheets) return;
