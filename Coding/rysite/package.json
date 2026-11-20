@@ -19,6 +19,7 @@
     "lucide-react": "^0.561.0",
     "next": "^15.1.0",
     "next-sanity": "^11.6.10",
+    "qrcode-generator": "2.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-leaflet": "^5.0.0",

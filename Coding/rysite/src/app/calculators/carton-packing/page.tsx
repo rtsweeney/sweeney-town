@@ -6,6 +6,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import Footer from '@/components/Footer';
 import {
   COLUMN_CONFIGS,
@@ -25,10 +26,20 @@ import {
   type SolutionK,
 } from './engine';
 import { AllowanceDiagram, ConfigGlyph, EffMeter, fmt, fmtDim, IsoCartonView, KChart, PalletSideView, PalletTopView } from './viz';
+import { areaUnit, areaValue, blankDims, fmtArea, specArea, specDim, specDims3, type Paper, type Units } from './format';
+import { decodePayload, encodePayload, shareUrl, solutionFingerprint, tokenFromHash, type SharePayload } from './share';
+
+// The drawing set (QR encoder + PDF writer) loads only once drawings are switched on.
+const DrawingSheets = dynamic(() => import('./DrawingSheets'), {
+  ssr: false,
+  loading: () => (
+    <section className="cpk-card">
+      <p className="cpk-hint" style={{ margin: 0 }}>Preparing drawings…</p>
+    </section>
+  ),
+});
 
 // ── Form state ────────────────────────────────────────────────────────────────
-
-type Units = 'mm' | 'in';
 
 interface PrismRow {
   id: number;
@@ -61,6 +72,10 @@ interface FormState {
   allowMinor: string;
   allowDepth: string;
   wall: string;
+  /** RSC manufacturer's joint width, for the blank size. */
+  glueFlap: string;
+  /** Board-saving tolerance, in percent of the best objective score. */
+  boardTolerance: string;
   flutesVertical: boolean;
   palletPreset: string;
   palletLen: string;
@@ -76,6 +91,13 @@ interface FormState {
   palletsPerTrailer: string;
   costPerTrailer: string;
   objective: ObjectiveId;
+  /** Carton drawings: off until asked for, plus the sheets' title-block fields. */
+  drawings: boolean;
+  company: string;
+  project: string;
+  drawingNo: string;
+  revision: string;
+  paper: Paper;
 }
 
 const PALLET_PRESETS: { id: string; label: string; len: number; wid: number }[] = [
@@ -102,6 +124,8 @@ const DEFAULT_FORM: FormState = {
   allowMinor: '10',
   allowDepth: '10',
   wall: '4',
+  glueFlap: '35',
+  boardTolerance: '0',
   flutesVertical: true,
   palletPreset: 'gma',
   palletLen: '1219',
@@ -117,7 +141,20 @@ const DEFAULT_FORM: FormState = {
   palletsPerTrailer: '26',
   costPerTrailer: '3000',
   objective: 'pallets',
+  drawings: false,
+  company: '',
+  project: '',
+  drawingNo: '',
+  revision: 'A',
+  paper: 'letter',
 };
+
+/**
+ * Title-block fields: they label the drawings but never change the results,
+ * so a scenario link leaves them out (the drawing number and revision travel
+ * separately, to name the drawing on arrival).
+ */
+const DRAWING_FIELDS = ['drawings', 'company', 'project', 'drawingNo', 'revision', 'paper'] as const;
 
 /** Assumed pallet height: 5 in / 127 mm. Max stack height applies above the deck. */
 const PALLET_HEIGHT_MM = 127;
@@ -187,6 +224,15 @@ function NumField({ label, value, onChange, suffix, step, hint }: NumFieldProps)
   );
 }
 
+function TextField({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
+  return (
+    <label className="cpk-field">
+      <span className="cpk-label">{label}</span>
+      <input type="text" value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
+    </label>
+  );
+}
+
 function Toggle({ label, checked, onChange, hint }: { label: string; checked: boolean; onChange: (v: boolean) => void; hint?: string }) {
   return (
     <label className="cpk-toggle">
@@ -209,6 +255,7 @@ const LENGTH_FIELDS = [
   'allowMinor',
   'allowDepth',
   'wall',
+  'glueFlap',
   'palletLen',
   'palletWid',
   'maxLoadHeight',
@@ -243,6 +290,46 @@ function restoreForm(saved: Partial<FormState> & { maxSide?: string }): FormStat
   return form;
 }
 
+/**
+ * Link payload for a scenario: the inputs that differ from what restoreForm
+ * would fill in, and the prism rows. Lengths are compared with the defaults
+ * converted into the scenario's units, mirroring restoreForm; `units` itself
+ * is compared with the mm default, so an inch scenario always says so.
+ */
+function scenarioPayload(form: FormState, rows: PrismRow[], dropNames = false): SharePayload {
+  const base: FormState = { ...DEFAULT_FORM };
+  if (form.units === 'in') for (const key of LENGTH_FIELDS) base[key] = convertValue(DEFAULT_FORM[key], 'in');
+  const skip: readonly string[] = DRAWING_FIELDS;
+  const f: Record<string, unknown> = {};
+  for (const key of Object.keys(form) as (keyof FormState)[]) {
+    if (skip.includes(key)) continue;
+    if (JSON.stringify(form[key]) !== JSON.stringify(base[key])) f[key] = form[key];
+  }
+  return { f, p: rows.map((r) => [dropNames ? '' : r.name, r.width, r.height, r.depth, r.usage, r.perCarton]) };
+}
+
+function rowsFromPayload(p: string[][]): PrismRow[] {
+  return p.map((a, i) => ({ id: i + 1, name: a[0] ?? '', width: a[1] ?? '', height: a[2] ?? '', depth: a[3] ?? '', usage: a[4] ?? '', perCarton: a[5] ?? '' }));
+}
+
+/** Where a scenario link should land, and what to tell the visitor. */
+interface LinkTarget {
+  k?: number;
+  carton?: string;
+  fp?: string;
+  drawing?: string;
+  rev?: string;
+}
+
+interface LinkNotice {
+  drawing?: string;
+  rev?: string;
+  carton?: string;
+  /** The optimizer now gives different cartons than when the link was made. */
+  changed?: boolean;
+  unreadable?: boolean;
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 interface RunContext {
@@ -250,6 +337,9 @@ interface RunContext {
   units: Units;
   palletsPerTrailer: number;
   costPerTrailer: number;
+  /** The inputs as they were when this run started, for scenario links. */
+  form: FormState;
+  prisms: PrismRow[];
 }
 
 /** Annual freight: pallets per year ÷ pallets per trailer × cost per trailer. */
@@ -260,33 +350,6 @@ function freightPerYear(pallets: number, ctx: RunContext): number {
 
 function money(v: number): string {
   return `$${Math.round(v).toLocaleString('en-US')}`;
-}
-
-/**
- * One dimension for the supplier spec sheet: fractional inches rounded to the
- * nearest 1/16 (reduced, e.g. 24 3/16), or plain millimeters.
- */
-function specDim(v: number, from: Units, to: Units): string {
-  const mm = from === 'mm' ? v : v * 25.4;
-  if (to === 'mm') return fmt(Math.round(mm * 10) / 10, 1);
-  const sixteenths = Math.round((mm / 25.4) * 16);
-  const whole = Math.floor(sixteenths / 16);
-  let num = sixteenths - whole * 16;
-  let den = 16;
-  while (num > 0 && num % 2 === 0) {
-    num /= 2;
-    den /= 2;
-  }
-  return num === 0 ? `${whole}` : `${whole} ${num}/${den}`;
-}
-
-function specDims3(d: { l: number; w: number; d: number }, from: Units, to: Units): string {
-  return `${specDim(d.l, from, to)} × ${specDim(d.w, from, to)} × ${specDim(d.d, from, to)} ${to === 'in' ? 'in' : 'mm'}`;
-}
-
-/** Cartons consumed per year: each SKU ships whole cartons, so ceil per SKU. */
-function annualCartons(c: CartonSpec): number {
-  return c.members.reduce((a, m) => a + Math.ceil(m.prism.usage / Math.max(m.unitsPerCarton, 1)), 0);
 }
 
 function annualPalletsFor(c: CartonSpec): number {
@@ -321,15 +384,20 @@ function buildSpecText(sol: SolutionK, units: Units, specUnits: Units, palletLen
     lines.push(`Carton ${c.label}`);
     lines.push(`  Inner: ${specDims3(c.inner, units, specUnits)}`);
     lines.push(`  Outer: ${specDims3(c.outer, units, specUnits)}`);
-    lines.push(`  Est. cartons per year: ${fmt(annualCartons(c))}`);
+    const bd = blankDims(c.blank, units, specUnits);
+    lines.push(
+      `  Blank (RSC): ${specDim(bd.length, specUnits, specUnits)} × ${specDim(bd.width, specUnits, specUnits)} ${specUnits} (${specArea(c.blank.area, units, specUnits, 2)} per carton)`,
+    );
+    lines.push(`  Est. cartons per year: ${fmt(c.cartonsPerYear)}`);
+    lines.push(`  Board per year: ${specArea(c.boardPerYear, units, specUnits)}`);
     lines.push(`  Cartons per pallet: ${fmt(c.cartonsPerPallet)}`);
     lines.push(`  Load bounding box: ${specDims3({ l: ext.x, w: ext.y, d: c.pallet.stackHeight }, units, specUnits)} (${specDim(c.pallet.stackHeight + palletH, units, specUnits)} ${specUnits} incl. pallet)`);
     lines.push(`  Overhang: length ${oh(ohL)}; width ${oh(ohW)}`);
     lines.push(`  Serves: ${c.members.map((m) => `${m.prism.name} (${fmt(m.prism.usage)}/yr${m.prism.perCarton != null ? `, set ${m.prism.perCarton}/carton` : ''})`).join(', ')}`);
     lines.push('');
   }
-  const totalCartons = sol.cartons.reduce((a, c) => a + annualCartons(c), 0);
-  lines.push(`Total cartons per year: ${fmt(totalCartons)}`);
+  lines.push(`Total cartons per year: ${fmt(sol.cartonsPerYear)}`);
+  lines.push(`Total board per year: ${specArea(sol.boardPerYear, units, specUnits)}`);
   lines.push(`Total pallets per year: ${fmt(sol.pallets, 1)}`);
   return lines.join('\n');
 }
@@ -347,11 +415,24 @@ export default function CartonPackingPage() {
   const [runCtx, setRunCtx] = useState<RunContext | null>(null);
   const [selectedK, setSelectedK] = useState(4);
   const [copied, setCopied] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   /** Supplier spec sheets default to fractional inches (nearest 1/16). */
   const [specUnits, setSpecUnits] = useState<Units>('in');
   const tokenRef = useRef<CancelToken>({ cancelled: false });
   const loadedRef = useRef(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  /** A scenario link to run once its inputs are in state. */
+  const [autoRun, setAutoRun] = useState<LinkTarget | null>(null);
+  const [linkNotice, setLinkNotice] = useState<LinkNotice | null>(null);
+  /** Element id to bring into view once results render. */
+  const [scrollTo, setScrollTo] = useState<string | null>(null);
+  /**
+   * While the page shows a scenario opened from a link, the visitor's own
+   * saved session is left alone; the first edit saves as usual and drops the
+   * hash, since the URL no longer describes what is on screen.
+   */
+  const fromLinkRef = useRef(false);
+  const linkSnapshotRef = useRef<string | null>(null);
 
   const set = useCallback(<K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -371,10 +452,43 @@ export default function CartonPackingPage() {
       /* ignore corrupt storage */
     }
     loadedRef.current = true;
+
+    // A scenario link (e.g. a drawing's QR code) replaces the inputs and runs
+    // them. The visitor's own title-block fields are kept.
+    const token = tokenFromHash(window.location.hash);
+    if (token) {
+      decodePayload(token).then((payload) => {
+        if (!payload) {
+          setLinkNotice({ unreadable: true });
+          return;
+        }
+        const rows = rowsFromPayload(payload.p);
+        fromLinkRef.current = true;
+        linkSnapshotRef.current = null;
+        setForm((current) => {
+          const keep = Object.fromEntries(DRAWING_FIELDS.map((k) => [k, current[k]])) as Pick<FormState, (typeof DRAWING_FIELDS)[number]>;
+          return { ...restoreForm(payload.f as Partial<FormState>), ...keep };
+        });
+        setPrisms(rows);
+        setNextId((n) => Math.max(n, rows.length + 1));
+        setAutoRun({ k: payload.k, carton: payload.c, fp: payload.fp, drawing: payload.d, rev: payload.r });
+      });
+    }
   }, []);
 
   useEffect(() => {
     if (!loadedRef.current) return;
+    if (fromLinkRef.current) {
+      const snapshot = JSON.stringify({ form, prisms });
+      if (linkSnapshotRef.current === null) {
+        linkSnapshotRef.current = snapshot;
+        return;
+      }
+      if (snapshot === linkSnapshotRef.current) return;
+      fromLinkRef.current = false;
+      linkSnapshotRef.current = null;
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
     const t = setTimeout(() => {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ form, prisms, nextId }));
@@ -482,6 +596,27 @@ export default function CartonPackingPage() {
     });
   };
 
+  // ── Scenario link ──
+  // The inputs on screen as a link. When they are the ones last run, the link
+  // also opens the selected solution and carries its fingerprint.
+  const handleCopyLink = async () => {
+    const payload = scenarioPayload(form, prisms);
+    const sameAsRun = runCtx && JSON.stringify(scenarioPayload(runCtx.form, runCtx.prisms)) === JSON.stringify(payload);
+    const sol = sameAsRun ? result?.solutions.find((x) => x.k === selectedK && x.feasible) : undefined;
+    if (sol) {
+      payload.k = sol.k;
+      payload.fp = solutionFingerprint(sol);
+    }
+    const url = shareUrl(window.location.origin + window.location.pathname, await encodePayload(payload));
+    try {
+      await navigator.clipboard.writeText(url);
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 1800);
+    } catch {
+      window.prompt('Copy this link to the scenario:', url);
+    }
+  };
+
   // ── Validation + run ──
   const parseAll = (): { prismSkus: PrismSku[]; settings: Settings; problems: string[] } => {
     const problems: string[] = [];
@@ -542,6 +677,8 @@ export default function CartonPackingPage() {
       allowMinor: num('Minor-flap allowance', form.allowMinor),
       allowDepth: num('Depth allowance', form.allowDepth),
       wall: num('Carton wall thickness', form.wall),
+      glueFlap: num('Glue flap width', form.glueFlap),
+      boardTolerance: num('Board-saving tolerance', form.boardTolerance) / 100,
       flutesVertical: form.flutesVertical,
       maxOnSideLayers: form.onSideUnlimited
         ? null
@@ -557,7 +694,8 @@ export default function CartonPackingPage() {
     return { prismSkus, settings, problems };
   };
 
-  const handleRun = async () => {
+  /** Runs the optimizer; `link` is set when the run opens a scenario link. */
+  const handleRun = async (link?: LinkTarget) => {
     const { prismSkus, settings, problems } = parseAll();
     if (problems.length > 0) {
       setErrors(problems);
@@ -566,6 +704,7 @@ export default function CartonPackingPage() {
     setErrors([]);
     setRunning(true);
     setResult(null);
+    setLinkNotice(null);
     setProgress({ label: 'Starting…', frac: 0 });
     tokenRef.current = { cancelled: false };
     try {
@@ -576,13 +715,27 @@ export default function CartonPackingPage() {
         units: form.units,
         palletsPerTrailer: Math.max(parseFloat(form.palletsPerTrailer) || 0, 0),
         costPerTrailer: Math.max(parseFloat(form.costPerTrailer) || 0, 0),
+        form,
+        prisms,
       });
       const feasibleKs = res.solutions.filter((s) => s.feasible).map((s) => s.k);
       if (feasibleKs.length > 0) {
-        const target = feasibleKs.includes(settings.goalSkus)
-          ? settings.goalSkus
-          : feasibleKs.reduce((best, k) => (Math.abs(k - settings.goalSkus) < Math.abs(best - settings.goalSkus) ? k : best), feasibleKs[0]);
+        // A link opens the solution it was drawn from; otherwise the goal, or the nearest feasible count.
+        const want = link?.k != null && feasibleKs.includes(link.k) ? link.k : settings.goalSkus;
+        const target = feasibleKs.includes(want)
+          ? want
+          : feasibleKs.reduce((best, k) => (Math.abs(k - want) < Math.abs(best - want) ? k : best), feasibleKs[0]);
         setSelectedK(target);
+      }
+      if (link) {
+        const sol = res.solutions.find((s) => s.k === link.k && s.feasible);
+        setLinkNotice({
+          drawing: link.drawing,
+          rev: link.rev,
+          carton: link.carton,
+          changed: !!link.fp && (!sol || solutionFingerprint(sol) !== link.fp),
+        });
+        setScrollTo(link.carton && sol?.cartons.some((c) => c.label === link.carton) ? `cpk-carton-${link.carton}` : 'cpk-results');
       }
     } catch (e) {
       if (!(e instanceof SolveCancelled)) {
@@ -592,6 +745,29 @@ export default function CartonPackingPage() {
       setRunning(false);
     }
   };
+
+  // A decoded link sets its inputs and autoRun in one batch; by this effect
+  // the inputs are in state, so the run sees them. The ref keeps the effect
+  // calling the current handleRun without re-running on every render.
+  const runRef = useRef(handleRun);
+  useEffect(() => {
+    runRef.current = handleRun;
+  });
+  useEffect(() => {
+    if (!autoRun) return;
+    setAutoRun(null);
+    void runRef.current(autoRun);
+  }, [autoRun]);
+  useEffect(() => {
+    if (!scrollTo || !result) return;
+    const el = document.getElementById(scrollTo);
+    if (!el) return;
+    // The site's sticky nav covers the top of the viewport; land just below it.
+    const nav = document.querySelector('nav');
+    const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+    window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - navBottom - 12, behavior: 'smooth' });
+    setScrollTo(null);
+  }, [scrollTo, result, selectedK]);
 
   const handleCancel = () => {
     tokenRef.current.cancelled = true;
@@ -625,6 +801,34 @@ export default function CartonPackingPage() {
       .slice(0, 3);
     return new Set(ranked.map((p) => p.id));
   }, [prisms]);
+  const drawingLinks = useMemo(
+    () => (runCtx ? { full: scenarioPayload(runCtx.form, runCtx.prisms), noNames: scenarioPayload(runCtx.form, runCtx.prisms, true) } : null),
+    [runCtx],
+  );
+  const drawingParams = useMemo((): [string, string][] => {
+    if (!runCtx) return [];
+    const st = runCtx.settings;
+    const du = runCtx.units;
+    const d = (v: number) => specDim(v, du, du);
+    const preset = PALLET_PRESETS.find((p) => p.id === runCtx.form.palletPreset && p.id !== 'custom');
+    return [
+      ['PALLET', `${preset ? `${preset.label.split(' ')[0]} · ` : ''}${d(st.palletLen)} × ${d(st.palletWid)} ${du}`],
+      ['MAX STACK', `${d(st.maxLoadHeight)} ${du}`],
+      ['OVERHANG L / W', `${d(st.overhangLen)} / ${d(st.overhangWid)} ${du}`],
+      ['MAX OUTSIDE L / W / D', `${d(st.maxMajor)} / ${d(st.maxMinor)} / ${d(st.maxDepth)} ${du}`],
+      ['ALLOWANCE L / W / D', `${d(st.allowMajor)} / ${d(st.allowMinor)} / ${d(st.allowDepth)} ${du}`],
+      ['MIN PER CARTON', String(st.minUnitsPerCarton)],
+      ['FLUTES', st.flutesVertical ? 'vertical (upright only)' : 'may lie on side'],
+      ['ORIENTATIONS', COLUMN_CONFIGS.filter((c) => st.allowedConfigs.includes(c.id)).map((c) => `${c.cols}×${c.tiers}`).join(', ')],
+      ['BOARD TOLERANCE', `${fmt(st.boardTolerance * 100, 1)}%`],
+      ['PALLET PADS', st.pads.enabled ? `${d(st.pads.thickness)} ${du}, ${st.pads.mode === 'every' ? 'every layer' : 'top and bottom'}` : 'none'],
+    ];
+  }, [runCtx]);
+  const drawingTitle = useMemo(
+    () => ({ company: form.company.trim(), project: form.project.trim(), drawingNo: form.drawingNo.trim(), revision: form.revision.trim() }),
+    [form.company, form.project, form.drawingNo, form.revision],
+  );
+
   const resultTop3 = useMemo(() => {
     const sol = result?.solutions.find((s) => s.feasible);
     if (!sol) return new Set<string>();
@@ -803,6 +1007,12 @@ export default function CartonPackingPage() {
             </p>
             <div className="cpk-divider" />
             <NumField label={`Carton wall thickness (${u})`} value={form.wall} onChange={(v) => set('wall', v)} hint="Outer = inner + 2× wall on L and W, + 4× wall on depth (two flap plies top and bottom)." />
+            <NumField
+              label={`Glue flap width (${u})`}
+              value={form.glueFlap}
+              onChange={(v) => set('glueFlap', v)}
+              hint="The RSC manufacturer's joint. With wall t, the blank is glue flap + 2(L + t) + 2(W + t) long by (W + t) + D + 2t wide, in inside dims."
+            />
           </section>
 
           {/* ── Pallet ── */}
@@ -905,6 +1115,50 @@ export default function CartonPackingPage() {
                 ))}
               </ul>
             </details>
+            <div style={{ marginTop: '0.8rem' }}>
+              <NumField
+                label="Board-saving tolerance"
+                value={form.boardTolerance}
+                onChange={(v) => set('boardTolerance', v)}
+                suffix="%"
+                hint="For each carton, the optimizer takes the design with the least corrugated board among those within this much of the best result for your objective. 0% gives up nothing — it only breaks ties toward less board."
+              />
+            </div>
+            <Toggle
+              label="Generate carton drawings (PDF)"
+              checked={form.drawings}
+              onChange={(v) => set('drawings', v)}
+              hint="Adds a drawing set at the bottom of the page — a carton schedule, then one sheet per carton with its flat blank — with a PDF download. Each sheet carries a QR code that reopens this scenario."
+            />
+            {form.drawings && (
+              <div className="cpk-subsetting">
+                <div className="cpk-two">
+                  <TextField label="Company name" value={form.company} onChange={(v) => set('company', v)} />
+                  <TextField label="Project" value={form.project} onChange={(v) => set('project', v)} />
+                </div>
+                <div className="cpk-three">
+                  <TextField label="Drawing number" value={form.drawingNo} onChange={(v) => set('drawingNo', v)} placeholder="e.g. PKG-1042" />
+                  <TextField label="Revision" value={form.revision} onChange={(v) => set('revision', v)} />
+                  <label className="cpk-field">
+                    <span className="cpk-label">Paper</span>
+                    <select value={form.paper} onChange={(e) => set('paper', e.target.value as Paper)}>
+                      <option value="letter">Letter, landscape</option>
+                      <option value="a4">A4, landscape</option>
+                    </select>
+                  </label>
+                </div>
+                <p className="cpk-hint" style={{ marginBottom: 0 }}>
+                  The schedule sheet carries the drawing number; carton A&apos;s sheet is{' '}
+                  <span style={{ whiteSpace: 'nowrap' }}>{form.drawingNo.trim() || 'the number'}-CTN-A</span>, carton B&apos;s{' '}
+                  <span style={{ whiteSpace: 'nowrap' }}>-CTN-B</span>, and so on.{' '}
+                  {result && result.solutions.some((x) => x.feasible) ? (
+                    <a href="#cpk-drawings" style={{ color: 'var(--accent-secondary)' }}>Jump to the drawings ↓</a>
+                  ) : (
+                    'They appear below the results once you run the optimization.'
+                  )}
+                </p>
+              </div>
+            )}
             <p className="cpk-hint">
               No SKU mixing: a carton is always packed with a single prism SKU, and each prism SKU is assigned to exactly
               one carton SKU. Cartons may be turned 90° on the pallet, and orientations may be mixed.
@@ -918,12 +1172,15 @@ export default function CartonPackingPage() {
             )}
             <div className="cpk-btnrow" style={{ marginTop: '0.75rem' }}>
               {!running ? (
-                <button type="button" className="primary cpk-start" onClick={handleRun}>Start optimization</button>
+                <button type="button" className="primary cpk-start" onClick={() => handleRun()}>Start optimization</button>
               ) : (
                 <button type="button" onClick={handleCancel}>Cancel</button>
               )}
               <button type="button" onClick={handleReset}>Reset defaults</button>
               <button type="button" onClick={handleExport}>Export scenario</button>
+              <button type="button" onClick={handleCopyLink} title="A link that reopens these inputs and runs them">
+                {linkCopied ? '✓ Link copied' : 'Copy scenario link'}
+              </button>
               <button type="button" onClick={() => fileRef.current?.click()}>Import scenario</button>
               <input
                 ref={fileRef}
@@ -947,6 +1204,21 @@ export default function CartonPackingPage() {
         </div>
 
         {/* ── Results ── */}
+        {linkNotice && (
+          <div className={`cpk-linknote${linkNotice.changed || linkNotice.unreadable ? ' warn' : ''}`} role="status">
+            {linkNotice.unreadable ? (
+              <>⚠ This scenario link could not be read — it may have been cut short. Your own inputs are unchanged.</>
+            ) : (
+              <>
+                Opened from {linkNotice.drawing ? <>drawing <b>{linkNotice.drawing}</b></> : 'a scenario link'}
+                {linkNotice.rev ? <> · rev <b>{linkNotice.rev}</b></> : null} — these are the cartons, prism SKUs and parameters it
+                was made from.
+                {linkNotice.changed &&
+                  ' ⚠ The optimizer now gives different cartons for these inputs than when the link was made, probably because the calculator was updated since. Check the results against the drawing.'}
+              </>
+            )}
+          </div>
+        )}
         {result && result.issues.length > 0 && (
           <section className="cpk-card cpk-issues">
             <div className="cpk-cardhead">
@@ -965,7 +1237,7 @@ export default function CartonPackingPage() {
         )}
 
         {result && runCtx && result.solutions.length > 0 && (
-          <div className="cpk-results">
+          <div className="cpk-results" id="cpk-results">
             {/* summary tiles */}
             {selectedSolution && (
               <section className="cpk-card">
@@ -989,6 +1261,20 @@ export default function CartonPackingPage() {
                     <div className="cpk-tile-value">{money(freightPerYear(selectedSolution.pallets, runCtx))}</div>
                     <div className="cpk-tile-sub">
                       {fmt(Math.ceil(selectedSolution.pallets / Math.max(runCtx.palletsPerTrailer, 1)))} trailers at {money(runCtx.costPerTrailer)}
+                    </div>
+                  </div>
+                  <div className="cpk-tile">
+                    <div className="cpk-tile-label">Board per year</div>
+                    <div className="cpk-tile-value">{fmtArea(selectedSolution.boardPerYear, runCtx.units)}</div>
+                    <div className="cpk-tile-sub">
+                      {fmt(selectedSolution.cartonsPerYear)} carton blanks
+                      {goalSolution && goalSolution.boardPerYear > 0 && selectedSolution.k !== goalSolution.k && (
+                        <>
+                          {' · '}
+                          {selectedSolution.boardPerYear <= goalSolution.boardPerYear ? '' : '+'}
+                          {fmt(((selectedSolution.boardPerYear - goalSolution.boardPerYear) / goalSolution.boardPerYear) * 100, 1)}% vs. goal
+                        </>
+                      )}
                     </div>
                   </div>
                   <div className="cpk-tile">
@@ -1018,8 +1304,9 @@ export default function CartonPackingPage() {
             <section className="cpk-card">
               <div className="cpk-cardhead"><h2>Add or remove carton SKUs?</h2></div>
               <p className="cpk-hint">
-                Usage-weighted units per pallet for each carton SKU count. Click a point to inspect that solution.
-                {runCtx.settings.objective !== 'wfpp' && ' Cartons were optimized for your selected objective; this chart reports the weighted units/pallet each solution achieves.'}
+                Usage-weighted units per pallet (top) and the corrugated board a year of cartons uses (bottom), for each
+                carton SKU count — each on its own scale. Click a point to inspect that solution.
+                {runCtx.settings.objective !== 'wfpp' && ' Cartons were optimized for your selected objective; the chart reports what each solution achieves.'}
               </p>
               <KChart
                 solutions={result.solutions}
@@ -1027,6 +1314,22 @@ export default function CartonPackingPage() {
                 selectedK={selectedK}
                 onSelect={setSelectedK}
                 freightFor={(pallets) => money(freightPerYear(pallets, runCtx))}
+                panels={[
+                  {
+                    title: 'Weighted units per pallet',
+                    value: (s) => s.weightedFpp,
+                    tick: (v) => fmt(v, v < 10 ? 1 : 0),
+                    label: (v) => fmt(v, 1),
+                    tipName: 'weighted units/pallet',
+                  },
+                  {
+                    title: `Board per year (${areaUnit(runCtx.units)})`,
+                    value: (s) => areaValue(s.boardPerYear, runCtx.units),
+                    tick: (v) => fmt(v, v < 10 ? 1 : 0),
+                    label: (v) => `${fmt(v, 0)} ${areaUnit(runCtx.units)}`,
+                    tipName: 'board per year',
+                  },
+                ]}
               />
               <div className="cpk-tablewrap" style={{ marginTop: '0.9rem' }}>
                 <table className="cpk-table cpk-sweeptable">
@@ -1037,6 +1340,7 @@ export default function CartonPackingPage() {
                       <th className="cpk-num">vs. goal</th>
                       <th className="cpk-num">Pallets/year</th>
                       <th className="cpk-num">Freight/year</th>
+                      <th className="cpk-num">Board/year</th>
                       <th className="cpk-num">Weighted efficiency</th>
                     </tr>
                   </thead>
@@ -1059,10 +1363,11 @@ export default function CartonPackingPage() {
                             </td>
                             <td className="cpk-num">{fmt(s.pallets, 1)}</td>
                             <td className="cpk-num">{money(freightPerYear(s.pallets, runCtx))}</td>
+                            <td className="cpk-num">{fmtArea(s.boardPerYear, runCtx.units)}</td>
                             <td className="cpk-num">{(s.weightedEff * 100).toFixed(1)}%</td>
                           </>
                         ) : (
-                          <td colSpan={5} style={{ color: 'var(--text-muted)' }}>no feasible grouping found</td>
+                          <td colSpan={6} style={{ color: 'var(--text-muted)' }}>no feasible grouping found</td>
                         )}
                       </tr>
                     ))}
@@ -1118,9 +1423,11 @@ export default function CartonPackingPage() {
                         <th>Carton</th>
                         <th>Inner L × W × D</th>
                         <th>Outer L × W × D</th>
+                        <th>Blank L × W</th>
                         <th className="cpk-num">Prism SKUs</th>
                         <th className="cpk-num">Cartons/pallet</th>
                         <th className="cpk-num">Cartons/year</th>
+                        <th className="cpk-num">Board/year</th>
                         <th className="cpk-num">Pallets/year</th>
                       </tr>
                     </thead>
@@ -1130,15 +1437,23 @@ export default function CartonPackingPage() {
                           <td><b>Carton {c.label}</b></td>
                           <td>{specDims3(c.inner, runCtx.units, specUnits)}</td>
                           <td>{specDims3(c.outer, runCtx.units, specUnits)}</td>
+                          <td>
+                            {(() => {
+                              const bd = blankDims(c.blank, runCtx.units, specUnits);
+                              return `${specDim(bd.length, specUnits, specUnits)} × ${specDim(bd.width, specUnits, specUnits)} ${specUnits}`;
+                            })()}
+                          </td>
                           <td className="cpk-num">{c.members.length}</td>
                           <td className="cpk-num">{fmt(c.cartonsPerPallet)}</td>
-                          <td className="cpk-num">{fmt(annualCartons(c))}</td>
+                          <td className="cpk-num">{fmt(c.cartonsPerYear)}</td>
+                          <td className="cpk-num">{specArea(c.boardPerYear, runCtx.units, specUnits)}</td>
                           <td className="cpk-num">{fmt(annualPalletsFor(c), 1)}</td>
                         </tr>
                       ))}
                       <tr className="cpk-totalrow">
-                        <td colSpan={5}>Total</td>
-                        <td className="cpk-num">{fmt(selectedSolution.cartons.reduce((a, c) => a + annualCartons(c), 0))}</td>
+                        <td colSpan={6}>Total</td>
+                        <td className="cpk-num">{fmt(selectedSolution.cartonsPerYear)}</td>
+                        <td className="cpk-num">{specArea(selectedSolution.boardPerYear, runCtx.units, specUnits)}</td>
                         <td className="cpk-num">{fmt(selectedSolution.pallets, 1)}</td>
                       </tr>
                     </tbody>
@@ -1146,14 +1461,21 @@ export default function CartonPackingPage() {
                 </div>
                 <p className="cpk-hint" style={{ marginTop: '0.5rem', marginBottom: 0 }}>
                   Cartons/year sums each assigned SKU&apos;s annual usage ÷ units per carton, rounded up per SKU (no SKU
-                  mixing inside a carton).
+                  mixing inside a carton). Board/year is cartons/year × the flat RSC blank area.
                 </p>
               </section>
             )}
 
             {/* carton cards */}
             {selectedSolution?.cartons.map((carton) => (
-              <CartonCard key={carton.label} carton={carton} solution={selectedSolution} ctx={runCtx} top3={resultTop3} />
+              <CartonCard
+                key={carton.label}
+                carton={carton}
+                solution={selectedSolution}
+                ctx={runCtx}
+                top3={resultTop3}
+                linkNotice={linkNotice && !linkNotice.unreadable && linkNotice.carton === carton.label ? linkNotice : null}
+              />
             ))}
 
             {/* modeling notes */}
@@ -1168,6 +1490,10 @@ export default function CartonPackingPage() {
                   <li>Each carton is packed with one SKU at a time; each prism SKU is assigned to exactly one carton SKU.</li>
                   <li>Every SKU without a set per-carton count must reach the minimum prisms per carton; a set count overrides the minimum for that SKU and must split evenly across an enabled packing orientation (columns × tiers must divide it).</li>
                   <li>When orientations mix on a pallet, upright layers always stack at the bottom and on-side layers on top; layers are numbered from the deck up, and the number of on-side layers is capped by the max-layers-on-their-side setting (or uncapped when the whole stack may lie on its side).</li>
+                  <li>Blank size is the flat RSC (FEFCO 0201) sheet, from the inside dims L × W × D and the wall t: four panels L + t, W + t, L + t, W + t score to score plus the glue flap; every flap (W + t) / 2 deep so the major flaps meet in the middle; depth D + 2t between the flap scores. Blank area is the full rectangular sheet, since slots and trim are cut from it, and board per year is that area × cartons per year.</li>
+                  <li>The board-saving tolerance works per carton: the optimizer finds the best score for your objective, then takes the design with the least board among those within the tolerance of it. At 0% it only breaks ties, so the objective never gets worse.</li>
+                  <li>Carton drawings are made from the selected solution: a carton schedule of inside dimensions and the prism SKUs in each carton, then one sheet per carton with its packed view, flat RSC blank (cuts solid, scores dashed, at a standard scale on A4 or Letter printed at 100%) and data. Blank dimensions are score to score, each rounded to 1/16 in or 0.1 mm, and every overall is the sum of its rounded parts so the chains add up.</li>
+                  <li>Scenario links — Copy scenario link, and each drawing&apos;s QR code — carry the inputs and prism list after the # in the URL, which browsers never send to a server, so the page can reopen and rerun the scenario with no database. Company and project names are left out. The optimizer is deterministic, so a link reopens the same cartons; a fingerprint flags it if a later version of the calculator gives different ones. Very long prism lists drop their names from QR links to fit, and past about 100 SKUs a sheet asks for Export scenario instead.</li>
                   <li>The packed-carton view draws the closed top see-through, so the prisms stay visible, with the major-flap seam running the full length L down the middle of W.</li>
                   <li>In the pallet views a carton&apos;s colour shows only its orientation — upright layers in purple, on-side layers in teal. An upright carton shows its major-flap seam: the major flaps close second, over the minor flaps, and meet down the middle of W, so the seam runs the full length L. A carton on its side has its flap faces standing vertical along its two L edges, drawn heavier in the top view, and its seam shows in the stack elevation on the flap faces turned toward you. A 90° turn within a layer reads from these marks, so colour never means two things at once.</li>
                   <li>Pallet patterns mix 90° rotations using a block-pattern search (up to three guillotine splits). Fully interlocked pinwheel patterns are not searched, so a rare layout may fit one more carton than reported.</li>
@@ -1180,6 +1506,23 @@ export default function CartonPackingPage() {
                 </ul>
               </details>
             </section>
+
+            {/* carton drawings, last on the page */}
+            {form.drawings && selectedSolution && drawingLinks && (
+              <DrawingSheets
+                solution={selectedSolution}
+                units={runCtx.units}
+                wall={runCtx.settings.wall}
+                glueFlap={runCtx.settings.glueFlap}
+                totalPrisms={result.totalPrisms}
+                objective={OBJECTIVES.find((o) => o.id === runCtx.settings.objective)?.label ?? ''}
+                params={drawingParams}
+                title={drawingTitle}
+                paper={form.paper}
+                payload={drawingLinks.full}
+                payloadNoNames={drawingLinks.noNames}
+              />
+            )}
           </div>
         )}
       </div>
@@ -1196,7 +1539,20 @@ function configPhrase(m: MemberPack): string {
   return `${m.cols} across × ${m.tiers} tier${m.tiers > 1 ? 's' : ''} × ${m.nPerStack} deep`;
 }
 
-function CartonCard({ carton, solution, ctx, top3 }: { carton: CartonSpec; solution: SolutionK; ctx: RunContext; top3: Set<string> }) {
+function CartonCard({
+  carton,
+  solution,
+  ctx,
+  top3,
+  linkNotice,
+}: {
+  carton: CartonSpec;
+  solution: SolutionK;
+  ctx: RunContext;
+  top3: Set<string>;
+  /** Set on the carton a scenario link opened at. */
+  linkNotice: LinkNotice | null;
+}) {
   const [memberIdx, setMemberIdx] = useState(0);
   const u = ctx.units;
   const s = ctx.settings;
@@ -1240,13 +1596,20 @@ function CartonCard({ carton, solution, ctx, top3 }: { carton: CartonSpec; solut
   };
 
   return (
-    <section className="cpk-card">
+    <section className={`cpk-card${linkNotice ? ' cpk-focus' : ''}`} id={`cpk-carton-${carton.label}`}>
+      {linkNotice && (
+        <div className="cpk-focusnote">
+          {linkNotice.drawing ? <>From drawing <b>{linkNotice.drawing}</b>{linkNotice.rev ? <> · rev <b>{linkNotice.rev}</b></> : null}</> : 'Opened from a scenario link'}
+          {linkNotice.changed && ' · ⚠ results differ from the drawing — see the note above'}
+        </div>
+      )}
       <div className="cpk-cardhead">
         <h2>
           Carton {carton.label}
           <span className="cpk-carton-dims">
             outer {fmtDim(carton.outer.l, u)} × {fmtDim(carton.outer.w, u)} × {fmtDim(carton.outer.d, u)}
             {' · '}inner {fmtDim(carton.inner.l, u)} × {fmtDim(carton.inner.w, u)} × {fmtDim(carton.inner.d, u)}
+            {' · '}blank {fmtDim(carton.blank.length, u)} × {fmtDim(carton.blank.width, u)}
           </span>
         </h2>
         <span className="cpk-elapsed">
@@ -1382,6 +1745,15 @@ const CPK_CSS = `
 .cpk-suffix{font-size:0.75rem;color:var(--text-muted);font-weight:600}
 .cpk-field .cpk-hint{display:block;margin:0.25rem 0 0;font-size:0.7rem}
 .cpk-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.6rem}
+.cpk-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.6rem}
+@media(max-width:560px){.cpk-two{grid-template-columns:1fr}}
+#cpk-drawings{scroll-margin-top:6.5rem}
+.cpk-sheets{display:flex;flex-direction:column;gap:1.1rem}
+.cpk-sheet{margin:0;border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;background:#fff;box-shadow:0 2px 14px rgba(0,0,0,0.06)}
+.cpk-sheet figcaption{font-size:0.74rem;color:var(--text-secondary);padding:0.45rem 0.75rem;border-top:1px solid var(--border-subtle);background:var(--surface)}
+.cpk-root a.cpk-linkbtn{font-size:0.78rem;font-weight:600;color:var(--accent-secondary);text-decoration:none;padding:0.48rem 0.4rem}
+.cpk-root a.cpk-linkbtn:hover{text-decoration:underline}
+.cpk-root button:disabled{opacity:0.5;cursor:default}
 .cpk-maprow{display:grid;grid-template-columns:minmax(0,1fr) 8.75rem;gap:0.6rem;align-items:end}
 @media(max-width:560px){.cpk-maprow{grid-template-columns:minmax(10rem,1fr) minmax(0,6rem)}}
 @media(max-width:560px){.cpk-three{grid-template-columns:1fr}}
@@ -1480,6 +1852,10 @@ const CPK_CSS = `
 .cpk-subsetting .cpk-field{margin-bottom:0.5rem}
 .cpk-subsetting input[type=number]{max-width:7rem}
 
+.cpk-linknote{background:rgba(108,92,231,0.06);border:1px solid rgba(108,92,231,0.3);border-radius:var(--radius-md);padding:0.65rem 0.9rem;font-size:0.82rem;color:var(--text-primary);line-height:1.5;margin-bottom:1.1rem}
+.cpk-linknote.warn{background:rgba(225,112,85,0.08);border-color:rgba(225,112,85,0.5)}
+.cpk-focus{border-color:rgba(108,92,231,0.55);box-shadow:0 0 0 3px rgba(108,92,231,0.12)}
+.cpk-focusnote{font-size:0.74rem;font-weight:600;color:var(--accent-primary);margin-bottom:0.45rem}
 .cpk-objcompare{margin-top:0.4rem}
 .cpk-objcompare summary{cursor:pointer;font-size:0.74rem;font-weight:700;color:var(--accent-secondary)}
 .cpk-objcompare ul{margin:0.5rem 0 0 1.1rem;display:flex;flex-direction:column;gap:0.5rem;font-size:0.76rem;color:var(--text-secondary);line-height:1.55}
