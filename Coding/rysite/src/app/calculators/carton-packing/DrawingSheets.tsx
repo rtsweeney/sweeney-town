@@ -202,19 +202,21 @@ export default function DrawingSheets(props: DrawingSheetsProps) {
         </div>
       </div>
       <p className="cpk-hint">
-        The selected {solution.k}-SKU solution as a drawing set: a carton schedule of inside dimensions and the prism
-        SKUs each carton holds, then one sheet per carton with its packed view, flat RSC blank and data. Each sheet&apos;s
-        QR code opens this scenario here — inputs, SKUs and 3D views — at that carton.
-        {links?.namesDropped && ' The prism list is long, so the QR links leave out the SKU names (the page names them by size).'}
-        {links?.tooLong && ' The prism list is too long for a printable QR code, so some sheets say to use Export scenario instead.'}
+        A carton schedule, then one sheet per carton, for the selected <span className="cpk-nowrap">{solution.k}-SKU</span>{' '}
+        solution. Each QR code reopens this scenario at its carton.
+        {links?.namesDropped && ' The prism list is long, so the QR links leave out SKU names; the page names them by size.'}
+        {links?.tooLong && ' The prism list is too long for a printable QR code, so some sheets say to use Export scenario.'}
       </p>
+      <p className="cpk-hint cpk-show-sm">These are previews: download the PDF to read the sheets on a phone.</p>
       {sheets ? (
         <div className="cpk-sheets">
           {sheets.map((s, i) => (
             <figure key={i} className="cpk-sheet">
               <SheetSvg sheet={s} />
               <figcaption>
-                <b>{s.number}</b> · {s.title}
+                {/* A carton sheet's number already names its carton (…-CTN-A). */}
+                <b>{s.number === '—' ? '' : s.number}</b>
+                {s.carton ? '' : `${s.number === '—' ? '' : ' · '}carton schedule`}
               </figcaption>
             </figure>
           ))}

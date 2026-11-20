@@ -7,12 +7,12 @@
 // a 90° turn within a layer shows in the direction of the major-flap seam
 // (or, for a carton on its side, of its flap faces), never in color.
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CartonSpec, MemberPack, PalletPlan, SolutionK } from './engine';
 
 // ── Shared helpers ────────────────────────────────────────────────────────────
 
-import { fmt, fmtDim } from './format';
+import { fmt, fmtDim, fmtLen } from './format';
 
 export { fmt, fmtDim };
 
@@ -189,7 +189,7 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
     <svg
       viewBox={`${minX - margin} ${minY - margin * 0.7} ${maxX - minX + margin * 2.6} ${maxY - minY + margin * 1.7}`}
       role="img"
-      aria-label={`Carton ${carton.label} packed with ${member.prism.name}: ${member.cols} across the major flaps × ${member.tiers} tiers × ${member.nPerStack} per stack, with the closed top drawn see-through to show the major-flap seam`}
+      aria-label={`Carton ${carton.label}, outside ${fmtLen(OL)} × ${fmtLen(OW)} × ${fmtLen(OD)} ${units === 'in' ? 'in' : 'mm'}, packed with ${member.prism.name}: ${member.cols} across the major flaps × ${member.tiers} tiers × ${member.nPerStack} per stack, with the closed top drawn see-through to show the major-flap seam`}
       style={{ width: '100%', height: 'auto', display: 'block' }}
     >
       {/* carton interior */}
@@ -226,10 +226,10 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
       {edge([0, 0, OD], [OL, 0, OD], 'e9')}
       {/* dimension labels */}
       <text x={labelL[0] - fs * 0.4} y={labelL[1] + fs * 1.5} fontSize={fs} fill="var(--text-muted, #8888a4)" textAnchor="middle" fontFamily="inherit">
-        L {fmtDim(OL, units)}
+        L {fmtLen(OL)}
       </text>
       <text x={labelW[0] + fs * 1.6} y={labelW[1] + fs * 1.35} fontSize={fs} fill="var(--text-muted, #8888a4)" textAnchor="middle" fontFamily="inherit">
-        W {fmtDim(OW, units)}
+        W {fmtLen(OW)}
       </text>
       <text
         x={labelD[0] + fs * 0.9}
@@ -240,7 +240,7 @@ export function IsoCartonView({ carton, member, units }: IsoCartonViewProps) {
         fontFamily="inherit"
         transform={`rotate(-90 ${labelD[0] + fs * 0.9} ${labelD[1]})`}
       >
-        D {fmtDim(OD, units)}
+        D {fmtLen(OD)}
       </text>
     </svg>
   );
@@ -682,13 +682,26 @@ const SERIES = '#6c5ce7';
 export function KChart({ solutions, goalK, selectedK, onSelect, panels, freightFor }: KChartProps) {
   const [hover, setHover] = useState<number | null>(null);
   const feasible = solutions.filter((s) => s.feasible);
+  // Draw at the width the chart is shown at (up to 640), so text keeps its
+  // real size on a phone instead of shrinking with a scaled-down drawing.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [boxW, setBoxW] = useState(640);
+  const hasData = feasible.length > 0;
+  useEffect(() => {
+    // Re-attaches when the chart first has data, since it renders nothing before.
+    const el = wrapRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(([entry]) => setBoxW(entry.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [hasData]);
 
-  const W = 640;
-  const m = { l: 62, r: 20 };
+  const W = Math.round(Math.min(640, Math.max(300, boxW)));
+  const m = W < 480 ? { l: 46, r: 12 } : { l: 62, r: 20 };
   const titleH = 24;
   const plotH = 116;
   const gap = 18;
-  const axisH = 42;
+  const axisH = 48;
   const plotTop = (pi: number) => pi * (titleH + plotH + gap) + titleH;
   const plotBottom = (pi: number) => plotTop(pi) + plotH;
   const lastBottom = plotBottom(panels.length - 1);
@@ -709,7 +722,7 @@ export function KChart({ solutions, goalK, selectedK, onSelect, panels, freightF
   if (feasible.length === 0) return null;
 
   return (
-    <div className="cpk-chartwrap" style={{ position: 'relative' }}>
+    <div className="cpk-chartwrap" ref={wrapRef} style={{ position: 'relative' }}>
       <svg
         viewBox={`0 0 ${W} ${H}`}
         role="img"
@@ -765,7 +778,7 @@ export function KChart({ solutions, goalK, selectedK, onSelect, panels, freightF
             )}
           </g>
         ))}
-        <text x={(m.l + W - m.r) / 2} y={H - 3} textAnchor="middle" fontSize={11} fill="var(--text-muted, #8888a4)" fontFamily="inherit">
+        <text x={(m.l + W - m.r) / 2} y={H - 2} textAnchor="middle" fontSize={11} fill="var(--text-muted, #8888a4)" fontFamily="inherit">
           carton SKU count
         </text>
         {/* crosshair through every panel */}

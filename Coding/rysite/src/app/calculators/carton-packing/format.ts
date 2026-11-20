@@ -12,6 +12,17 @@ export function fmt(x: number, digits = 0): string {
   return x.toLocaleString('en-US', { maximumFractionDigits: digits, minimumFractionDigits: 0 });
 }
 
+/** Exactly `digits` decimals, so a table column of numbers lines up. */
+export function fmtFixed(x: number, digits = 1): string {
+  return x.toLocaleString('en-US', { maximumFractionDigits: digits, minimumFractionDigits: digits });
+}
+
+/** A length rounded to 0.1 with no unit, for groups that state the unit once. */
+export function fmtLen(x: number): string {
+  const rounded = Math.round(x * 10) / 10;
+  return fmt(rounded, Math.abs(rounded % 1) > 1e-9 ? 1 : 0);
+}
+
 export function fmtDim(x: number, units: string): string {
   const rounded = Math.round(x * 10) / 10;
   return `${fmt(rounded, Math.abs(rounded % 1) > 1e-9 ? 1 : 0)}${units === 'in' ? '″' : ' mm'}`;
@@ -76,8 +87,13 @@ export function fmtArea(unit2: number, units: Units, digits = 0): string {
   return `${fmt(areaValue(unit2, units), digits)} ${areaUnit(units)}`;
 }
 
-/** An area in `from` units², shown as m² (to mm) or ft² (to in). 1 ft² = 92,903.04 mm². */
-export function specArea(unit2: number, from: Units, to: Units, digits = 0): string {
+/** An area in `from` units², as a number of m² (to mm) or ft² (to in). 1 ft² = 92,903.04 mm². */
+export function specAreaValue(unit2: number, from: Units, to: Units): number {
   const mm2 = from === 'in' ? unit2 * 645.16 : unit2;
-  return to === 'in' ? `${fmt(mm2 / 92903.04, digits)} ft²` : `${fmt(mm2 / 1e6, digits)} m²`;
+  return to === 'in' ? mm2 / 92903.04 : mm2 / 1e6;
+}
+
+/** The same, formatted with its unit. */
+export function specArea(unit2: number, from: Units, to: Units, digits = 0): string {
+  return `${fmt(specAreaValue(unit2, from, to), digits)} ${areaUnit(to)}`;
 }
