@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 
 const visuals = [
@@ -20,20 +21,15 @@ export default function ReactiveFunBackgroundsPage() {
       <div className="page-bg" />
 
       <div className="container">
-        <div style={{ marginBottom: '1.5rem' }}>
-          <Link href="/projects" style={{ textDecoration: 'none', color: 'var(--accent-color)' }}>
-            &larr; Back to Projects
-          </Link>
-        </div>
-
         <div className="page-header">
+          <Breadcrumb current="Reactive Fun Backgrounds" />
           <h1 className="section-title">
             <span className="gradient-text">Reactive Fun Backgrounds</span>
           </h1>
           <p className="section-subtitle" style={{ marginBottom: 0 }}>Pick a visual. Go fullscreen. Vibe.</p>
         </div>
 
-        <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--card-bg)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+        <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--glass-bg)', borderRadius: '12px', border: '1px solid var(--border)' }}>
           <p style={{ color: 'var(--text-secondary)' }}>
             A browser-based collection of reactive party visuals and animated screensavers. Select a visual below to launch it. Go fullscreen and enable your microphone to sync animations to music.
           </p>
@@ -41,7 +37,7 @@ export default function ReactiveFunBackgroundsPage() {
 
         <div className="projects-grid">
           {visuals.map((vis) => (
-            <Link key={vis.slug} href={`/projects/reactive-fun-backgrounds/${vis.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link key={vis.slug} href={`/reactive-fun-backgrounds/${vis.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className={`card ${vis.accentClass}`} style={{ height: '100%', cursor: 'pointer' }}>
                 <div className="project-card-header">
                   <div className="project-card-icon">{vis.icon}</div>

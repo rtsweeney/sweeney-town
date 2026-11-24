@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 
 import {
@@ -399,11 +399,8 @@ export default function AntipodePage() {
       <div className="page-bg" />
 
       <div className="container">
-        <Link href="/projects" className="planetarium-breadcrumb">
-          Back to Projects
-        </Link>
-
         <div className="page-header">
+          <Breadcrumb current="Dig Through the Earth" />
           <h1 className="section-title">
             <span className="gradient-text">Dig Through the Earth</span>
           </h1>

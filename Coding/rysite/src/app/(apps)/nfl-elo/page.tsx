@@ -15,13 +15,14 @@
 // Nothing is proxied through a server, so the site stays fully static.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import { TEAMS, resolveTeam, fullName, shortName } from './teams';
 import {
   LEAGUE_AVG_QB_VALUE, LEAGUE_MEAN,
   type EloSeason, type GameProjection, type QbRating, type TeamRating,
 } from './engine';
+import { pct, spreadLabel } from './format';
 import {
   BumpChart, CHART_CSS, DIVISIONS, DivisionRaces, Highlights, PlayoffMeter, PlayoffPicture, QbRooms,
   RatingLineChart, SPOTLIGHTS, SpotlightPicker, WeeklyTable, emphasisOf, qbSeries, teamSeries,
@@ -92,16 +93,6 @@ function formatKickoff(iso: string | null, gameday: string): string {
   });
 }
 
-function pct(p: number): string {
-  return `${(p * 100).toFixed(0)}%`;
-}
-
-/** "IND -2.2" — the model's line, quoted on whichever side is favoured. */
-function spreadLabel(game: GameProjection): string {
-  if (Math.abs(game.spread) < 0.05) return 'Pick ’em';
-  const favourite = game.spread < 0 ? game.home : game.away;
-  return `${favourite} −${Math.abs(game.spread).toFixed(1)}`;
-}
 
 export default function NflEloPage() {
   const [data, setData] = useState<EloSeason | null>(null);
@@ -312,10 +303,7 @@ export default function NflEloPage() {
 
       <div className="container nfl-root">
         <div className="page-header">
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            <Link href="/projects" style={{ color: 'var(--accent-secondary)' }}>Projects</Link>
-            {' / '}NFL Elo Ratings &amp; Predictions
-          </p>
+          <Breadcrumb current="NFL Elo Ratings & Predictions" />
           <h1 className="section-title"><span className="gradient-text">NFL Elo Ratings &amp; Predictions</span></h1>
           <p className="section-subtitle" style={{ marginBottom: 0 }}>
             Who wins this week, and how likely is it? Every game gets a pre-game win probability

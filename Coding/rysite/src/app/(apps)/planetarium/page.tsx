@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import {
   CONSTELLATIONS,
@@ -802,9 +802,7 @@ export default function PlanetariumPage() {
 
       <div className="container">
         <div className="page-header">
-          <Link href="/projects" className="planetarium-breadcrumb">
-            Projects
-          </Link>
+          <Breadcrumb current="Planetarium" />
           <h1 className="section-title">
             <span className="gradient-text">Planetarium</span>
           </h1>

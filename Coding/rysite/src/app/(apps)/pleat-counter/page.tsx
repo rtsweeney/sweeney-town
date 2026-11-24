@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -1048,10 +1048,7 @@ export default function PleatCounterPage() {
       <div className="container">
         {/* Header */}
         <div className="page-header">
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            <Link href="/calculators" style={{ color: 'var(--accent-secondary)' }}>Calculators</Link>
-            {' / '}Machine Vision Pleat Counting
-          </p>
+          <Breadcrumb current="Machine Vision Pleat Counting" />
           <h1 className="section-title">
             <span className="gradient-text">Machine Vision Pleat Counting</span>
           </h1>

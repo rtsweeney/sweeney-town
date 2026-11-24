@@ -1,146 +1,143 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import { FileText, MapIcon, Music } from 'lucide-react';
 import Footer from '@/components/Footer';
-
-const featured = [
-  {
-    name: 'Carton Packing Optimizer',
-    href: '/calculators/carton-packing',
-    icon: '&#128230;',
-    accent: 'card-accent-orange',
-    description:
-      'Enter product dimensions and annual volumes and it designs the best small set of carton sizes, tiles them onto pallets, charts the trade-off of adding or dropping a carton SKU, and writes supplier-ready specs.',
-    tags: ['Box Sizing', 'Pallet Loading', 'Optimization'],
-  },
-  {
-    name: 'Machine Vision Pleat Counting',
-    href: '/calculators/pleat-counter',
-    icon: '&#128247;',
-    accent: 'card-accent-teal',
-    description:
-      'Photograph a filter panel and the browser does the rest — finds the panel, corrects the perspective, counts ridges through frames and grating, and reports pitch, pleats per foot, and open area.',
-    tags: ['Computer Vision', 'Canvas', 'No Server'],
-  },
-  {
-    name: 'NFL Elo Ratings & Predictions',
-    href: '/projects/nfl-elo',
-    icon: '&#127944;',
-    accent: 'card-accent-purple',
-    description:
-      "Who wins this week, and how likely? FiveThirtyEight's NFL Elo model, continued and re-fit: win probabilities and spreads for every game, playoff odds from simulated seasons, quarterback ratings, and live scores.",
-    tags: ['Elo Model', 'nflverse', 'Live Scores'],
-  },
-  {
-    name: 'Planetarium',
-    href: '/planetarium',
-    icon: '&#127776;',
-    accent: 'card-accent-gold',
-    description:
-      'An interactive star map. See what is in the sky tonight from wherever you are, pick a constellation, and find out exactly where to look.',
-    tags: ['Astronomy', 'Geolocation', 'Canvas'],
-  },
-];
+import AppIcon from '@/components/AppIcon';
+import NflPreview from '@/components/home/NflPreview';
+import BeerPreview from '@/components/home/BeerPreview';
+import CartonPreview from '@/components/home/CartonPreview';
+import { FEATURED_APPS, MORE_APPS } from '@/lib/apps';
+import { getNflPreview } from '@/lib/nflPreview';
+import { HOME_FIELD } from '@/app/(apps)/nfl-elo/engine';
 
 export default function Home() {
+  // Static page: this is the build's clock. The matchup re-checks in the browser.
+  const renderedAt = Date.now();
+  const nfl = getNflPreview(renderedAt);
+  const previews: Record<string, React.ReactNode> = {
+    'nfl-elo': <NflPreview data={nfl} renderedAt={renderedAt} />,
+    'beers-per-beer': <BeerPreview />,
+    'carton-packing': <CartonPreview />,
+  };
+  const n = (v: number) => v.toLocaleString('en-US');
+
   return (
     <main>
       <div className="page-bg" />
 
-      {/* Hero */}
-      <section className="hero">
-        <p className="hero-tagline animate-in animate-delay-1">Welcome to</p>
-        <h1 className="hero-title animate-in animate-delay-2">
-          <span className="gradient-text">sweeney.town</span>
+      <section className="container home-hero">
+        <p className="home-eyebrow animate-in animate-delay-1">Built by Ryan Sweeney</p>
+        <h1 className="home-title animate-in animate-delay-2">
+          Tools I built because I <span className="gradient-text">needed&nbsp;them.</span>
         </h1>
-        <p className="hero-subtitle animate-in animate-delay-3">
-          A workshop for calculators, and fun little inventions and tools. Engineering
-          math that usually lives in a spreadsheet, rebuilt so it runs in your browser
-          &mdash; plus whatever else I felt like building.
+        <p className="home-lede animate-in animate-delay-3">
+          Live NFL predictions, a standard-drink calculator and a carton optimizer &mdash; plus a few
+          experiments. Free, no sign-up, and everything runs in your browser.
         </p>
-        <div className="hero-cta-group animate-in animate-delay-4">
-          <Link href="/calculators" className="btn btn-primary">Browse Calculators</Link>
-          <Link href="/projects" className="btn btn-secondary">See All Projects</Link>
-        </div>
       </section>
 
-      {/* Featured builds */}
-      <section className="container" style={{ paddingBottom: '4rem' }}>
-        <h2 className="section-title" style={{ textAlign: 'center' }}>Start Here</h2>
-        <p className="section-subtitle" style={{ textAlign: 'center' }}>
-          The tools I get asked about most. Everything runs in your browser &mdash; nothing to install,
-          nothing to sign up for.
-        </p>
-
-        <div className="home-grid home-grid-featured">
-          {featured.map((item) => (
-            <Link key={item.href} href={item.href} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className={`card ${item.accent}`} style={{ height: '100%' }}>
-                <div
-                  className="home-card-icon"
-                  dangerouslySetInnerHTML={{ __html: item.icon }}
-                />
-                <h3 className="home-card-title">{item.name}</h3>
-                <p className="home-card-desc">{item.description}</p>
-                <div className="project-tech-tags">
-                  {item.tags.map((tag) => (
-                    <span key={tag} className="project-tech-tag">{tag}</span>
-                  ))}
-                </div>
-                <div className="project-links">
-                  <span className="project-link">Open &rarr;</span>
-                </div>
+      <section className="container" aria-labelledby="most-used">
+        <h2 id="most-used" className="home-label">Most used</h2>
+        <div className="feature-grid">
+          {FEATURED_APPS.map((app) => (
+            <article key={app.slug} className={`feature-card accent-${app.accent}`}>
+              <div className="feature-preview">{previews[app.slug]}</div>
+              <div className="feature-body">
+                <h3 className="feature-title">
+                  <Link href={app.href} className="stretched-link">{app.name}</Link>
+                </h3>
+                <p className="feature-summary">{app.summary}</p>
+                <span className="feature-cta" aria-hidden="true">
+                  Open {app.shortName} <span className="arrow">&rarr;</span>
+                </span>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Section Cards */}
-      <section className="container" style={{ paddingBottom: '4rem' }}>
-        <h2 className="section-title" style={{ textAlign: 'center' }}>The Rest of the Site</h2>
-        <p className="section-subtitle" style={{ textAlign: 'center' }}>
-          More tools, and a few things that are just for fun.
-        </p>
+      <section className="container home-section" aria-labelledby="more">
+        <div className="home-section-head">
+          <h2 id="more" className="home-h2">More things I&apos;ve built</h2>
+          <Link href="/apps" className="home-more-link">See all apps &rarr;</Link>
+        </div>
+        <ul className="more-grid">
+          {MORE_APPS.map((app) => (
+            <li key={app.slug} className={`more-item accent-${app.accent}`}>
+              <span className="more-icon"><AppIcon name={app.icon} size={20} /></span>
+              <span className="more-text">
+                <Link href={app.href} className="stretched-link more-name">{app.name}</Link>
+                <span className="more-tagline">{app.tagline}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-        <div className="home-grid home-grid-sections">
-          <Link href="/calculators" style={{ textDecoration: 'none' }}>
-            <div className="card card-accent-purple">
-              <div className="home-card-icon">&#128425;</div>
-              <h3 className="home-card-title">Calculators</h3>
-              <p className="home-card-desc">
-                Handy engineering and everyday calculators &mdash; filter models, carton packing, pleat counting, and more added over time.
-              </p>
-            </div>
-          </Link>
+      <section className="container home-section" aria-labelledby="how">
+        <h2 id="how" className="home-h2">How I build</h2>
+        <div className="how-grid">
+          <div className="how-item">
+            <p className="how-stat">{n(nfl.simulations)}</p>
+            <p className="how-stat-label">simulated seasons behind every playoff number</p>
+            <h3>Go a layer deeper</h3>
+            <p>
+              FiveThirtyEight retired its NFL model, so I rebuilt it from their published source and
+              re-fit it on modern seasons. Home field is worth {HOME_FIELD} rating points now, not 65.
+            </p>
+          </div>
+          <div className="how-item">
+            <p className="how-stat">{n(nfl.calibration.evaluatedGames)}</p>
+            <p className="how-stat-label">real games the NFL model is scored against</p>
+            <h3>Test before you trust</h3>
+            <p>
+              The re-fit settings score better than FiveThirtyEight&apos;s originals on those games
+              (log loss {nfl.calibration.logLoss.toFixed(3)} vs {nfl.calibration.baselineLogLoss.toFixed(3)}).
+              Carton scenario links carry a fingerprint, so a link warns you if a later version of the
+              optimizer would answer differently.
+            </p>
+          </div>
+          <div className="how-item">
+            <p className="how-stat">0</p>
+            <p className="how-stat-label">uploads &mdash; the apps run on your device</p>
+            <h3>Your data stays put</h3>
+            <p>
+              No accounts, and no server doing the math. Carton scenarios travel in the part of a link
+              that is never sent to a server, and your drink log stays in your own browser.
+            </p>
+          </div>
+        </div>
+      </section>
 
-          <Link href="/projects" style={{ textDecoration: 'none' }}>
-            <div className="card card-accent-teal">
-              <div className="home-card-icon">&#128736;</div>
-              <h3 className="home-card-title">Projects</h3>
-              <p className="home-card-desc">
-                Bigger builds and experiments &mdash; live sports models, dashboards, star maps, and reactive visuals.
-              </p>
-            </div>
-          </Link>
-
-          <Link href="/concerts" style={{ textDecoration: 'none' }}>
-            <div className="card card-accent-pink">
-              <div className="home-card-icon">&#127925;</div>
-              <h3 className="home-card-title">Concerts</h3>
-              <p className="home-card-desc">
-                Shows I&apos;ve been to, rated and reviewed. From dive bars to arenas.
-              </p>
-            </div>
-          </Link>
-
-          <Link href="/travel" style={{ textDecoration: 'none' }}>
-            <div className="card card-accent-orange">
-              <div className="home-card-icon">&#127758;</div>
-              <h3 className="home-card-title">Travel</h3>
-              <p className="home-card-desc">
-                Cities and countries I&apos;ve visited, mapped out with photos and notes.
-              </p>
-            </div>
-          </Link>
+      <section id="about" className="container home-section" aria-labelledby="about-title">
+        <div className="about-card">
+          <div className="about-main">
+            <p className="home-label">About</p>
+            <h2 id="about-title" className="home-h2">Hi, I&apos;m Ryan.</h2>
+            <p>
+              I&apos;m a mechanical engineer working in product development. I learn by building &mdash;
+              the tool, the rig or the system itself &mdash; and I usually go further than the job
+              needs. Some of these apps come straight out of engineering work: pallets, cartons,
+              machine vision. Others are for football Sundays and nights out.
+            </p>
+            <p>
+              Off the clock it&apos;s festivals and live music, lifting and time-trial cycling &mdash;
+              and, most of all, family.
+            </p>
+          </div>
+          <div className="about-links">
+            <Link href="/concerts" className="about-link"><Music size={18} aria-hidden="true" /> Concerts I&apos;ve rated</Link>
+            <Link href="/travel" className="about-link"><MapIcon size={18} aria-hidden="true" /> Places I&apos;ve been</Link>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="about-link">
+              <FileText size={18} aria-hidden="true" /> R&eacute;sum&eacute; (PDF)
+            </a>
+            <a href="https://github.com/rtsweeney" target="_blank" rel="noopener noreferrer" className="about-link">
+              <Image src="/GitHub.png" alt="" width={18} height={18} /> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/rtsweeney01/" target="_blank" rel="noopener noreferrer" className="about-link">
+              <Image src="/linkedin.png" alt="" width={18} height={18} /> LinkedIn
+            </a>
+          </div>
         </div>
       </section>
 

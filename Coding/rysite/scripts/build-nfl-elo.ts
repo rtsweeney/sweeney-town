@@ -35,9 +35,9 @@ import {
   type GameProjection,
   type QbRating,
   type TeamRating,
-} from '../src/app/projects/nfl-elo/engine.ts';
-import { TEAMS, resolveTeam } from '../src/app/projects/nfl-elo/teams.ts';
-import { SIMULATIONS, simulateSeason } from '../src/app/projects/nfl-elo/playoffs.ts';
+} from '../src/app/(apps)/nfl-elo/engine.ts';
+import { TEAMS, resolveTeam } from '../src/app/(apps)/nfl-elo/teams.ts';
+import { SIMULATIONS, simulateSeason } from '../src/app/(apps)/nfl-elo/playoffs.ts';
 
 const GAMES_URL = 'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv';
 const STATS_URL = (season: number) =>

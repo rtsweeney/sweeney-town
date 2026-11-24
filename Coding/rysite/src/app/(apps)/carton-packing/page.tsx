@@ -5,7 +5,7 @@
 // used, and see how they load onto pallets. All computation is client-side.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import dynamic from 'next/dynamic';
 import Footer from '@/components/Footer';
 import {
@@ -859,10 +859,7 @@ export default function CartonPackingPage() {
     <main>
       <div className="container cpk-root">
         <div className="page-header">
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            <Link href="/calculators" style={{ color: 'var(--accent-secondary)' }}>Calculators</Link>
-            {' / '}Carton Packing Optimizer
-          </p>
+          <Breadcrumb current="Carton Packing Optimizer" />
           <h1 className="section-title"><span className="gradient-text">Carton Packing Optimizer</span></h1>
           <p className="section-subtitle" style={{ marginBottom: 0 }}>
             A free box size and pallet load calculator. Enter your product dimensions and annual volumes, and it

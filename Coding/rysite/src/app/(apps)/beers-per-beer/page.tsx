@@ -1,19 +1,15 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
+// The standard beer (12 oz at 4.2%) is shared with the homepage's examples.
+import { ML_PER_OZ, STANDARD_ABV, STANDARD_ML, STANDARD_OZ } from './standard';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const ML_PER_OZ = 29.5735295625;
 const ETHANOL_DENSITY = 0.789; // g/mL at 20 °C
 const G_PER_LB = 453.59237;
-
-/** A "standard beer" on this site: 12 oz at 4.2% ABV. */
-const STANDARD_ABV = 4.2;
-const STANDARD_OZ = 12;
-const STANDARD_ML = STANDARD_OZ * ML_PER_OZ;
 
 /** Widmark elimination is zero-order — a flat %BAC burned off per hour. */
 const ELIMINATION_PER_HOUR = 0.015;
@@ -791,12 +787,7 @@ export default function BeersPerBeerPage() {
     <main>
       <div className="container bpb-root">
         <div className="page-header">
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            <Link href="/calculators" style={{ color: 'var(--accent-secondary)' }}>
-              Calculators
-            </Link>
-            {' / '}Beers Per Beer
-          </p>
+          <Breadcrumb current="Beers Per Beer" />
           <h1 className="section-title">
             <span className="gradient-text">Beers Per Beer</span>
           </h1>

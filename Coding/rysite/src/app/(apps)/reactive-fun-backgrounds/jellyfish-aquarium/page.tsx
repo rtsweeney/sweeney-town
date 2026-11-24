@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 
 export default function JellyfishAquariumPage() {
@@ -9,32 +9,27 @@ export default function JellyfishAquariumPage() {
       <div className="page-bg" />
 
       <div className="container">
-        <div style={{ marginBottom: '1.5rem' }}>
-          <Link href="/projects/reactive-fun-backgrounds" style={{ textDecoration: 'none', color: 'var(--accent-color)' }}>
-            &larr; Back to Reactive Fun Backgrounds
-          </Link>
-        </div>
-
         <div className="page-header">
+          <Breadcrumb trail={[{ label: 'Reactive Fun Backgrounds', href: '/reactive-fun-backgrounds' }]} current="Jellyfish Aquarium" />
           <h1 className="section-title">
             <span className="gradient-text">Jellyfish Aquarium</span>
           </h1>
           <p className="section-subtitle" style={{ marginBottom: 0 }}>A pixelated underwater world that reacts to music</p>
         </div>
 
-        <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--card-bg)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+        <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--glass-bg)', borderRadius: '12px', border: '1px solid var(--border)' }}>
           <p style={{ marginBottom: '1rem', color: 'var(--text-secondary)' }}>
             Vibrant pixel jellyfish drift and pulse through a living ocean scene. Fish swim and flee from visiting sharks, a crab crawls along the seafloor, and kelp sways in the current. Enable your microphone to sync everything to music.
           </p>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-color)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-color)' }}>Canvas API</span>
-            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-color)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-color)' }}>Web Audio API</span>
-            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-color)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-color)' }}>Fullscreen API</span>
-            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-color)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-color)' }}>Beat Detection</span>
+            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-primary)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-primary)' }}>Canvas API</span>
+            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-primary)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-primary)' }}>Web Audio API</span>
+            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-primary)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-primary)' }}>Fullscreen API</span>
+            <span style={{ padding: '0.3rem 0.7rem', background: 'rgba(120, 115, 245, 0.1)', border: '1px solid var(--accent-primary)', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--accent-primary)' }}>Beat Detection</span>
           </div>
         </div>
 
-        <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
+        <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
           <iframe
             src="/visuals/reactive-fun-backgrounds/jellyfish.html"
             style={{
@@ -52,7 +47,7 @@ export default function JellyfishAquariumPage() {
           />
         </div>
 
-        <div style={{ padding: '1.5rem', background: 'var(--card-bg)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+        <div style={{ padding: '1.5rem', background: 'var(--glass-bg)', borderRadius: '12px', border: '1px solid var(--border)' }}>
           <h3 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem' }}>Features</h3>
           <ul style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginLeft: '1.5rem' }}>
             <li><strong>Microphone Reactive</strong> — Jellyfish pulse speed and drift sync to detected BPM</li>

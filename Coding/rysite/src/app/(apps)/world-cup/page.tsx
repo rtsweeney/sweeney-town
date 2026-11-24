@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import {
   SCOREBOARD_URL,
@@ -541,10 +541,7 @@ export default function WorldCupPage() {
 
       <div className="container">
         <div className="page-header">
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            <Link href="/projects" style={{ color: 'var(--accent-secondary)' }}>Projects</Link>
-            {' / '}World Cup Tracker
-          </p>
+          <Breadcrumb current="World Cup Tracker" />
           <h1 className="section-title">
             <span className="gradient-text">World Cup 2026 Tracker</span>
           </h1>
