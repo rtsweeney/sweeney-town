@@ -1,0 +1,35 @@
+{
+  "name": "Sweeney Town — Ryan Sweeney's toolbox",
+  "short_name": "Sweeney Town",
+  "description": "Practical web apps, engineering calculators, sports models, and experiments.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#282c20",
+  "theme_color": "#282c20",
+  "icons": [
+    {
+      "src": "/icons/toolbox.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "NFL Elo Ratings",
+      "url": "/projects/nfl-elo",
+      "icons": [{ "src": "/icons/toolbox.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Beers Per Beer",
+      "url": "/calculators/beers-per-beer",
+      "icons": [{ "src": "/icons/toolbox.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Carton Packing",
+      "url": "/calculators/carton-packing",
+      "icons": [{ "src": "/icons/toolbox.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}

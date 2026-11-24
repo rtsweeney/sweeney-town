@@ -21,8 +21,8 @@ export default function ReactiveFunBackgroundsPage() {
 
       <div className="container">
         <div style={{ marginBottom: '1.5rem' }}>
-          <Link href="/projects" style={{ textDecoration: 'none', color: 'var(--accent-color)' }}>
-            &larr; Back to Projects
+          <Link href="/tools" style={{ textDecoration: 'none', color: 'var(--accent-color)' }}>
+            &larr; Back to Tools
           </Link>
         </div>
 

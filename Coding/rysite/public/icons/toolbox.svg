@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Sweeney Town toolbox</title>
+  <rect width="512" height="512" fill="#282c20"/>
+  <path d="M103 184 256 96l152 88-152 91z" fill="#d2ff00"/>
+  <path d="m103 188 150 90v145l-150-95z" fill="#b4b8a5"/>
+  <path d="m408 188-147 90v145l147-95z" fill="#f4f4ed"/>
+  <path d="m261 278 61-39v136l-61 48z" fill="#d2ff00"/>
+  <path d="m103 184 153 94 152-94M256 278l5 0v145" fill="none" stroke="#111112" stroke-width="6" stroke-linejoin="round"/>
+</svg>

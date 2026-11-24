@@ -12,7 +12,7 @@ export default function CalculatorLayout({ title, description, children }: Calcu
       <div className="container">
         <div className="page-header">
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            <Link href="/calculators" style={{ color: 'var(--accent-secondary)' }}>Calculators</Link>
+            <Link href="/tools" style={{ color: 'var(--accent-secondary)' }}>Tools</Link>
             {' / '}
             {title}
           </p>

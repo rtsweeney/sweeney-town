@@ -1,16 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
-
-const calculators = [
-  { name: 'Beers Per Beer', href: '/calculators/beers-per-beer', subtitle: 'Standard beers in any drink' },
-  { name: 'Carton Packing', href: '/calculators/carton-packing', subtitle: 'Box sizes & pallet loads' },
-  { name: 'Pleat Counter', href: '/calculators/pleat-counter', subtitle: 'Count pleats from a photo' },
-];
+import { useEffect, useState } from 'react';
+import { Github, Linkedin, Menu, X } from 'lucide-react';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -20,63 +13,69 @@ export default function Navigation() {
     setMobileOpen(false);
   }, [pathname]);
 
-  const isActive = (path: string) => pathname === path;
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, []);
+
+  const inTools =
+    pathname === '/tools' ||
+    pathname.startsWith('/projects') ||
+    pathname.startsWith('/calculators') ||
+    pathname.startsWith('/planetarium');
+  const closeMenu = () => setMobileOpen(false);
 
   return (
-    <nav className="nav">
+    <nav className="nav" aria-label="Main navigation">
       <div className="nav-inner">
-        <Link href="/" className="nav-brand">
-          <span className="gradient-text">sweeney.town</span>
+        <Link href="/" className="nav-brand" onClick={closeMenu}>
+          sweeney<span>.</span>town
         </Link>
 
         <button
           className="nav-mobile-toggle"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle navigation"
+          onClick={() => setMobileOpen((open) => !open)}
+          aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'}
+          aria-expanded={mobileOpen}
+          aria-controls="site-navigation"
         >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          {mobileOpen ? <X size={23} /> : <Menu size={23} />}
         </button>
 
-        <div className={`nav-links ${mobileOpen ? 'open' : ''}`}>
-          <Link href="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
-            Home
-          </Link>
-          <Link href="/projects" className={`nav-link ${isActive('/projects') ? 'active' : ''}`}>
-            Projects
-          </Link>
-          <Link href="/concerts" className={`nav-link ${isActive('/concerts') ? 'active' : ''}`}>
-            Concerts
-          </Link>
-          <Link href="/travel" className={`nav-link ${isActive('/travel') ? 'active' : ''}`}>
-            Travel
-          </Link>
-
-          <div className="nav-dropdown">
-            <span className={`nav-link nav-dropdown-trigger ${pathname.startsWith('/calculators') ? 'active' : ''}`}>
-              Calculators <ChevronDown size={14} />
-            </span>
-            <div className="nav-dropdown-menu">
-              {calculators.map((calc) => (
-                <Link key={calc.href} href={calc.href} className="nav-dropdown-item">
-                  <div>{calc.name}</div>
-                  <div className="item-subtitle">{calc.subtitle}</div>
-                </Link>
-              ))}
-            </div>
+        <div id="site-navigation" className={`nav-links ${mobileOpen ? 'open' : ''}`}>
+          <div className="nav-primary-links">
+            <Link href="/tools" className={`nav-link ${inTools ? 'active' : ''}`} onClick={closeMenu}>
+              Tools
+            </Link>
+            <Link href="/#about" className="nav-link" onClick={closeMenu}>
+              About
+            </Link>
+            <Link href="/#field-notes" className="nav-link" onClick={closeMenu}>
+              Field notes
+            </Link>
           </div>
 
           <div className="nav-socials">
-            <a href="https://www.linkedin.com/in/rtsweeney01/" target="_blank" rel="noopener noreferrer" className="nav-social-link">
-              <Image src="/linkedin.png" alt="LinkedIn" width={20} height={20} />
+            <a
+              href="https://www.linkedin.com/in/rtsweeney01/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-social-link"
+              aria-label="Ryan Sweeney on LinkedIn"
+            >
+              <Linkedin size={19} strokeWidth={1.7} />
             </a>
-            <a href="https://github.com/rtsweeney" target="_blank" rel="noopener noreferrer" className="nav-social-link">
-              <Image src="/GitHub.png" alt="GitHub" width={20} height={20} />
-            </a>
-            <a href="https://letterboxd.com/Sweeneyr3/" target="_blank" rel="noopener noreferrer" className="nav-social-link">
-              <Image src="/Letterboxd.png" alt="Letterboxd" width={20} height={20} />
-            </a>
-            <a href="https://www.chess.com/member/sweenayy" target="_blank" rel="noopener noreferrer" className="nav-social-link">
-              <Image src="/chess.png" alt="Chess.com" width={20} height={20} />
+            <a
+              href="https://github.com/rtsweeney"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-social-link"
+              aria-label="Ryan Sweeney on GitHub"
+            >
+              <Github size={19} strokeWidth={1.7} />
             </a>
           </div>
         </div>

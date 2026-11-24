@@ -11,13 +11,15 @@ const nextConfig = {
     async redirects() {
         return [
             { source: '/blog', destination: '/concerts', permanent: true },
-            // Moved from Projects to Calculators — keep the indexed URLs alive.
+            // One tool index replaces the old Projects vs Calculators split.
+            { source: '/projects', destination: '/tools', permanent: true },
+            { source: '/calculators', destination: '/tools', permanent: true },
+            // Keep older deep links and indexed URLs alive.
             { source: '/projects/carton-packing', destination: '/calculators/carton-packing', permanent: true },
             { source: '/projects/pleat-counter', destination: '/calculators/pleat-counter', permanent: true },
-            // Retired calculators — send visitors to the index rather than a 404.
-            { source: '/calculators/unit-converter', destination: '/calculators', permanent: false },
-            { source: '/calculators/air-density', destination: '/calculators', permanent: false },
-            { source: '/calculators/pleated-filter-calculator', destination: '/calculators', permanent: false },
+            { source: '/calculators/unit-converter', destination: '/tools', permanent: false },
+            { source: '/calculators/air-density', destination: '/tools', permanent: false },
+            { source: '/calculators/pleated-filter-calculator', destination: '/tools', permanent: false },
         ];
     },
 };
