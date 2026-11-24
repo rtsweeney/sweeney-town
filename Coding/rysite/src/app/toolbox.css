@@ -204,6 +204,7 @@ body {
 }
 
 .nav-link {
+  min-width: 44px;
   min-height: 44px;
   display: flex;
   align-items: center;
