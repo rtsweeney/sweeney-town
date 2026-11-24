@@ -15,6 +15,7 @@ Visitors reach the app they came for in one click, and anyone evaluating Ryan ca
 - ✓ Résumé — PDF at `/resume.pdf`
 - ✓ Apps — one registry (`src/lib/apps.ts`) drives the nav, homepage, `/apps` index, footer and breadcrumbs; every app lives in `src/app/(apps)/<slug>/` and is served at `/<slug>`
 - ✓ Sanity CMS integration — studio embedded at `/studio`, schemas for blog/projects exist
+- ✓ CAD & hardware — `src/lib/builds.ts` drives `/cad`, the homepage section and footer; `/cad/uv-index-meter` (ESP32 sketch shown + downloadable, e-ink screens rendered from a port of its drawing code) and `/cad/indoor-ice-ax` (SOLIDWORKS previews + native files)
 - ✓ Old `/projects/*` and `/calculators/*` URLs (incl. carton QR links with `#cpk=`) redirect to the new paths in one hop
 - ✓ Cloudflare Pages deployment — configured via `wrangler.json`
 

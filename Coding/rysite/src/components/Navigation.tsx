@@ -70,6 +70,13 @@ export default function Navigation() {
           >
             All apps
           </Link>
+          <Link
+            href="/cad"
+            className={`nav-link ${isActive('/cad') ? 'active' : ''}`}
+            aria-current={pathname === '/cad' ? 'page' : undefined}
+          >
+            CAD
+          </Link>
           <Link href="/#about" className="nav-link">
             About
           </Link>

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { APPS } from '@/lib/apps';
+import { BUILDS, siteHref } from '@/lib/builds';
 
 const SOCIALS = [
   { href: 'https://www.linkedin.com/in/rtsweeney01/', label: 'LinkedIn', icon: '/linkedin.png' },
@@ -25,6 +26,14 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer-col">
+            <h2 className="footer-heading">CAD &amp; hardware</h2>
+            <ul>
+              {BUILDS.map((build) => (
+                <li key={build.slug}>
+                  <Link href={siteHref(build)}>{build.name}</Link>
+                </li>
+              ))}
+            </ul>
             <h2 className="footer-heading">Off the clock</h2>
             <ul>
               <li><Link href="/concerts">Concerts</Link></li>

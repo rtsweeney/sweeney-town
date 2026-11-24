@@ -3,10 +3,12 @@ import Link from 'next/link';
 import { FileText, MapIcon, Music } from 'lucide-react';
 import Footer from '@/components/Footer';
 import AppIcon from '@/components/AppIcon';
+import BuildCard from '@/components/BuildCard';
 import NflPreview from '@/components/home/NflPreview';
 import BeerPreview from '@/components/home/BeerPreview';
 import CartonPreview from '@/components/home/CartonPreview';
 import { FEATURED_APPS, MORE_APPS } from '@/lib/apps';
+import { BUILDS } from '@/lib/builds';
 import { getNflPreview } from '@/lib/nflPreview';
 import { HOME_FIELD } from '@/app/(apps)/nfl-elo/engine';
 
@@ -72,6 +74,16 @@ export default function Home() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="container home-section" aria-labelledby="cad">
+        <div className="home-section-head">
+          <h2 id="cad" className="home-h2">CAD &amp; hardware</h2>
+          <Link href="/cad" className="home-more-link">More on each &rarr;</Link>
+        </div>
+        <div className="builds-grid">
+          {BUILDS.map((build) => <BuildCard key={build.slug} build={build} />)}
+        </div>
       </section>
 
       <section className="container home-section" aria-labelledby="how">

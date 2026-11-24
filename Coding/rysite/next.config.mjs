@@ -20,6 +20,12 @@ const MOVED_APPS = [
 ];
 
 const nextConfig = {
+    // Arduino sketches import as their source text (types/ino.d.ts), so the
+    // UV meter page shows the very file it offers for download.
+    webpack(config) {
+        config.module.rules.push({ test: /\.ino$/, type: 'asset/source' });
+        return config;
+    },
     images: {
         remotePatterns: [
             {

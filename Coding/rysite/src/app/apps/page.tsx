@@ -5,6 +5,7 @@ import type { PortableTextBlock } from 'next-sanity';
 import Footer from '@/components/Footer';
 import AppIcon from '@/components/AppIcon';
 import { FEATURED_APPS, MORE_APPS, type AppEntry } from '@/lib/apps';
+import { BUILD_EXTERNAL_LINKS } from '@/lib/builds';
 import { safeFetch } from '@/sanity/lib/client';
 
 export const metadata: Metadata = {
@@ -60,7 +61,10 @@ function AppCard({ app }: { app: AppEntry }) {
 }
 
 export default async function AppsPage() {
-  const projects = await safeFetch<Project[]>(PROJECTS_QUERY, []);
+  // Sanity projects the CAD section already shows (same link) aren't repeated here.
+  const projects = (await safeFetch<Project[]>(PROJECTS_QUERY, [])).filter(
+    (p) => !BUILD_EXTERNAL_LINKS.has(p.liveUrl) && !BUILD_EXTERNAL_LINKS.has(p.repoUrl),
+  );
 
   return (
     <main>
