@@ -2,26 +2,26 @@
 
 ## What This Is
 
-A personal website that serves as a central hub for everything Ryan is up to — concerts he's attended, places he's traveled, projects and web apps he's built, and his professional resume. It's designed for multiple audiences: potential employers evaluating his work, peers and collaborators interested in what he's building, and friends/family keeping up with what he's been doing.
+A useful site first and a portfolio second: the web apps Ryan has built, led by the most used — NFL Elo Ratings, Beers Per Beer and the Carton Packing Optimizer — plus a short about, his résumé, and the personal sections (concerts, travel). Audiences: people who come to use the apps, and employers or peers who want to see how he builds.
 
 ## Core Value
 
-Visitors can quickly see what Ryan has been making, where he's been, and what he's about — in one place that feels personal and well-crafted.
+Visitors reach the app they came for in one click, and anyone evaluating Ryan can see what he builds and how — with evidence, not adjectives.
 
 ## Requirements
 
 ### Validated
 
-- ✓ Resume page — existing at `/resume`
-- ✓ Projects / web apps showcase — existing at `/projects`
+- ✓ Résumé — PDF at `/resume.pdf`
+- ✓ Apps — one registry (`src/lib/apps.ts`) drives the nav, homepage, `/apps` index, footer and breadcrumbs; every app lives in `src/app/(apps)/<slug>/` and is served at `/<slug>`
 - ✓ Sanity CMS integration — studio embedded at `/studio`, schemas for blog/projects exist
-- ✓ Calculators section — existing at `/calculators`
-- ✓ Planetarium section — existing at `/planetarium`
+- ✓ CAD & hardware — `src/lib/builds.ts` drives `/cad`, the homepage section and footer; `/cad/uv-index-meter` (ESP32 sketch shown + downloadable, e-ink screens rendered from a port of its drawing code) and `/cad/indoor-ice-ax` (SOLIDWORKS previews + native files)
+- ✓ Old `/projects/*` and `/calculators/*` URLs (incl. carton QR links with `#cpk=`) redirect to the new paths in one hop
 - ✓ Cloudflare Pages deployment — configured via `wrangler.json`
 
 ### Active
 
-- [ ] Homepage rework — current landing page needs redesign to better reflect the site's purpose
+- [x] Homepage rework — apps-first redesign: most-used apps with live previews, /apps index, about (2026-11)
 - [ ] Concert reviews feed — chronological list with photos, star rating, caption; sortable by rating
 - [ ] Travel map — interactive map (US-focused + international) with city-level pins for personally visited places; clicking a pin zooms in and shows a detail card below (photos, description, date, rating)
 - [ ] Replace /blog with concerts and travel sections
@@ -54,6 +54,9 @@ Visitors can quickly see what Ryan has been making, where he's been, and what he
 | Use Sanity Studio as admin UI for concerts/travel | Already embedded at /studio, no extra auth needed | — Pending |
 | Replace /blog with concerts + travel | Blog was unused; these sections better represent Ryan's life | — Pending |
 | City-level pins for travel map | Granular enough to be interesting, manageable to maintain | — Pending |
+| One Apps collection instead of Projects vs Calculators | The split was by implementation, not by what visitors want; most-used apps are marked `featured` instead | ✓ 2026-11 |
+| App URLs flattened to `/<slug>` with 308 redirects | Shorter shareable links; the old paths redirect, and browsers keep the `#cpk=` fragment so printed QR codes still work | ✓ 2026-11 |
+| Homepage previews use live data where it exists | NFL card reads the committed season.json at build time and re-checks kickoffs in the browser | ✓ 2026-11 |
 
 ---
-*Last updated: 2026-03-10 after initialization*
+*Last updated: 2026-11-24 after the apps-first redesign*

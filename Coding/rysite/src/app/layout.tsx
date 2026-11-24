@@ -6,8 +6,9 @@ import Navigation from "@/components/Navigation";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Sweeney Town",
-  description: "Calculators, tools, and fun inventions built by Ryan Sweeney — plus concerts and travel.",
+  title: "Sweeney Town — Free Web Apps by Ryan Sweeney",
+  description:
+    "NFL Elo predictions, a standard-drink calculator, a carton packing optimizer and more — free web apps by Ryan Sweeney that run entirely in your browser.",
 };
 
 export default function RootLayout({
@@ -16,8 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.variable}>
+    // The font variable goes on <html>: globals.css builds --font-sans from
+    // --font-inter on :root, and a variable only resolves where it's defined.
+    // On <body> it was undefined at :root, so every page fell back to Times.
+    <html lang="en" className={inter.variable}>
+      <body>
         <Navigation />
         {children}
       </body>
