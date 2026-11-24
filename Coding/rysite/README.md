@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sweeney Town
 
-## Getting Started
+Ryan Sweeney’s working toolbox: practical web apps for engineering math, sports questions, and problems worth building a tool around. The homepage puts the most-used applications first while retaining a short maker profile and links to field notes.
 
-First, run the development server:
+## Stack
+
+- Next.js 15 App Router, React 19, and TypeScript
+- Sanity for managed content
+- Cloudflare Pages via `@cloudflare/next-on-pages`
+- Space Grotesk and IBM Plex Mono, self-hosted through `next/font`
+- Installable PWA metadata, app shortcuts, and static-asset caching
+
+## Run locally
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks and production build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+npm start
+```
 
-## Learn More
+## Site structure
 
-To learn more about Next.js, take a look at the following resources:
+- `/` — featured tools, complete tool index highlights, maker profile, and field notes
+- `/tools` — unified directory for all applications
+- `/projects/*`, `/calculators/*`, and `/planetarium` — existing application routes and bookmarks
+- `/concerts` and `/travel` — personal field notes
+- `/studio` — Sanity Studio
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The old `/projects` and `/calculators` index routes redirect to `/tools`. Existing application deep links remain unchanged. Additional legacy redirects live in `next.config.mjs`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tool directory content
 
-## Deploy on Vercel
+Shared tool names, descriptions, routes, tags, and featured status live in `src/data/tools.ts`. Homepage and directory cards are rendered from that single source by `src/components/ToolDirectory.tsx`; the featured previews are in `src/components/ToolArtwork.tsx`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Generated data
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Refresh generated application data only when needed:
+
+```bash
+npm run build:nfl-elo
+npm run build:antipode
+```
+
+The NFL homepage preview reads the checked-in `public/data/nfl-elo/season.json` data directly.
+
+## PWA behavior
+
+`public/manifest.webmanifest` provides install metadata and shortcuts to the three featured tools. `public/sw.js` caches static assets only: it does not precache HTML or use cache-first navigation, so application pages continue to use the network normally.
